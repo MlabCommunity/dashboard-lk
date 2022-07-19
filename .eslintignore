@@ -1,0 +1,8 @@
+.history
+src/react-app-env.d.ts
+src/app/App.test.tsx
+node_modules
+build
+yarn.lock
+package-lock.json
+public
