@@ -15,7 +15,7 @@ const GlobalStyles = createGlobalStyle`
     align-items: center;
     font-family: "Ubuntu", sans-serif;
     text-align: center;
-    background: #F6F6F6;
+    background-color: #F6F6F6;
   }
 `;
 

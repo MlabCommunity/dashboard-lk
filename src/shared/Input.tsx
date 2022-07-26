@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-type IProps = {
+interface IProps {
   type: string;
-};
+}
 
 export const Input = styled("input")(
   ({ type }: IProps) => `
@@ -14,6 +14,7 @@ export const Input = styled("input")(
   mix-blend-mode: normal;
   opacity: 0.75;
   outline: none;
+  font-family: "Ubuntu";
   letter-spacing: ${type === "password" && "0.2rem"};
   font-family: ${type === "password" && "Verdana"};
   &::placeholder {

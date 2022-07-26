@@ -7,7 +7,7 @@ const theme = {
     dark: "#232233",
     textGrey: "#77838F",
   },
-  fonts: {
+  fontSizes: {
     titleLarge: "4.2rem",
     title: "4rem",
     textLarge: "1.6rem",
@@ -16,9 +16,9 @@ const theme = {
   },
 };
 
-type Props = {
+interface Props {
   children: React.ReactNode;
-};
+}
 
 const Theme = ({ children }: Props) => (
   <ThemeProvider theme={theme}>{children}</ThemeProvider>

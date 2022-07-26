@@ -1,16 +1,12 @@
-import React from "react";
-
-// eslint-disable-next-line import/no-duplicates
-import SignInSection from "./SignIn";
-// eslint-disable-next-line import/no-duplicates
-import SignUpSection from "./SignUp";
+import LayoutWrapper from "shared/LayoutWrapper";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 const Register = () => (
-  <>
-    <SignInSection />
-    <p>W trakcie przerabiania</p>
-    <SignUpSection />
-  </>
+  <LayoutWrapper isReversed>
+    <SignIn />
+    <SignUp />
+  </LayoutWrapper>
 );
 
 export default Register;

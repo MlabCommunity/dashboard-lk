@@ -1,9 +1,8 @@
-// import React from "react";
 import styled from "styled-components";
 
-type IProps = {
+interface IProps {
   name: string;
-};
+}
 
 export const Policy = styled("div")(
   ({ name }: IProps) => `
@@ -20,7 +19,7 @@ export const Policy = styled("div")(
     mix-blend-mode: normal;
   }
   @media (min-width: 768px) {
-    margin: 7rem 0 0;
+    margin: 2rem 0 0;
     display: ${name === "login" ? "block" : "none"}
   }
 `
