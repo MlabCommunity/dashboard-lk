@@ -18,10 +18,10 @@ const StyledWrapper = styled.div<{ isReversed: boolean }>`
   }
 `;
 
-type WrapperProps = {
+interface WrapperProps {
   isReversed: boolean;
   children: ReactNode;
-};
+}
 
 const LayoutWrapper = ({ isReversed, children }: WrapperProps) => (
   <StyledWrapper isReversed={isReversed}>{children}</StyledWrapper>

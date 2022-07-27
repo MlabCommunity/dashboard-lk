@@ -7,10 +7,10 @@ const FormContainer = styled.form`
   width: 95%;
   max-width: 34.4rem;
   text-align: center;
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fontSizes.textMedium};
   line-height: 22px;
   text-align: center;
-  color: #77838f;
+  color: ${({ theme }) => theme.colors.textGrey};
 
   .checkbox-section {
     display: flex;
@@ -25,7 +25,7 @@ const FormContainer = styled.form`
     }
     a {
       text-decoration: none;
-      color: #77838f;
+      color: ${({ theme }) => theme.colors.textGrey};
     }
   }
 `;

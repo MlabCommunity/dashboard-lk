@@ -3,6 +3,7 @@ import { ThemeProvider } from "styled-components";
 
 const theme = {
   colors: {
+    white: "#fff",
     green: "#43BE8D",
     dark: "#232233",
     textGrey: "#77838F",

@@ -2,10 +2,11 @@ import styled from "styled-components";
 
 interface IProps {
   type: string;
+  error: boolean;
 }
 
 export const Input = styled("input")(
-  ({ type }: IProps) => `
+  ({ type, error }: IProps) => `
   border: none;
   padding: 1rem 1.5rem;
   font-size: 14px;
@@ -14,12 +15,16 @@ export const Input = styled("input")(
   mix-blend-mode: normal;
   opacity: 0.75;
   outline: none;
-  font-family: "Ubuntu";
   letter-spacing: ${type === "password" && "0.2rem"};
-  font-family: ${type === "password" && "Verdana"};
+  font-family: ${type === "password" ? "Verdana" : "Ubuntu"};
+  background-color: ${error ? "#F9E3E3" : "#fff"};
+ 
   &::placeholder {
      font-family: "Ubuntu";
      letter-spacing: ${type === "password" && "0"};
   }
+  &:focus {
+        outline: none;
+    }
 `
 );

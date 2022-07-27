@@ -14,16 +14,16 @@ const Wrapper = styled.div`
     position: relative;
     padding-top: 5rem;
     font-weight: bold;
-    font-size: 4rem;
+    font-size: ${({ theme }) => theme.fontSizes.title};
     line-height: 4.6rem;
     letter-spacing: 0.571428px;
-    color: #fff;
+    color: ${({ theme }) => theme.colors.white};
     &::after {
       content: "";
       position: absolute;
       width: 84px;
       height: 4px;
-      background-color: #fff;
+      background-color: ${({ theme }) => theme.colors.white};
       bottom: 0;
       left: 50%;
       transform: translate(-50%, 12px);
@@ -31,14 +31,14 @@ const Wrapper = styled.div`
   }
   .description {
     font-weight: 500;
-    font-size: 14px;
+    font-size: ${({ theme }) => theme.fontSizes.textMedium};
     line-height: 18px;
-    color: #ffffff;
+    color: ${({ theme }) => theme.colors.white};
     mix-blend-mode: normal;
   }
   .return {
     bottom: 0;
-    background: #232233;
+    background: ${({ theme }) => theme.colors.dark};
     margin-top: auto;
   }
   @media (min-width: 768px) {

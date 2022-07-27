@@ -7,15 +7,16 @@ export const SwitchLink = styled("div")`
   width: 100%;
   max-width: 20.9rem;
   height: 5.6rem;
-  border: 2px solid #fff;
+  border: 2px solid ${({ theme }) => theme.colors.white};
   font-family: "Ubuntu";
   text-transform: uppercase;
   background: transparent;
   border-radius: 10px;
   box-shadow: -3px 4px 15px rgba(0, 0, 0, 0.1);
   a {
+    position: relative;
     font-weight: 700;
-    font-size: 16px;
+    font-size: ${({ theme }) => theme.fontSizes.textLarge};
     line-height: 18px;
     letter-spacing: 0.5px;
     display: block;
@@ -23,6 +24,42 @@ export const SwitchLink = styled("div")`
     height: 100%;
     width: 100%;
     text-decoration: none;
-    color: #fff;
+    color: ${({ theme }) => theme.colors.white};
+    &::before {
+      content: "";
+      position: absolute;
+      background-color: ${({ theme }) => theme.colors.white};
+      left: 0;
+      width: 50%;
+      height: 2px;
+      bottom: 20%;
+      transition: opacity 0.4s, transform 0.4s;
+      opacity: 0;
+    }
+    &:hover,
+    &:focus {
+      &::before {
+        transform: translateX(30px);
+        opacity: 1;
+      }
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      background-color: ${({ theme }) => theme.colors.white};
+      width: 50%;
+      right: 0;
+      height: 2px;
+      bottom: 20%;
+      transition: opacity 0.4s, transform 0.4s;
+      opacity: 0;
+    }
+    &:hover,
+    &:focus {
+      &::after {
+        transform: translateX(-30px);
+        opacity: 1;
+      }
+    }
   }
 `;

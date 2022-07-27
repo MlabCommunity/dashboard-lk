@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+import { BsArrowLeft } from "react-icons/bs";
 import { ReactComponent as Fb } from "assets/btnSigninwithFb.svg";
 import { ReactComponent as Google } from "assets/btnSigninwithGoogle.svg";
 import logo from "assets/cat.png";
@@ -21,7 +22,7 @@ const SignUpSection = () => (
     <SwitchLink>
       <Link to="/register">Zarejestruj się</Link>
     </SwitchLink>
-    <SocialLogin name="register">
+    <SocialLogin name="register" side="left">
       <p>Lub zarejestruj się przez</p>
       <a href="###">
         <Fb />
@@ -30,12 +31,15 @@ const SignUpSection = () => (
         <Google />
       </a>
     </SocialLogin>
-    <Policy name="register">
+    <Policy name="register" side="left">
       <a href="##">Regulamin</a>
       <a href="##">Polityka Prywatności</a>
     </Policy>
     <div className="return">
-      <ReturnButton>Powrót do strony głównej</ReturnButton>
+      <ReturnButton>
+        <BsArrowLeft />
+        Powrót do strony głównej
+      </ReturnButton>
     </div>
   </GradientWrapper>
 );

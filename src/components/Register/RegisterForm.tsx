@@ -10,7 +10,7 @@ const RegisterForm = () => (
   <LayoutForm>
     <InputWrapper />
     <SubmitButton name="register">Zarejestruj się</SubmitButton>
-    <SocialLogin name="login">
+    <SocialLogin name="login" side="right">
       <p>Lub zarejestruj się przez</p>
       <a href="###">
         <Fb />
@@ -19,7 +19,7 @@ const RegisterForm = () => (
         <Google />
       </a>
     </SocialLogin>
-    <Policy name="login">
+    <Policy name="login" side="right">
       <a href="##">Regulamin</a>
       <a href="##">Polityka Prywatności</a>
     </Policy>

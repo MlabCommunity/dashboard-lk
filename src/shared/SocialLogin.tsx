@@ -2,10 +2,11 @@ import styled from "styled-components";
 
 interface IProps {
   name: string;
+  side: string;
 }
 
 export const SocialLogin = styled("div")(
-  ({ name }: IProps) => `
+  ({ name, side }: IProps) => `
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,8 +22,8 @@ export const SocialLogin = styled("div")(
   }
   a {
     color: #43be8d;
+    transition: transform .3s;
     svg {
-      transition: transform .3s;
       margin: .4rem .7rem;
       filter: ${
         name === "login"
@@ -32,13 +33,13 @@ export const SocialLogin = styled("div")(
       path {
         color: ${name === "register" && "#fff"}
       }
-      &:hover {
-        transform: scale(1.1);
-      }
+    }
+    &:hover,&:focus {
+      transform: scale(1.1);
     }
   }
   @media (min-width: 768px) {
-    margin: 1.5rem 0 4rem;
+    margin: ${side === "right" ? "0" : "1.5rem 0 4rem"};
   }
   `
 );

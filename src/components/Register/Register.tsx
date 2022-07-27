@@ -1,6 +1,6 @@
 import LayoutWrapper from "shared/LayoutWrapper";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
+import SignIn from "./SignUp";
+import SignUp from "./SignIn";
 
 const Register = () => (
   <LayoutWrapper isReversed>

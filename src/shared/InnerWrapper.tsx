@@ -8,16 +8,16 @@ const Wrapper = styled.div`
   .title {
     position: relative;
     font-weight: bold;
-    font-size: 4rem;
+    font-size: ${({ theme }) => theme.fontSizes.title};
     line-height: 4.6rem;
     letter-spacing: 0.571428px;
-    color: #43be8d;
+    color: ${({ theme }) => theme.colors.green};
     &::after {
       content: "";
       position: absolute;
       width: 8.4rem;
       height: 0.4rem;
-      background-color: #43be8d;
+      background-color: ${({ theme }) => theme.colors.green};
       bottom: 0;
       left: 50%;
       transform: translate(-50%, 1.2rem);
