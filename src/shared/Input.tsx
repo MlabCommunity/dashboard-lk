@@ -1,23 +1,28 @@
 import styled from "styled-components";
 
-interface IProps {
+interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type: string;
-  error: boolean;
 }
 
-export const Input = styled("input")(
-  ({ type, error }: IProps) => `
+// interface Animal<T> {
+//   name: string;
+//   data: T;
+// }
+
+// const animal: Animal<string> = { name: "xd", data: "asdasd" };
+
+export const Input = styled("input")<IProps>(
+  ({ type }: IProps) => `
   border: none;
   padding: 1rem 1.5rem;
   font-size: 14px;
   line-height: 22px;
   color: #232233;
-  mix-blend-mode: normal;
   opacity: 0.75;
   outline: none;
   letter-spacing: ${type === "password" && "0.2rem"};
   font-family: ${type === "password" ? "Verdana" : "Ubuntu"};
-  background-color: ${error ? "#F9E3E3" : "#fff"};
+  background-color: fff;
  
   &::placeholder {
      font-family: "Ubuntu";
