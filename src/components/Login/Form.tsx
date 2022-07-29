@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Formik } from "formik";
+import axios from "axios";
+import { ErrorMessage, Formik, Field } from "formik";
 import * as Yup from "yup";
 
 import { ReactComponent as Fb } from "assets/btnSigninwithFb.svg";
@@ -11,6 +12,7 @@ import PersonLogo from "assets/Vector.png";
 import PasswordLogo from "assets/password.png";
 import EyeIcon from "assets/ic_eye.png";
 import { InputContainer } from "shared/InputContainer";
+import { Inputs } from "shared/Inputs";
 import { Input } from "../../shared/Input";
 
 const FormContainer = styled.form`
@@ -25,9 +27,9 @@ const FormContainer = styled.form`
   color: ${({ theme }) => theme.colors.textGrey};
 
   .checkbox-section {
+    padding-top: 1.2rem;
     display: flex;
     justify-content: space-between;
-    mix-blend-mode: normal;
     opacity: 0.75;
     div {
       display: flex;
@@ -41,32 +43,9 @@ const FormContainer = styled.form`
     }
   }
 `;
-const Inputs = styled.div`
-  div:first-child {
-    margin-top: 1.9rem;
-  }
-  .eye {
-    margin-left: auto;
-  }
-  p.error {
-    color: #db524e;
-    text-align: left;
-    padding-left: 0.4rem;
-  }
-  .disabledError {
-    visibility: hidden;
-  }
-`;
 
-const SignupSchema = Yup.object().shape({
-  password: Yup.string()
-    .min(6, "Hasło musi zawierać conajmniej 6 znaków")
-    .matches(/^(?=.*?[a-z])$/, "Wymagana: mała litera")
-    //   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-    .matches(/^(?=.*?[A-Z])$/, "Wymagana: duża litera")
-    .matches(/^(?=.*?[#?!@$%^&*-])$/, "Wymagany: znak specjalny #?!@$%^&*-")
-    .matches(/^(?=.*?[0-9])$/, "Wymagana: cyfra 0-9")
-    .required("Wymagane pole"),
+const SignInSchema = Yup.object().shape({
+  password: Yup.string().required("Wymagane pole"),
   email: Yup.string().email("Niepoprawny email").required("Wymagane pole"),
 });
 
@@ -76,10 +55,14 @@ const Form = () => (
       email: "",
       password: "",
     }}
-    validationSchema={SignupSchema}
-    onSubmit={(values) => {
-      alert(JSON.stringify(values, null, 2));
-      console.log(values);
+    validationSchema={SignInSchema}
+    onSubmit={async (values, actions) => {
+      actions.validateForm();
+      axios.post("", { values }).then((res) => {
+        console.log(res);
+      });
+      actions.setSubmitting(false);
+      actions.resetForm();
     }}
   >
     {(props) => (
@@ -87,36 +70,34 @@ const Form = () => (
         <Inputs>
           <InputContainer>
             <img src={PersonLogo} alt="" />
-            <Input
+            <Field
+              as={Input}
+              id="email"
               name="email"
               type="email"
               placeholder="Your Email"
               onChange={props.handleChange}
               onBlur={props.handleBlur}
-              // value={formik.values.email}
             />
           </InputContainer>
-          {props.errors.email ? (
-            <p className="error">{props.errors.email}</p>
-          ) : (
-            <p className="disabledError">.</p>
+          {props.touched.email && props.errors.email && (
+            <ErrorMessage component="p" className="error" name="email" />
           )}
           <InputContainer>
             <img src={PasswordLogo} alt="" />
-            <Input
+            <Field
+              as={Input}
+              id="password"
               name="password"
               type="password"
-              placeholder="Password"
+              placeholder="Podaj hasło"
               onChange={props.handleChange}
               onBlur={props.handleBlur}
-              // value={formik.values.password}
             />
             <img className="eye" src={EyeIcon} alt="" />
           </InputContainer>
-          {props.errors.password ? (
-            <p className="error">{props.errors.password}</p>
-          ) : (
-            <p className="disabledError">.</p>
+          {props.touched.password && props.errors.password && (
+            <ErrorMessage component="p" className="error" name="password" />
           )}
         </Inputs>
         <div className="checkbox-section">
@@ -126,7 +107,7 @@ const Form = () => (
           </div>
           <a href="##">Zapomniałeś hasła?</a>
         </div>
-        <SubmitButton type="submit" name="login">
+        <SubmitButton type="submit" name="login" disabled={props.isSubmitting}>
           Zaloguj się
         </SubmitButton>
         <SocialLogin name="login" side="left">

@@ -47,7 +47,7 @@ export const SubmitButton = styled("button")(
     content: '';
     position: absolute;
     background-color: #fff;
-    width: 20%;
+    width: 25%;
     height: 2px;
     bottom: 20%;
     transition: opacity .3s, transform .4s;
@@ -60,7 +60,7 @@ export const SubmitButton = styled("button")(
     }
   };
   @media(min-width: 768px) {
-    margin: ${name === "login" ? "3.7rem auto" : "0 auto 1.1rem"};
+    margin: ${name === "login" ? "3.7rem auto" : "1.9rem auto 1.1rem"};
   }
   `
 );

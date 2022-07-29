@@ -22,14 +22,22 @@ export const Input = styled("input")<IProps>(
   outline: none;
   letter-spacing: ${type === "password" && "0.2rem"};
   font-family: ${type === "password" ? "Verdana" : "Ubuntu"};
-  background-color: fff;
- 
+  font-weight: ${type === "password" ? "normal" : "bold"};
+  background-color: #fff;
   &::placeholder {
+     font-weight: normal;
      font-family: "Ubuntu";
      letter-spacing: ${type === "password" && "0"};
   }
   &:focus {
         outline: none;
     }
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover, 
+  &:-webkit-autofill:focus, 
+  &:-webkit-autofill:active{
+    transition: background-color 5000s;
+    
+  } 
 `
 );

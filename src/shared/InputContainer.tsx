@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const InputContainer = styled("div")`
   display: flex;
-  margin: 0 auto;
+  margin: 1.9rem auto 0;
   padding: 1.6rem;
   width: 100%;
   max-width: 34.4rem;

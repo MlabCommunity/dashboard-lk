@@ -4,6 +4,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   width: 100%;
   background: linear-gradient(180deg, #43be8d 8.98%, #0de18c 90.85%), #43be8d;
   box-shadow: inset 0px 0px 29.9351px rgba(0, 0, 0, 0.25);
