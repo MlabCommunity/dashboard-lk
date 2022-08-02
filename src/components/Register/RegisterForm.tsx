@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { ErrorMessage, Formik, Field } from "formik";
@@ -16,6 +16,7 @@ import Envelope from "assets/envelope.png";
 import { InputContainer } from "shared/InputContainer";
 import { Inputs } from "shared/Inputs";
 import { Input } from "shared/Input";
+import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
 
 const FormContainer = styled.form`
   padding: 3rem 0 0;
@@ -62,10 +63,10 @@ const SignUpSchema = Yup.object().shape({
 });
 
 const RegisterForm = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const passwordVisibilityHandler = () => {
-    setIsVisible(!isVisible);
-  };
+  const [passwordType, handlePasswordVisibility] =
+    useTogglePasswordVisibility();
+  const [repeatPasswordType, handleRepeatPasswordVisibility] =
+    useTogglePasswordVisibility();
 
   return (
     <Formik
@@ -78,9 +79,13 @@ const RegisterForm = () => {
       validationSchema={SignUpSchema}
       onSubmit={async (values, actions) => {
         actions.validateForm();
-        axios.post("  ", { values }).then((res) => {
-          console.log(res);
-        });
+        axios
+          .post("http://lappka.mobitouch.pl/api/identity/auth/signin", {
+            values,
+          })
+          .then((res) => {
+            console.log(res);
+          });
         actions.setSubmitting(false);
         actions.resetForm();
       }}
@@ -144,7 +149,7 @@ const RegisterForm = () => {
                 as={Input}
                 id="password"
                 name="password"
-                type={isVisible ? "text" : "password"}
+                type={passwordType}
                 placeholder="Hasło"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
@@ -154,12 +159,12 @@ const RegisterForm = () => {
                   "errorBackground"
                 }`}
               />
-              <button type="button" onClick={passwordVisibilityHandler}>
-                <img
-                  // className={`${isVisible ? "inactive" : "active"}`}
-                  src={EyeIcon}
-                  alt=""
-                />
+              <button
+                type="button"
+                onClick={handlePasswordVisibility}
+                className={`${passwordType === "text" && "active"}`}
+              >
+                <img src={EyeIcon} alt="" />
               </button>
             </InputContainer>
             {props.touched.password && props.errors.password && (
@@ -177,7 +182,7 @@ const RegisterForm = () => {
                 as={Input}
                 id="confirmPassword"
                 name="confirmPassword"
-                type="password"
+                type={repeatPasswordType}
                 placeholder="Powtórz hasło"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
@@ -187,7 +192,13 @@ const RegisterForm = () => {
                   "errorBackground"
                 }`}
               />
-              <img className="eye" src={EyeIcon} alt="" />
+              <button
+                type="button"
+                onClick={handleRepeatPasswordVisibility}
+                className={`${repeatPasswordType === "text" && "active"}`}
+              >
+                <img className="eye" src={EyeIcon} alt="" />
+              </button>
             </InputContainer>
             {props.touched.confirmPassword && props.errors.confirmPassword && (
               <ErrorMessage

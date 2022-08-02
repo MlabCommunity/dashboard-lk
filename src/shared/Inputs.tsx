@@ -18,14 +18,18 @@ export const Inputs = styled("div")`
       height: 0;
       left: 50%;
       top: 50%;
-      background-color: grey;
+      background-color: #858585;
+      border-radius: 1px;
       transform: translate(-1px, -50%) rotate(-45deg);
       transition: height 0.3s;
     }
-    &:hover::after {
+  }
+  .active {
+    &::after {
       height: 20px;
     }
   }
+
   .error {
     margin: 0.5rem 0;
     color: #db524e;

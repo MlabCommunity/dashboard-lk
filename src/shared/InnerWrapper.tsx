@@ -5,6 +5,10 @@ const Wrapper = styled.div`
   .logo {
     padding: 2rem 0 1.5rem;
   }
+  .description {
+    padding-top: 8rem;
+    color: ${({ theme }) => theme.colors.textGrey};
+  }
   .title {
     position: relative;
     font-weight: bold;

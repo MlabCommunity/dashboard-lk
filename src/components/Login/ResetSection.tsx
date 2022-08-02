@@ -1,12 +1,12 @@
 import LayoutWrapper from "shared/LayoutWrapper";
-import Form from "./Form";
+import PasswordReminder from "./PasswordReminder";
 import SignUpSection from "./SignUpSection";
 
-const Login = () => (
+const ResetSection = () => (
   <LayoutWrapper isReversed={false}>
-    <Form />
+    <PasswordReminder />
     <SignUpSection />
   </LayoutWrapper>
 );
 
-export default Login;
+export default ResetSection;
