@@ -1,9 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
+import { configure } from "axios-hooks";
+import axiosInstance from "api/axios";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.scss";
+
+configure({ axios: axiosInstance });
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

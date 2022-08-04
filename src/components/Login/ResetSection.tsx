@@ -3,7 +3,7 @@ import PasswordReminder from "./PasswordReminder";
 import SignUpSection from "./SignUpSection";
 
 const ResetSection = () => (
-  <LayoutWrapper isReversed={false}>
+  <LayoutWrapper isreversed={false}>
     <PasswordReminder />
     <SignUpSection />
   </LayoutWrapper>

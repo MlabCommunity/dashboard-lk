@@ -19,6 +19,8 @@
       2,
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
+    "no-underscore-dangle": "off",
+    "no-param-reassign": 0,
     "react/function-component-definition": "off",
     "react/jsx-props-no-spreading": "off",
     "import/prefer-default-export": "off",

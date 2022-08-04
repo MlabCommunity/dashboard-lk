@@ -1,8 +1,8 @@
-// import { useState } from "react";
-import styled from "styled-components";
-import axios from "axios";
+import { PuffLoader } from "react-spinners";
+import styled, { CSSProperties } from "styled-components";
 import { ErrorMessage, Formik, Field } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as Fb } from "assets/btnSigninwithFb.svg";
 import { ReactComponent as Google } from "assets/btnSigninwithGoogle.svg";
@@ -17,6 +17,7 @@ import { InputContainer } from "shared/InputContainer";
 import { Inputs } from "shared/Inputs";
 import { Input } from "shared/Input";
 import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
+import useRegisterData from "services/UserRegisterData";
 
 const FormContainer = styled.form`
   padding: 3rem 0 0;
@@ -46,6 +47,13 @@ const FormContainer = styled.form`
     }
   }
 `;
+const override: CSSProperties = {
+  position: "absolute",
+  zIndex: "10",
+  left: "50%",
+  top: "50%",
+  transform: "translate(-50%,-50%)",
+};
 
 const SignUpSchema = Yup.object().shape({
   name: Yup.string().required("Wymagane pole"),
@@ -62,11 +70,33 @@ const SignUpSchema = Yup.object().shape({
     .oneOf([Yup.ref("password"), null], "Hasła muszą być takie same"),
 });
 
+interface ValuesProps {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 const RegisterForm = () => {
   const [passwordType, handlePasswordVisibility] =
     useTogglePasswordVisibility();
   const [repeatPasswordType, handleRepeatPasswordVisibility] =
     useTogglePasswordVisibility();
+
+  const navigate = useNavigate();
+
+  const { useData } = useRegisterData();
+  const [{ loading, error }, Register] = useData();
+
+  const handleRegisterFormSubmit = async (values: ValuesProps) => {
+    const response = await Register({
+      data: values,
+    });
+    localStorage.setItem("user", JSON.stringify(response.data));
+    if (response.status === 201) {
+      navigate("/login");
+    }
+  };
 
   return (
     <Formik
@@ -79,13 +109,7 @@ const RegisterForm = () => {
       validationSchema={SignUpSchema}
       onSubmit={async (values, actions) => {
         actions.validateForm();
-        axios
-          .post("http://lappka.mobitouch.pl/api/identity/auth/signin", {
-            values,
-          })
-          .then((res) => {
-            console.log(res);
-          });
+        handleRegisterFormSubmit(values);
         actions.setSubmitting(false);
         actions.resetForm();
       }}
@@ -93,6 +117,13 @@ const RegisterForm = () => {
       {(props) => (
         <FormContainer onSubmit={props.handleSubmit}>
           <Inputs>
+            {loading && (
+              <PuffLoader
+                color="green"
+                cssOverride={override}
+                speedMultiplier={1.5}
+              />
+            )}
             <InputContainer
               className={`${
                 props.touched.name && props.errors.name && "errorBackground"
@@ -104,13 +135,25 @@ const RegisterForm = () => {
                 id="name"
                 name="name"
                 type="text"
-                placeholder="Imię i nazwisko"
+                placeholder="Imię"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
                 className={`${
                   props.touched.name && props.errors.name && "errorBackground"
                 }`}
               />
+              {/* <Field
+                as={Input}
+                id="name"
+                name="name"
+                type="text"
+                placeholder="Nazwisko"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                className={`${
+                  props.touched.name && props.errors.name && "errorBackground"
+                }`}
+              /> */}
             </InputContainer>
             {props.touched.name && props.errors.name && (
               <ErrorMessage component="p" className="error" name="name" />
@@ -164,7 +207,7 @@ const RegisterForm = () => {
                 onClick={handlePasswordVisibility}
                 className={`${passwordType === "text" && "active"}`}
               >
-                <img src={EyeIcon} alt="" />
+                <img className="eye" src={EyeIcon} alt="" />
               </button>
             </InputContainer>
             {props.touched.password && props.errors.password && (
@@ -208,6 +251,9 @@ const RegisterForm = () => {
               />
             )}
           </Inputs>
+          {error && (
+            <p className="errorMessage">Wprowadzono niepoprawne dane</p>
+          )}
           <SubmitButton name="register" type="submit">
             Zarejestruj się
           </SubmitButton>

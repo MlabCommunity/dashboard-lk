@@ -7,6 +7,7 @@ const theme = {
     green: "#43BE8D",
     dark: "#232233",
     textGrey: "#77838F",
+    warning: "#DB524E",
   },
   fontSizes: {
     titleLarge: "4.2rem",

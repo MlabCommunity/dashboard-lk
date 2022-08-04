@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, { CSSProperties } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import axiosInstance from "api/axios";
+import { PuffLoader } from "react-spinners";
 import { ErrorMessage, Formik, Field } from "formik";
 import * as Yup from "yup";
 import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
@@ -18,6 +18,7 @@ import { InputContainer } from "shared/InputContainer";
 import { Inputs } from "shared/Inputs";
 import { Input } from "shared/Input";
 import InnerWrapper from "shared/InnerWrapper";
+import useUserData from "services/UserLoginData";
 
 const FormContainer = styled.form`
   padding: 3rem 0 0;
@@ -49,22 +50,50 @@ const FormContainer = styled.form`
       color: ${({ theme }) => theme.colors.textGrey};
       transition: color 0.3s;
       &:hover {
-        color: #232323;
+        color: ${({ theme }) => theme.colors.dark};
       }
     }
   }
+  .errorMessage {
+    color: ${({ theme }) => theme.colors.warning};
+  }
 `;
+const override: CSSProperties = {
+  position: "absolute",
+  zIndex: "10",
+  left: "50%",
+  top: "50%",
+  transform: "translate(-50%,-50%)",
+};
 
 const SignInSchema = Yup.object().shape({
   password: Yup.string().required("Wymagane pole"),
   email: Yup.string().email("Niepoprawny email").required("Wymagane pole"),
 });
 
+interface ValuesProps {
+  email: string;
+  password: string;
+}
+
 const Form = () => {
+  const navigate = useNavigate();
+
   const [passwordType, handlePasswordVisibility] =
     useTogglePasswordVisibility();
 
-  const navigate = useNavigate();
+  const { useLoginData } = useUserData();
+  const [{ error, loading }, login] = useLoginData();
+
+  const handleFormSubmit = async (values: ValuesProps) => {
+    const response = await login({
+      data: values,
+    });
+    localStorage.setItem("user", JSON.stringify(response.data));
+    if (response.status === 200) {
+      navigate("/dashboard");
+    }
+  };
 
   return (
     <InnerWrapper>
@@ -82,17 +111,7 @@ const Form = () => {
         validationSchema={SignInSchema}
         onSubmit={async (values, actions) => {
           actions.validateForm();
-          await axiosInstance
-            .post("/auth/signin", {
-              email: values.email,
-              password: values.password,
-            })
-            .then((response) => {
-              console.log(response);
-              if (response.status === 200) {
-                navigate("./dashboard");
-              }
-            });
+          handleFormSubmit(values);
           actions.setSubmitting(false);
           actions.resetForm();
         }}
@@ -100,6 +119,13 @@ const Form = () => {
         {(props) => (
           <FormContainer onSubmit={props.handleSubmit}>
             <Inputs>
+              {loading && (
+                <PuffLoader
+                  color="green"
+                  cssOverride={override}
+                  speedMultiplier={1.5}
+                />
+              )}
               <InputContainer
                 className={`${
                   props.touched.email && props.errors.email && "errorBackground"
@@ -158,6 +184,9 @@ const Form = () => {
                 <ErrorMessage component="p" className="error" name="password" />
               )}
             </Inputs>
+            {error && (
+              <p className="errorMessage">Nieprawidłowy email lub hasło</p>
+            )}
             <div className="checkbox-section">
               <div>
                 <input type="checkbox" />

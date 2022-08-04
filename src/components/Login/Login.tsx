@@ -3,7 +3,7 @@ import Form from "./Form";
 import SignUpSection from "./SignUpSection";
 
 const Login = () => (
-  <LayoutWrapper isReversed={false}>
+  <LayoutWrapper isreversed={false}>
     <Form />
     <SignUpSection />
   </LayoutWrapper>

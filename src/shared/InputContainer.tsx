@@ -15,4 +15,7 @@ export const InputContainer = styled("div")`
     max-width: 22px;
     object-fit: contain;
   }
+  .eye {
+    margin-right: 0.5rem;
+  }
 `;

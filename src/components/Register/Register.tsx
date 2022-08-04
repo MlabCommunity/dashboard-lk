@@ -3,7 +3,7 @@ import SignIn from "./SignUp";
 import SignUp from "./SignIn";
 
 const Register = () => (
-  <LayoutWrapper isReversed>
+  <LayoutWrapper isreversed>
     <SignIn />
     <SignUp />
   </LayoutWrapper>

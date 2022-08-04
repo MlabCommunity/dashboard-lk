@@ -1,26 +1,45 @@
 import axios from "axios";
+import { refreshToken } from "services/RefreshToken";
 
-const headers = {
-  asdd: "das",
-  asdsda: "das",
-};
-
-export const axiosInstance = axios.create({
+const axiosInstance = axios.create({
   baseURL: "http://lappka.mobitouch.pl/api/identity",
-  headers,
 });
 
-// if (localStorage.token) {
-//   headers.Authorization = `Bearer ${localStorage.token}`;
-// }
+axios.interceptors.request.use(
+  async (config) => {
+    const user = localStorage.getItem("user");
 
-// axiosInstance.interceptors.request.use((config) =>
-//   // config.params = config.params || {};
+    if (user) {
+      config.headers = {
+        Authorization: `Bearer ${user}`,
+      };
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
-//    config
-// );
-// axiosInstance.interceptors.request.use((response) => {
-//   console.log(response);
-// });
+axios.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const { config } = error;
+    const user = JSON.parse(localStorage.getItem("user")!);
+
+    if (error.response.status === 401 && !config._retry) {
+      config._retry = true;
+
+      const [data] = await refreshToken(user.refreshToken);
+
+      if (data) {
+        localStorage.setItem("user", JSON.stringify(data));
+        return axios.request(config);
+      }
+
+      return axios(config);
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export default axiosInstance;

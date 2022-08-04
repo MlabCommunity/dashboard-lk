@@ -7,6 +7,7 @@ declare module "styled-components" {
       green: string;
       dark: string;
       textGrey: string;
+      warning: string;
     };
     fontSizes: {
       titleLarge: string;

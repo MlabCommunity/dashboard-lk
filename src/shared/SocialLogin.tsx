@@ -7,6 +7,7 @@ interface IProps {
 
 export const SocialLogin = styled("div")(
   ({ name, side }: IProps) => `
+  margin-bottom: ${name === "login" && "1rem"};
   display: flex;
   justify-content: center;
   align-items: center;

@@ -20,6 +20,7 @@ export const Input = styled("input")<IProps>(
   color: #232233;
   opacity: 0.75;
   outline: none;
+  width: inherit;
   letter-spacing: ${type === "password" && "0.2rem"};
   font-family: ${type === "password" ? "Verdana" : "Ubuntu"};
   font-weight: ${type === "password" ? "normal" : "bold"};
@@ -37,7 +38,6 @@ export const Input = styled("input")<IProps>(
   &:-webkit-autofill:focus, 
   &:-webkit-autofill:active{
     transition: background-color 5000s;
-    
   } 
 `
 );
