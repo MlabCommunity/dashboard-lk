@@ -18,6 +18,7 @@ import { Inputs } from "shared/Inputs";
 import { Input } from "shared/Input";
 import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
 import useRegisterData from "services/UserRegisterData";
+import { useEffect, useState } from "react";
 
 const FormContainer = styled.form`
   padding: 3rem 0 0;
@@ -46,6 +47,10 @@ const FormContainer = styled.form`
       color: ${({ theme }) => theme.colors.textGrey};
     }
   }
+  .errorMessage {
+    padding-top: 1rem;
+    color: ${({ theme }) => theme.colors.warning};
+  }
 `;
 const override: CSSProperties = {
   position: "absolute",
@@ -56,7 +61,9 @@ const override: CSSProperties = {
 };
 
 const SignUpSchema = Yup.object().shape({
-  name: Yup.string().required("Wymagane pole"),
+  username: Yup.string().required("Wymagane pole"),
+  firstName: Yup.string().required("Wymagane pole"),
+  lastName: Yup.string().required("Wymagane pole"),
   email: Yup.string().email("Niepoprawny email").required("Wymagane pole"),
   password: Yup.string()
     .min(6, "Hasło musi zawierać conajmniej 6 znaków")
@@ -71,13 +78,17 @@ const SignUpSchema = Yup.object().shape({
 });
 
 interface ValuesProps {
-  name: string;
+  username: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
 
 const RegisterForm = () => {
+  const [errorMessage, setErrorMessage] = useState("a");
+
   const [passwordType, handlePasswordVisibility] =
     useTogglePasswordVisibility();
   const [repeatPasswordType, handleRepeatPasswordVisibility] =
@@ -88,10 +99,19 @@ const RegisterForm = () => {
   const { useData } = useRegisterData();
   const [{ loading, error }, Register] = useData();
 
+  useEffect(() => {
+    if (error) {
+      setErrorMessage(error.response?.data.reason);
+    }
+  }, [error]);
+
   const handleRegisterFormSubmit = async (values: ValuesProps) => {
     const response = await Register({
       data: values,
     });
+    if (response.status === 400) {
+      setErrorMessage(response.data.reason);
+    }
     localStorage.setItem("user", JSON.stringify(response.data));
     if (response.status === 201) {
       navigate("/login");
@@ -101,7 +121,9 @@ const RegisterForm = () => {
   return (
     <Formik
       initialValues={{
-        name: "",
+        username: "",
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -111,7 +133,6 @@ const RegisterForm = () => {
         actions.validateForm();
         handleRegisterFormSubmit(values);
         actions.setSubmitting(false);
-        actions.resetForm();
       }}
     >
       {(props) => (
@@ -126,37 +147,75 @@ const RegisterForm = () => {
             )}
             <InputContainer
               className={`${
-                props.touched.name && props.errors.name && "errorBackground"
+                props.touched.username &&
+                props.errors.username &&
+                "errorBackground"
               }`}
             >
               <img src={PersonLogo} alt="" />
               <Field
                 as={Input}
-                id="name"
-                name="name"
+                id="username"
+                name="username"
+                type="text"
+                placeholder="Username"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                className={`${
+                  props.touched.username &&
+                  props.errors.username &&
+                  "errorBackground"
+                }`}
+              />
+            </InputContainer>
+            {props.touched.username && props.errors.username && (
+              <ErrorMessage component="p" className="error" name="username" />
+            )}
+            <InputContainer
+              className={`${
+                props.touched.firstName &&
+                props.errors.firstName &&
+                "errorBackground"
+              }`}
+            >
+              <img src={PersonLogo} alt="" />
+              <Field
+                as={Input}
+                id="firstName"
+                name="firstName"
                 type="text"
                 placeholder="Imię"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
                 className={`${
-                  props.touched.name && props.errors.name && "errorBackground"
+                  props.touched.firstName &&
+                  props.errors.firstName &&
+                  "errorBackground"
                 }`}
               />
-              {/* <Field
+            </InputContainer>
+            {props.touched.firstName && props.errors.firstName && (
+              <ErrorMessage component="p" className="error" name="firstName" />
+            )}
+            <InputContainer>
+              <img src={PersonLogo} alt="" />
+              <Field
                 as={Input}
-                id="name"
-                name="name"
+                id="lastName"
+                name="lastName"
                 type="text"
                 placeholder="Nazwisko"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
                 className={`${
-                  props.touched.name && props.errors.name && "errorBackground"
+                  props.touched.lastName &&
+                  props.errors.lastName &&
+                  "errorBackground"
                 }`}
-              /> */}
+              />
             </InputContainer>
-            {props.touched.name && props.errors.name && (
-              <ErrorMessage component="p" className="error" name="name" />
+            {props.touched.lastName && props.errors.lastName && (
+              <ErrorMessage component="p" className="error" name="lastName" />
             )}
             <InputContainer
               className={`${
@@ -251,9 +310,7 @@ const RegisterForm = () => {
               />
             )}
           </Inputs>
-          {error && (
-            <p className="errorMessage">Wprowadzono niepoprawne dane</p>
-          )}
+          {error && <p className="errorMessage">{errorMessage}</p>}
           <SubmitButton name="register" type="submit">
             Zarejestruj się
           </SubmitButton>

@@ -9,6 +9,7 @@ export interface IResponse {
   expires: string;
 }
 export interface IRegister {
+  reason: string;
   username: string;
   firstName: string;
   lastName: string;
