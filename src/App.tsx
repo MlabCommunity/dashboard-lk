@@ -24,7 +24,10 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="dashboard" element={<MainDashboard />}>
               <Route index element={<DashboardSection />} />
-              <Route path="dashboardSection" element={<DashboardSection />} />
+              <Route
+                path="/dashboard/dashboardSection"
+                element={<DashboardSection />}
+              />
               <Route
                 path="/dashboard/messagesSection"
                 element={<MessagesSection />}
