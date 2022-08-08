@@ -1,16 +1,17 @@
-import styled from "styled-components";
-import logo from "assets/Logo.png";
-import { Policy } from "shared/PrivacyPolicy";
-import { Link } from "react-router-dom";
-import * as Yup from "yup";
-import PasswordLogo from "assets/password.png";
 import { ErrorMessage, Formik, Field } from "formik";
-import { InputContainer } from "shared/InputContainer";
-import { Inputs } from "shared/Inputs";
-import { Input } from "shared/Input";
-import { SubmitButton } from "shared/SubmitButton";
-import InnerWrapper from "shared/InnerWrapper";
-import { SwitchLink } from "shared/SwitchLink";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import * as Yup from "yup";
+
+import PasswordLogo from "assets/loginRegister/password.png";
+import logo from "assets/loginRegister/Logo.png";
+import { InputContainer } from "shared/loginRegister/InputContainer";
+import { SubmitButton } from "shared/loginRegister/SubmitButton";
+import InnerWrapper from "shared/loginRegister/InnerWrapper";
+import { SwitchLink } from "shared/loginRegister/SwitchLink";
+import { Policy } from "shared/loginRegister/PrivacyPolicy";
+import { Inputs } from "shared/loginRegister/Inputs";
+import { Input } from "shared/loginRegister/Input";
 
 const FormContainer = styled.form`
   padding: 3rem 0 0;

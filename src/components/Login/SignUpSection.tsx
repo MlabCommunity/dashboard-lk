@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 
+import { ReactComponent as Google } from "assets/loginRegister/btnSigninwithGoogle.svg";
+import { ReactComponent as Fb } from "assets/loginRegister/btnSigninwithFb.svg";
+import logo from "assets/loginRegister/cat.png";
+import GradientWrapper from "shared/loginRegister/InnerGradientWrapper";
+import { ReturnButton } from "shared/loginRegister/ReturnButton";
+import { SocialLogin } from "shared/loginRegister/SocialLogin";
+import { SwitchLink } from "shared/loginRegister/SwitchLink";
+import { Policy } from "shared/loginRegister/PrivacyPolicy";
 import { BsArrowLeft } from "react-icons/bs";
-import { ReactComponent as Fb } from "assets/btnSigninwithFb.svg";
-import { ReactComponent as Google } from "assets/btnSigninwithGoogle.svg";
-import logo from "assets/cat.png";
-import { SocialLogin } from "shared/SocialLogin";
-import { SwitchLink } from "shared/SwitchLink";
-import { Policy } from "shared/PrivacyPolicy";
-import { ReturnButton } from "shared/ReturnButton";
-import GradientWrapper from "shared/InnerGradientWrapper";
 
 const SignUpSection = () => (
   <GradientWrapper>

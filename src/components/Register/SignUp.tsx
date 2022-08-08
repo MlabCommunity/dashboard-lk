@@ -1,5 +1,5 @@
-import logo from "assets/Logo.png";
-import InnerWrapper from "shared/InnerWrapper";
+import logo from "assets/loginRegister/Logo.png";
+import InnerWrapper from "shared/loginRegister/InnerWrapper";
 import RegisterForm from "./RegisterForm";
 
 const SignUp = () => (

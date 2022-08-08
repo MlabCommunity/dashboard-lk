@@ -1,4 +1,4 @@
-import LayoutWrapper from "shared/LayoutWrapper";
+import LayoutWrapper from "shared/loginRegister/LayoutWrapper";
 import PasswordReminder from "./PasswordReminder";
 import SignUpSection from "./SignUpSection";
 

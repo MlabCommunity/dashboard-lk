@@ -1,4 +1,4 @@
-import LayoutWrapper from "shared/LayoutWrapper";
+import LayoutWrapper from "shared/loginRegister/LayoutWrapper";
 import Form from "./Form";
 import SignUpSection from "./SignUpSection";
 

@@ -1,23 +1,23 @@
 import styled, { CSSProperties } from "styled-components";
+import { ErrorMessage, Formik, Field } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
-import { ErrorMessage, Formik, Field } from "formik";
 import * as Yup from "yup";
-import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
 
-import { ReactComponent as Fb } from "assets/btnSigninwithFb.svg";
-import { ReactComponent as Google } from "assets/btnSigninwithGoogle.svg";
-import { SocialLogin } from "shared/SocialLogin";
-import { Policy } from "shared/PrivacyPolicy";
-import { SubmitButton } from "shared/SubmitButton";
-import logo from "assets/Logo.png";
-import PersonLogo from "assets/Vector.png";
-import PasswordLogo from "assets/password.png";
-import EyeIcon from "assets/ic_eye.png";
-import { InputContainer } from "shared/InputContainer";
-import { Inputs } from "shared/Inputs";
-import { Input } from "shared/Input";
-import InnerWrapper from "shared/InnerWrapper";
+import { ReactComponent as Google } from "assets/loginRegister/btnSigninwithGoogle.svg";
+import { ReactComponent as Fb } from "assets/loginRegister/btnSigninwithFb.svg";
+import PasswordLogo from "assets/loginRegister/password.png";
+import PersonLogo from "assets/loginRegister/Vector.png";
+import EyeIcon from "assets/loginRegister/ic_eye.png";
+import logo from "assets/loginRegister/Logo.png";
+import { InputContainer } from "shared/loginRegister/InputContainer";
+import { SubmitButton } from "shared/loginRegister/SubmitButton";
+import { SocialLogin } from "shared/loginRegister/SocialLogin";
+import InnerWrapper from "shared/loginRegister/InnerWrapper";
+import { Policy } from "shared/loginRegister/PrivacyPolicy";
+import { Inputs } from "shared/loginRegister/Inputs";
+import { Input } from "shared/loginRegister/Input";
+import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
 import useUserData from "services/UserLoginData";
 
 const FormContainer = styled.form`

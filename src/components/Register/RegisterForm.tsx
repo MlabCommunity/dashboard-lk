@@ -1,24 +1,24 @@
-import { PuffLoader } from "react-spinners";
 import styled, { CSSProperties } from "styled-components";
 import { ErrorMessage, Formik, Field } from "formik";
-import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { PuffLoader } from "react-spinners";
+import * as Yup from "yup";
 
-import { ReactComponent as Fb } from "assets/btnSigninwithFb.svg";
-import { ReactComponent as Google } from "assets/btnSigninwithGoogle.svg";
-import { SocialLogin } from "shared/SocialLogin";
-import { SubmitButton } from "shared/SubmitButton";
-import { Policy } from "shared/PrivacyPolicy";
-import PersonLogo from "assets/Vector.png";
-import PasswordLogo from "assets/password.png";
-import EyeIcon from "assets/ic_eye.png";
-import Envelope from "assets/envelope.png";
-import { InputContainer } from "shared/InputContainer";
-import { Inputs } from "shared/Inputs";
-import { Input } from "shared/Input";
+import { ReactComponent as Google } from "assets/loginRegister/btnSigninwithGoogle.svg";
+import { ReactComponent as Fb } from "assets/loginRegister/btnSigninwithFb.svg";
+import PasswordLogo from "assets/loginRegister/password.png";
+import PersonLogo from "assets/loginRegister/Vector.png";
+import Envelope from "assets/loginRegister/envelope.png";
+import EyeIcon from "assets/loginRegister/ic_eye.png";
+import { InputContainer } from "shared/loginRegister/InputContainer";
+import { SubmitButton } from "shared/loginRegister/SubmitButton";
+import { SocialLogin } from "shared/loginRegister/SocialLogin";
+import { Policy } from "shared/loginRegister/PrivacyPolicy";
+import { Inputs } from "shared/loginRegister/Inputs";
+import { Input } from "shared/loginRegister/Input";
 import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
 import useRegisterData from "services/UserRegisterData";
-import { useEffect, useState } from "react";
 
 const FormContainer = styled.form`
   padding: 3rem 0 0;
@@ -109,9 +109,6 @@ const RegisterForm = () => {
     const response = await Register({
       data: values,
     });
-    if (response.status === 400) {
-      setErrorMessage(response.data.reason);
-    }
     localStorage.setItem("user", JSON.stringify(response.data));
     if (response.status === 201) {
       navigate("/login");
