@@ -7,15 +7,19 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
   }
   html {
-    font-size: 62.5%;
+    font-size: 10px;
   }
   body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "Ubuntu", sans-serif;
     text-align: center;
+    font-family: 'Inter', sans-serif;
     background-color: #F6F6F6;
+    font-size: 1.6rem;
+    @media (min-width: 768px) {
+    height: 100vh;
+    }
   }
 `;
 

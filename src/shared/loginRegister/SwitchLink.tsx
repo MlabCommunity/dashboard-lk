@@ -1,65 +1,44 @@
 import styled from "styled-components";
 
 export const SwitchLink = styled("div")`
-  display: flex;
-  align-items: center;
-  margin: 3.7rem auto 2.5rem;
-  width: 100%;
-  max-width: 20.9rem;
-  height: 5.6rem;
-  border: 2px solid ${({ theme }) => theme.colors.white};
-  font-family: "Ubuntu";
-  text-transform: uppercase;
-  background: transparent;
-  border-radius: 10px;
-  box-shadow: -3px 4px 15px rgba(0, 0, 0, 0.1);
+  margin: 1rem;
+  width: 11.8rem;
+  height: 4rem;
+  background: #ffffff;
+  border: 1px solid #e1f5ed;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  border-radius: 8px;
   a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
-    font-weight: 700;
     font-size: ${({ theme }) => theme.fontSizes.textLarge};
-    line-height: 18px;
-    letter-spacing: 0.5px;
-    display: block;
-    padding: 1.7rem;
+    font-weight: 500;
+    line-height: 2.4rem;
+    padding: 0.8rem 1.6rem;
+    letter-spacing: -0.003em;
     height: 100%;
     width: 100%;
     text-decoration: none;
-    color: ${({ theme }) => theme.colors.white};
-    &::before {
-      content: "";
-      position: absolute;
-      background-color: ${({ theme }) => theme.colors.white};
-      left: 0;
-      width: 50%;
-      height: 2px;
-      bottom: 20%;
-      transition: opacity 0.4s, transform 0.4s;
-      opacity: 0;
-    }
+    transition: transform 0.3s;
+    color: #252c32;
     &:hover,
     &:focus {
-      &::before {
-        transform: translateX(30px);
-        opacity: 1;
-      }
+      transform: scale(1.05);
     }
-    &::after {
-      content: "";
-      position: absolute;
-      background-color: ${({ theme }) => theme.colors.white};
-      width: 50%;
-      right: 0;
-      height: 2px;
-      bottom: 20%;
-      transition: opacity 0.4s, transform 0.4s;
-      opacity: 0;
-    }
-    &:hover,
-    &:focus {
-      &::after {
-        transform: translateX(-30px);
-        opacity: 1;
-      }
-    }
+  }
+`;
+
+export const Return = styled(SwitchLink)`
+  width: 17rem;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  img {
+    padding-right: 0.8rem;
+  }
+  a {
+    color: #287154;
   }
 `;

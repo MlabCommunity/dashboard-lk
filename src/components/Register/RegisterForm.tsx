@@ -5,16 +5,16 @@ import { useEffect, useState } from "react";
 import { PuffLoader } from "react-spinners";
 import * as Yup from "yup";
 
-import { ReactComponent as Google } from "assets/loginRegister/btnSigninwithGoogle.svg";
-import { ReactComponent as Fb } from "assets/loginRegister/btnSigninwithFb.svg";
+// import { ReactComponent as Google } from "assets/loginRegister/btnSigninwithGoogle.svg";
+// import { ReactComponent as Fb } from "assets/loginRegister/btnSigninwithFb.svg";
 import PasswordLogo from "assets/loginRegister/password.png";
 import PersonLogo from "assets/loginRegister/Vector.png";
 import Envelope from "assets/loginRegister/envelope.png";
 import EyeIcon from "assets/loginRegister/ic_eye.png";
 import { InputContainer } from "shared/loginRegister/InputContainer";
 import { SubmitButton } from "shared/loginRegister/SubmitButton";
-import { SocialLogin } from "shared/loginRegister/SocialLogin";
-import { Policy } from "shared/loginRegister/PrivacyPolicy";
+// import { SocialLogin } from "shared/loginRegister/SocialLogin";
+// import { Policy } from "shared/loginRegister/PrivacyPolicy";
 import { Inputs } from "shared/loginRegister/Inputs";
 import { Input } from "shared/loginRegister/Input";
 import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
@@ -311,7 +311,7 @@ const RegisterForm = () => {
           <SubmitButton name="register" type="submit">
             Zarejestruj się
           </SubmitButton>
-          <SocialLogin name="login" side="right">
+          {/* <SocialLogin name="login" side="right">
             <p>Lub zarejestruj się przez</p>
             <a href="###">
               <Fb />
@@ -323,7 +323,7 @@ const RegisterForm = () => {
           <Policy name="login" side="right">
             <a href="##">Regulamin</a>
             <a href="##">Polityka Prywatności</a>
-          </Policy>
+          </Policy> */}
         </FormContainer>
       )}
     </Formik>

@@ -4,26 +4,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
 import * as Yup from "yup";
 
-// import { ReactComponent as Google } from "assets/loginRegister/btnSigninwithGoogle.svg";
-// import { ReactComponent as Fb } from "assets/loginRegister/btnSigninwithFb.svg";
 import PasswordLogo from "assets/loginRegister/password.png";
 import PersonLogo from "assets/loginRegister/Vector.png";
 import EyeIcon from "assets/loginRegister/ic_eye.png";
-import logo from "assets/loginRegister/Logo.png";
 import { InputContainer } from "shared/loginRegister/InputContainer";
 import { SubmitButton } from "shared/loginRegister/SubmitButton";
-// import { SocialLogin } from "shared/loginRegister/SocialLogin";
-// import InnerWrapper from "shared/loginRegister/InnerWrapper";
-// import { Policy } from "shared/loginRegister/PrivacyPolicy";
 import { Inputs } from "shared/loginRegister/Inputs";
 import { Input } from "shared/loginRegister/Input";
 import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
 import useUserData from "services/UserLoginData";
 
+import FormWrapper from "shared/loginRegister/FormWrapper";
+
 const FormContainer = styled.form`
-  padding: 3rem 0 0;
-  margin: 0 auto;
-  width: 95%;
   max-width: 34.4rem;
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.textMedium};
@@ -76,7 +69,7 @@ interface ValuesProps {
   password: string;
 }
 
-const Form = () => {
+const LoginForm = () => {
   const navigate = useNavigate();
 
   const [passwordType, handlePasswordVisibility] =
@@ -96,13 +89,9 @@ const Form = () => {
   };
 
   return (
-    <>
-      <div className="logo">
-        <img src={logo} alt="" />
-      </div>
-      <p className="title">
-        Zaloguj się <span className="hidden">do aplikacji</span>
-      </p>
+    <FormWrapper>
+      <h2 className="title">Zaloguj się</h2>
+      <p className="description">Witaj ponownie!</p>
       <Formik
         initialValues={{
           email: "",
@@ -192,7 +181,7 @@ const Form = () => {
                 <input type="checkbox" />
                 <p>Zapamiętaj mnie</p>
               </div>
-              <Link to="/resetPassword">Zapomniałeś hasła?</Link>
+              <Link to="/LoginLayout/ResetPassword">Zapomniałeś hasła?</Link>
             </div>
             <SubmitButton
               type="submit"
@@ -201,23 +190,10 @@ const Form = () => {
             >
               Zaloguj się
             </SubmitButton>
-            {/* <SocialLogin name="login" side="left">
-              <p>Lub zaloguj się przez</p>
-              <a href="###">
-                <Fb />
-              </a>
-              <a href="###">
-                <Google />
-              </a>
-            </SocialLogin>
-            <Policy name="login" side="left">
-              <a href="##">Regulamin</a>
-              <a href="##">Polityka Prywatności</a>
-            </Policy> */}
           </FormContainer>
         )}
       </Formik>
-    </>
+    </FormWrapper>
   );
 };
-export default Form;
+export default LoginForm;

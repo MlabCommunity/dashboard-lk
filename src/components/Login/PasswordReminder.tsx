@@ -7,9 +7,9 @@ import PasswordLogo from "assets/loginRegister/password.png";
 import logo from "assets/loginRegister/Logo.png";
 import { InputContainer } from "shared/loginRegister/InputContainer";
 import { SubmitButton } from "shared/loginRegister/SubmitButton";
-import InnerWrapper from "shared/loginRegister/InnerWrapper";
+// import InnerWrapper from "shared/loginRegister/InnerWrapper";
 import { SwitchLink } from "shared/loginRegister/SwitchLink";
-import { Policy } from "shared/loginRegister/PrivacyPolicy";
+// import { Policy } from "shared/loginRegister/PrivacyPolicy";
 import { Inputs } from "shared/loginRegister/Inputs";
 import { Input } from "shared/loginRegister/Input";
 
@@ -33,7 +33,7 @@ const PasswordReminderSchema = Yup.object().shape({
 });
 
 const PasswordReminder = () => (
-  <InnerWrapper>
+  <>
     <div className="logo">
       <img src={logo} alt="" />
     </div>
@@ -92,11 +92,11 @@ const PasswordReminder = () => (
     <SwitchLink>
       <Link to="/login">Powrót do logowania</Link>
     </SwitchLink>
-    <Policy className="resetPasswordPolicy" name="login" side="left">
+    {/* <Policy className="resetPasswordPolicy" name="login" side="left">
       <a href="##">Regulamin</a>
       <a href="##">Polityka Prywatności</a>
-    </Policy>
-  </InnerWrapper>
+    </Policy> */}
+  </>
 );
 
 export default PasswordReminder;
