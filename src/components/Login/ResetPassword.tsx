@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
 import * as Yup from "yup";
 
-import PersonLogo from "assets/loginRegister/Vector.png";
 import { InputContainer } from "shared/loginRegister/InputContainer";
 import { SubmitButton } from "shared/loginRegister/SubmitButton";
 import { Inputs } from "shared/loginRegister/Inputs";
@@ -15,10 +14,8 @@ import FormWrapper from "shared/loginRegister/FormWrapper";
 
 const FormContainer = styled.form`
   max-width: 34.4rem;
-  text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.textMedium};
   line-height: 2.2rem;
-  text-align: center;
   color: ${({ theme }) => theme.colors.textGrey};
 
   .errorMessage {
@@ -89,7 +86,6 @@ const ResetPassword = () => {
                   props.touched.email && props.errors.email && "errorBackground"
                 }`}
               >
-                <img src={PersonLogo} alt="" />
                 <Field
                   as={Input}
                   id="email"

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Inputs = styled("div")`
+  width: 100%;
   .errorBackground {
     background-color: #f9e3e3;
   }

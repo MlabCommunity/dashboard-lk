@@ -7,60 +7,34 @@ interface IProps {
 export const SubmitButton = styled("button")(
   ({ name }: IProps) => `
   position: relative;
+  margin-top: ${name === "next" ? "0" : "1rem"};
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1.9rem auto 1.2rem;
   width: 100%;
-  max-width: 34.4rem;
-  height: 5.6rem;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 18px;
-  letter-spacing: 0.5px;
-  border: none;
-  color: #fff;
-  font-family: "Ubuntu";
-  text-transform: uppercase;
-  background-color: #43be8d;
+  height: 4.8rem;
+  border: ${name === "prev" ? "1px solid #DDE2E4" : "none"};
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  letter-spacing: -0.004em;
+  color: ${name === "prev" ? "#252C32" : "#F6F7F9"};
+  font-family: "Inter";
+  background: ${name === "prev" ? "transparent" : "#369871"};
   filter: drop-shadow(-4px 4px 10px rgba(0, 0, 0, 0.15));
-  border-radius: 10px; 
+  border-radius: 0.8rem; 
   cursor: pointer;
-  overflow: hidden;
-  &::before {
-    content: '';
-    position: absolute;
-    background-color: #fff;
-    width: 20%;
-    height: 2px;
-    bottom: 20%;
-    transition: opacity .3s, transform .4s;
-    opacity: 0;
-  }
-  &:hover, &:focus {
-    &::before {
-      transform: translateX(3.4rem);
-      opacity: 1;
+  svg {
+    margin-right: ${name === "prev" ? "1rem" : "0"};
+    margin-left: ${name === "next" ? "1rem" : "0"};
+    path {
+      color: ${name === "prev" ? "#252C32" : "#fff"};
     }
-  };
-  &::after {
-    content: '';
-    position: absolute;
-    background-color: #fff;
-    width: 25%;
-    height: 2px;
-    bottom: 20%;
-    transition: opacity .3s, transform .4s;
-    opacity:0;
+    transform: rotate(${name === "prev" ? "180deg" : "0"});
   }
-  &:hover,&:focus {
-    &::after {
-      transform: translateX(-3.4rem);
-      opacity: 1;
-    }
-  };
-  @media(min-width: 768px) {
-    margin: ${name === "login" ? "3.7rem auto" : "1.9rem auto 1.1rem"};
+  @media (min-width: 768px) {
+     margin-top: 1rem;
   }
   `
 );

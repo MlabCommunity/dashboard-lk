@@ -5,8 +5,7 @@ export const InputContainer = styled("div")`
   margin: 1.9rem auto 0;
   padding: 1.6rem;
   width: 100%;
-  max-width: 34.4rem;
-  height: 5.6rem;
+  height: 4rem;
   border: 1px solid #77838f;
   background-color: #fff;
   filter: drop-shadow(-4px 4px 10px rgba(0, 0, 0, 0.05));

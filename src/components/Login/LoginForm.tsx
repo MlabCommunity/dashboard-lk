@@ -4,9 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
 import * as Yup from "yup";
 
-import PasswordLogo from "assets/loginRegister/password.png";
-import PersonLogo from "assets/loginRegister/Vector.png";
-import EyeIcon from "assets/loginRegister/ic_eye.png";
+import EyeIcon from "assets/loginRegister/Eye-on.png";
 import { InputContainer } from "shared/loginRegister/InputContainer";
 import { SubmitButton } from "shared/loginRegister/SubmitButton";
 import { Inputs } from "shared/loginRegister/Inputs";
@@ -18,10 +16,8 @@ import FormWrapper from "shared/loginRegister/FormWrapper";
 
 const FormContainer = styled.form`
   max-width: 34.4rem;
-  text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.textMedium};
   line-height: 2.2rem;
-  text-align: center;
   color: ${({ theme }) => theme.colors.textGrey};
 
   .checkbox-section {
@@ -39,11 +35,24 @@ const FormContainer = styled.form`
       }
     }
     a {
+      position: relative;
       text-decoration: none;
-      color: ${({ theme }) => theme.colors.textGrey};
+      color: #369871;
+      line-height: 2.4rem;
       transition: color 0.3s;
-      &:hover {
-        color: ${({ theme }) => theme.colors.dark};
+      &::after {
+        content: "";
+        position: absolute;
+        background-color: #43be8d;
+        width: 100%;
+        height: 1px;
+        left: 0;
+        bottom: 0;
+        opacity: 0.2;
+        transition: opacity 0.3s;
+      }
+      &:hover::after {
+        opacity: 1;
       }
     }
   }
@@ -120,7 +129,6 @@ const LoginForm = () => {
                   props.touched.email && props.errors.email && "errorBackground"
                 }`}
               >
-                <img src={PersonLogo} alt="" />
                 <Field
                   as={Input}
                   id="email"
@@ -146,7 +154,6 @@ const LoginForm = () => {
                   "errorBackground"
                 }`}
               >
-                <img src={PasswordLogo} alt="" />
                 <Field
                   as={Input}
                   id="password"
@@ -179,9 +186,9 @@ const LoginForm = () => {
             <div className="checkbox-section">
               <div>
                 <input type="checkbox" />
-                <p>Zapamiętaj mnie</p>
+                <p>Pamiętaj mnie</p>
               </div>
-              <Link to="/LoginLayout/ResetPassword">Zapomniałeś hasła?</Link>
+              <Link to="/LoginLayout/ResetPassword">Zapomniałem hasła</Link>
             </div>
             <SubmitButton
               type="submit"

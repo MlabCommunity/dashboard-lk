@@ -8,7 +8,7 @@ import logo from "assets/loginRegister/Logo.png";
 import { InputContainer } from "shared/loginRegister/InputContainer";
 import { SubmitButton } from "shared/loginRegister/SubmitButton";
 // import InnerWrapper from "shared/loginRegister/InnerWrapper";
-import { SwitchLink } from "shared/loginRegister/SwitchLink";
+import { ReturnLink } from "shared/loginRegister/ReturnLink";
 // import { Policy } from "shared/loginRegister/PrivacyPolicy";
 import { Inputs } from "shared/loginRegister/Inputs";
 import { Input } from "shared/loginRegister/Input";
@@ -89,9 +89,9 @@ const PasswordReminder = () => (
         </FormContainer>
       )}
     </Formik>
-    <SwitchLink>
+    <ReturnLink>
       <Link to="/login">Powrót do logowania</Link>
-    </SwitchLink>
+    </ReturnLink>
     {/* <Policy className="resetPasswordPolicy" name="login" side="left">
       <a href="##">Regulamin</a>
       <a href="##">Polityka Prywatności</a>

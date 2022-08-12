@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { IChildren } from "types/IChildren";
 import styled from "styled-components";
 
 const StyledWrapper = styled.div`
@@ -13,11 +13,7 @@ const StyledWrapper = styled.div`
   } */
 `;
 
-interface WrapperProps {
-  children: ReactNode;
-}
-
-const DashboardWrapper = ({ children }: WrapperProps) => (
+const DashboardWrapper = ({ children }: IChildren) => (
   <StyledWrapper>{children}</StyledWrapper>
 );
 
