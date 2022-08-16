@@ -3,6 +3,7 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import InputField from "shared/loginRegister/InputField";
 import { Inputs } from "shared/loginRegister/Inputs";
 import { IInputTypes } from "types/axiosApi";
+import { ErrorMessage } from "formik";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -39,39 +40,84 @@ const OrganizationForm = (props: IInputTypes) => {
         <Grid2 container spacing={3}>
           <Grid2 xs={12}>
             <label htmlFor="organizationName">{organizationName.label}</label>
-            <InputField name={organizationName.name} placeholder="Wpisz" />
+            <InputField
+              type="text"
+              name={organizationName.name}
+              placeholder="Wpisz"
+            />
+            <ErrorMessage
+              component="p"
+              className="errorMessage"
+              name="organizationName"
+            />
           </Grid2>
         </Grid2>
         <Grid2 container spacing={3}>
           <Grid2 xs={12}>
             <label htmlFor="streetName">{streetName.label}</label>
-            <InputField name={streetName.name} placeholder="Wpisz" />
+            <InputField
+              type="text"
+              name={streetName.name}
+              placeholder="Wpisz"
+            />
+            <ErrorMessage
+              component="p"
+              className="errorMessage"
+              name="streetName"
+            />
           </Grid2>
         </Grid2>
         <Grid2 container spacing={3}>
           <Grid2 xs={5}>
             <label htmlFor="zipcode">{zipcode.label}</label>
-            <InputField name={zipcode.name} placeholder="00-000" />
+            <InputField
+              type="number"
+              name={zipcode.name}
+              placeholder="00-000"
+            />
+            <ErrorMessage
+              component="p"
+              className="errorMessage"
+              name="zipcode"
+            />
           </Grid2>
           <Grid2 xs={7}>
             <label htmlFor="city">{city.label}</label>
-            <InputField name={city.name} placeholder="Wpisz" />
+            <InputField type="text" name={city.name} placeholder="Wpisz" />
+            <ErrorMessage component="p" className="errorMessage" name="city" />
           </Grid2>
         </Grid2>
         <Grid2 container spacing={3}>
           <Grid2 xs={12}>
             <label htmlFor="numberNIP">{numberNIP.label}</label>
-            <InputField name={numberNIP.name} placeholder="Wpisz" />
+            <InputField
+              type="number"
+              name={numberNIP.name}
+              placeholder="Wpisz"
+            />
+            <ErrorMessage
+              component="p"
+              className="errorMessage"
+              name="numberNIP"
+            />
           </Grid2>
         </Grid2>
         <Grid2 container spacing={3}>
           <Grid2 xs={12}>
             <label htmlFor="numberKRS">{numberKRS.label}</label>
-            <InputField name={numberKRS.name} placeholder="Wpisz" />
+            <InputField
+              type="number"
+              name={numberKRS.name}
+              placeholder="Wpisz"
+            />
+            <ErrorMessage
+              component="p"
+              className="errorMessage"
+              name="numberKRS"
+            />
           </Grid2>
         </Grid2>
       </Inputs>
-      {/* {error && <p className="errorMessage">{errorMessage}</p>} */}
     </Wrapper>
   );
 };

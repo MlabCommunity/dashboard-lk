@@ -19,8 +19,12 @@ export const ReturnLink = styled("div")`
     height: 100%;
     width: 100%;
     text-decoration: none;
-    transition: transform 0.3s;
+    transition: background 0.4s;
     color: #252c32;
+    border-radius: 8px;
+    &:hover {
+      background: #e5e5e5;
+    }
   }
   @media (min-width: 768px) {
     a {

@@ -1,14 +1,14 @@
 import styled, { CSSProperties } from "styled-components";
-import { ErrorMessage, Formik, Field } from "formik";
+import { ErrorMessage, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
 import * as Yup from "yup";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
-import { InputContainer } from "shared/loginRegister/InputContainer";
 import { SubmitButton } from "shared/loginRegister/SubmitButton";
 import { Inputs } from "shared/loginRegister/Inputs";
-import { Input } from "shared/loginRegister/Input";
 import useUserData from "services/UserLoginData";
+import InputField from "shared/loginRegister/InputField";
 
 import FormWrapper from "shared/loginRegister/FormWrapper";
 
@@ -31,7 +31,6 @@ const override: CSSProperties = {
 };
 
 const SignInSchema = Yup.object().shape({
-  password: Yup.string().required("Wymagane pole"),
   email: Yup.string().email("Niepoprawny email").required("Wymagane pole"),
 });
 
@@ -68,7 +67,6 @@ const ResetPassword = () => {
           actions.validateForm();
           handleFormSubmit(values);
           actions.setSubmitting(false);
-          actions.resetForm();
         }}
       >
         {(props) => (
@@ -81,29 +79,13 @@ const ResetPassword = () => {
                   speedMultiplier={1.5}
                 />
               )}
-              <InputContainer
-                className={`${
-                  props.touched.email && props.errors.email && "errorBackground"
-                }`}
-              >
-                <Field
-                  as={Input}
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Twój email"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  className={`${
-                    props.touched.email &&
-                    props.errors.email &&
-                    "errorBackground"
-                  }`}
-                />
-              </InputContainer>
-              {props.touched.email && props.errors.email && (
-                <ErrorMessage component="p" className="error" name="email" />
-              )}
+              <Grid2 container spacing={3}>
+                <Grid2 xs={12}>
+                  {/* <label htmlFor="email">password</label> */}
+                  <InputField id="email" name="email" type="email" />
+                </Grid2>
+              </Grid2>
+              <ErrorMessage component="p" className="error" name="email" />
             </Inputs>
             {error && <p className="errorMessage">Nieprawidłowy email</p>}
             <SubmitButton

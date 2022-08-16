@@ -27,7 +27,7 @@ const StyledWrapper = styled(motion.div)`
     color: #205b43;
   }
   .description {
-    padding-top: 0.8rem;
+    padding: 0.8rem 0 1.6rem;
     font-weight: 400;
     font-size: 1.4rem;
     line-height: 2rem;
@@ -75,6 +75,9 @@ const StyledWrapper = styled(motion.div)`
   @media (min-width: 768px) {
     width: clamp(30rem, 45vw, 45.6rem);
     padding: 3.2rem;
+    .description {
+      padding-bottom: 4rem;
+    }
   }
 `;
 

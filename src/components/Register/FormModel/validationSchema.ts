@@ -25,8 +25,12 @@ export default [
     [streetName.name]: Yup.string().required(required),
     [zipcode.name]: Yup.string().required(required),
     [city.name]: Yup.string().required(required),
-    [numberNIP.name]: Yup.string().required(required),
-    [numberKRS.name]: Yup.string().required(required),
+    [numberNIP.name]: Yup.string()
+      .required(required)
+      .length(10, "Numer NIP musi mieć 10 cyfr"),
+    [numberKRS.name]: Yup.string()
+      .required(required)
+      .length(10, "Numer KRS musi mieć 10 cyfr"),
   }),
   Yup.object().shape({
     [firstName.name]: Yup.string().required(required),

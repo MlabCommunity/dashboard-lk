@@ -1,5 +1,8 @@
+import { useState } from "react";
 import styled from "styled-components";
-import Frame from "assets/dashboard/Frame.png";
+import Frame from "assets/loginRegister/Frame.png";
+// import ResetLogo from "assets/loginRegister/ResetLogo.png"
+import LoginLogo from "assets/loginRegister/LoginLogo.png";
 import Logo from "assets/dashboard/Logo.png";
 import { Link, Outlet } from "react-router-dom";
 import CloseBtn from "assets/loginRegister/Close.png";
@@ -8,9 +11,6 @@ import { ReturnLink, Return } from "./ReturnLink";
 const LayoutWrapper = styled("div")`
   background-color: #f0faf6;
   width: 100vw;
-  height: 100vh;
-  min-height: 100vh;
-  max-height: 86rem;
 
   .authSection,
   .heroSection {
@@ -20,11 +20,8 @@ const LayoutWrapper = styled("div")`
     padding: 1.8rem 0;
   }
   .authSection {
-    height: 100%;
-
     .authSection-container {
       text-align: left;
-      height: 100%;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -57,21 +54,6 @@ const LayoutWrapper = styled("div")`
     .buttons {
       display: flex;
       align-items: center;
-      a {
-        transition: transform 0.3s;
-      }
-      .login {
-        &:hover,
-        &:focus {
-          transform: scale(1.05);
-        }
-      }
-      .return {
-        &:hover,
-        &:focus {
-          transform: rotate(180deg);
-        }
-      }
     }
   }
 
@@ -88,8 +70,7 @@ const LayoutWrapper = styled("div")`
   @media (min-width: 768px) {
     display: flex;
     width: 95vw;
-    height: 86rem;
-    min-height: unset;
+    min-height: 86rem;
     background-color: #fff;
     box-shadow: 0px 0px 29px rgba(0, 0, 0, 0.15);
     max-width: 144rem;
@@ -120,42 +101,67 @@ const LayoutWrapper = styled("div")`
   }
 `;
 
-const LoginLayout = () => (
-  <LayoutWrapper>
-    <div className="authSection">
-      <div className="authSection-container">
-        <div className="controls">
-          <img className="logo" src={Logo} alt="" />
-          <div className="buttons">
-            <ReturnLink>
-              <Link to="/LoginLayout/LoginForm">Zarejestruj się</Link>
-            </ReturnLink>
-            <Return>
-              <Link to="/landing">
-                <img src={CloseBtn} alt="" />
-              </Link>
-            </Return>
+const LoginLayout = () => {
+  const location = window.location.pathname;
+  const [currPath, setCurrentPath] = useState("/LoginLayout/LoginForm");
+
+  console.log(location);
+
+  return (
+    <LayoutWrapper>
+      <div className="authSection">
+        <div className="authSection-container">
+          <div className="controls">
+            <img className="logo" src={Logo} alt="" />
+            <div className="buttons">
+              <ReturnLink>
+                <Link
+                  className="login"
+                  onClick={() => setCurrentPath(location)}
+                  to={currPath}
+                >
+                  {currPath === "/LoginLayout/Register"
+                    ? "Zarejestruj się"
+                    : "Zaloguj się"}
+                </Link>
+              </ReturnLink>
+              <Return>
+                <Link to="/landing">
+                  <img src={CloseBtn} alt="" />
+                </Link>
+              </Return>
+            </div>
           </div>
+          <Outlet />
         </div>
-        <Outlet />
       </div>
-    </div>
-    <div className="heroSection">
-      <div className="buttons">
-        <ReturnLink>
-          <Link className="login" to="/LoginLayout/Register">
-            Zarejestruj się
-          </Link>
-        </ReturnLink>
-        <Return>
-          <Link className="return" to="/landing">
-            <img src={CloseBtn} alt="" />
-          </Link>
-        </Return>
+      <div className="heroSection">
+        <div className="buttons">
+          <ReturnLink>
+            <Link
+              className="login"
+              onClick={() => setCurrentPath(location)}
+              to={currPath}
+            >
+              {currPath === "/LoginLayout/Register"
+                ? "Zarejestruj się"
+                : "Zaloguj się"}
+            </Link>
+          </ReturnLink>
+          <Return>
+            <Link className="return" to="/landing">
+              <img src={CloseBtn} alt="" />
+            </Link>
+          </Return>
+        </div>
+        <img
+          className="heroImg"
+          src={currPath === "/LoginLayout/LoginForm" ? Frame : LoginLogo}
+          alt=""
+        />
       </div>
-      <img className="heroImg" src={Frame} alt="" />
-    </div>
-  </LayoutWrapper>
-);
+    </LayoutWrapper>
+  );
+};
 
 export default LoginLayout;

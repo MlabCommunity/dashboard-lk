@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import InputField from "shared/loginRegister/InputField";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { ErrorMessage } from "formik";
 
 import { Inputs } from "shared/loginRegister/Inputs";
 import { IInputTypes } from "types/axiosApi";
@@ -32,23 +33,43 @@ const UserForm = (props: IInputTypes) => {
         <Grid2 container spacing={2}>
           <Grid2 xs={6}>
             <label htmlFor="firstName">{firstName.label}</label>
-            <InputField name={firstName.name} placeholder="Wpisz" />
+            <InputField type="text" name={firstName.name} placeholder="Wpisz" />
+            <ErrorMessage
+              component="p"
+              className="errorMessage"
+              name="firstName"
+            />
           </Grid2>
           <Grid2 xs={6}>
             <label htmlFor="lastName">{lastName.label}</label>
-            <InputField name={lastName.name} placeholder="Wpisz" />
+            <InputField type="text" name={lastName.name} placeholder="Wpisz" />
+            <ErrorMessage
+              component="p"
+              className="errorMessage"
+              name="lastName"
+            />
           </Grid2>
         </Grid2>
         <Grid2 container spacing={3}>
           <Grid2 xs={12}>
             <label htmlFor="email">{email.label}</label>
-            <InputField name={email.name} placeholder="Wpisz" />
+            <InputField type="email" name={email.name} placeholder="Wpisz" />
+            <ErrorMessage component="p" className="errorMessage" name="email" />
           </Grid2>
         </Grid2>
         <Grid2 container spacing={3}>
           <Grid2 xs={12}>
             <label htmlFor="password">{password.label}</label>
-            <InputField name={password.name} placeholder="Wpisz" />
+            <InputField
+              type="password"
+              name={password.name}
+              placeholder="Wpisz"
+            />
+            <ErrorMessage
+              component="p"
+              className="errorMessage"
+              name="password"
+            />
           </Grid2>
         </Grid2>
         <Grid2 container spacing={3}>
@@ -58,6 +79,11 @@ const UserForm = (props: IInputTypes) => {
               type="password"
               name={confirmPassword.name}
               placeholder="Wpisz"
+            />
+            <ErrorMessage
+              component="p"
+              className="errorMessage"
+              name="confirmPassword"
             />
           </Grid2>
         </Grid2>

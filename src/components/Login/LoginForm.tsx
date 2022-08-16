@@ -1,25 +1,39 @@
-import styled, { CSSProperties } from "styled-components";
-import { ErrorMessage, Formik, Field } from "formik";
+import styled from "styled-components";
+import { ErrorMessage, Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import * as Yup from "yup";
 
-import EyeIcon from "assets/loginRegister/Eye-on.png";
-import { InputContainer } from "shared/loginRegister/InputContainer";
+import EyeOn from "assets/loginRegister/Eye-on.png";
+import EyeOff from "assets/loginRegister/Eye-off.png";
 import { SubmitButton } from "shared/loginRegister/SubmitButton";
 import { Inputs } from "shared/loginRegister/Inputs";
-import { Input } from "shared/loginRegister/Input";
 import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
 import useUserData from "services/UserLoginData";
-
-import FormWrapper from "shared/loginRegister/FormWrapper";
+import FormWrapper, { override } from "shared/loginRegister/FormWrapper";
+import InputField from "shared/loginRegister/InputField";
 
 const FormContainer = styled.form`
-  max-width: 34.4rem;
   font-size: ${({ theme }) => theme.fontSizes.textMedium};
   line-height: 2.2rem;
   color: ${({ theme }) => theme.colors.textGrey};
 
+  label {
+    font-weight: 500;
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+    color: #252c32;
+  }
+
+  .passwordContainer {
+    position: relative;
+    button {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+    }
+  }
   .checkbox-section {
     padding-top: 1.2rem;
     display: flex;
@@ -60,17 +74,10 @@ const FormContainer = styled.form`
     color: ${({ theme }) => theme.colors.warning};
   }
 `;
-const override: CSSProperties = {
-  position: "absolute",
-  zIndex: "10",
-  left: "50%",
-  top: "50%",
-  transform: "translate(-50%,-50%)",
-};
 
 const SignInSchema = Yup.object().shape({
-  password: Yup.string().required("Wymagane pole"),
   email: Yup.string().email("Niepoprawny email").required("Wymagane pole"),
+  password: Yup.string().required("Wymagane pole"),
 });
 
 interface ValuesProps {
@@ -124,61 +131,35 @@ const LoginForm = () => {
                   speedMultiplier={1.5}
                 />
               )}
-              <InputContainer
-                className={`${
-                  props.touched.email && props.errors.email && "errorBackground"
-                }`}
-              >
-                <Field
-                  as={Input}
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Twój email"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  className={`${
-                    props.touched.email &&
-                    props.errors.email &&
-                    "errorBackground"
-                  }`}
-                />
-              </InputContainer>
-              {props.touched.email && props.errors.email && (
-                <ErrorMessage component="p" className="error" name="email" />
-              )}
-              <InputContainer
-                className={`${
-                  props.touched.password &&
-                  props.errors.password &&
-                  "errorBackground"
-                }`}
-              >
-                <Field
-                  as={Input}
-                  id="password"
-                  name="password"
-                  type={passwordType}
-                  placeholder="Podaj hasło"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  className={`${
-                    props.touched.password &&
-                    props.errors.password &&
-                    "errorBackground"
-                  }`}
-                />
-                <button
-                  type="button"
-                  onClick={handlePasswordVisibility}
-                  className={`${passwordType === "text" && "active"}`}
-                >
-                  <img className="eye" src={EyeIcon} alt="" />
-                </button>
-              </InputContainer>
-              {props.touched.password && props.errors.password && (
-                <ErrorMessage component="p" className="error" name="password" />
-              )}
+              <Grid2 container spacing={3}>
+                <Grid2 xs={12}>
+                  <label htmlFor="email">E-mail</label>
+                  <InputField type="email" name="email" placeholder="Wpisz" />
+                </Grid2>
+              </Grid2>
+              <ErrorMessage component="p" className="error" name="email" />
+              <Grid2 container spacing={3}>
+                <Grid2 className="passwordContainer" xs={12}>
+                  <label htmlFor="password">Hasło</label>
+                  <InputField
+                    type={passwordType}
+                    name="password"
+                    placeholder="Wpisz"
+                  />
+                  <button
+                    type="button"
+                    onClick={handlePasswordVisibility}
+                    className={`${passwordType === "text" && "active"}`}
+                  >
+                    <img
+                      className="eye"
+                      src={passwordType === "text" ? EyeOff : EyeOn}
+                      alt=""
+                    />
+                  </button>
+                </Grid2>
+              </Grid2>
+              <ErrorMessage component="p" className="error" name="password" />
             </Inputs>
             {error && (
               <p className="errorMessage">Nieprawidłowy email lub hasło</p>
@@ -192,7 +173,7 @@ const LoginForm = () => {
             </div>
             <SubmitButton
               type="submit"
-              name="login"
+              name="next"
               disabled={props.isSubmitting}
             >
               Zaloguj się

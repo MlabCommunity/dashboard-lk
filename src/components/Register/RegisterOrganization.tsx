@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Stepper, Step, StepLabel } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { IRegisterFields } from "types/axiosApi";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
 import { Formik, Form } from "formik";
 
@@ -16,14 +16,6 @@ import OrganizationForm from "./Forms/OrganizationForm";
 import UserForm from "./Forms/UserForm";
 import validationSchema from "./FormModel/validationSchema";
 import submitFormModel from "./FormModel/submitFormModel";
-
-// const override: CSSProperties = {
-//   position: "absolute",
-//   zIndex: "10",
-//   left: "50%",
-//   top: "50%",
-//   transform: "translate(-50%,-50%)",
-// };
 
 const FormContainer = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.textMedium};
@@ -70,7 +62,7 @@ const RegisterOrganization = () => {
 
   const currentValidationSchema = validationSchema[activeStep];
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const { useData } = useRegisterData();
   const [{ loading, error }, onRegister] = useData();
@@ -81,7 +73,8 @@ const RegisterOrganization = () => {
     });
     localStorage.setItem("user", JSON.stringify(response.data));
     if (response.status === 201) {
-      navigate("/LoginLayout/LoginForm");
+      // navigate("/LoginLayout/LoginForm");
+      setActiveStep(2);
     }
   };
 
@@ -103,8 +96,8 @@ const RegisterOrganization = () => {
     <FormWrapper>
       <h2 className="title">Zarejestruj schronisko</h2>
       <p className="description">
-        Wypełnij poniższy formularz i załóż{" "}
-        <span className="highlighted">Konto schroniska</span>
+        Wypełnij poniższy formularz i załóż
+        <span className="highlighted"> Konto schroniska</span>
       </p>
       <Stepper
         activeStep={activeStep}

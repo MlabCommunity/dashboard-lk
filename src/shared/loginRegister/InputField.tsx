@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { at } from "lodash";
 import { useField } from "formik";
 
-const Input = styled("input")(
-  (error) => `
+const Input = styled("input")`
   padding: 1rem 1.5rem;
   font-size: 1.4rem;
   line-height: 2.2rem;
@@ -14,14 +13,14 @@ const Input = styled("input")(
   width: 100%;
   height: 40px;
   background: #ffffff;
-  border: 1px solid ${error ? "#d5dadd" : "#d5dadd"};
+  border: 1px solid #d5dadd;
   border-radius: 6px;
   &::placeholder {
     font-weight: normal;
     font-family: "Inter";
   }
   &:focus {
-    outline: none;
+    border: 1px solid #1a73e8;
   }
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
@@ -29,24 +28,23 @@ const Input = styled("input")(
   &:-webkit-autofill:active {
     transition: background-color 5000s;
   }
-`
-);
+`;
 
 export default function InputField(props: any) {
   const { errorText, ...rest } = props;
   const [field, meta] = useField(props);
 
   const [touched, error] = at(meta, "touched", "error");
-  // eslint-disable-next-line consistent-return
+
   const renderHelperText = () => {
     if (touched && error) {
       return error;
     }
+    return error;
   };
 
   return (
     <Input
-      type="text"
       error={meta.touched && meta.error && true}
       helperText={renderHelperText()}
       {...field}
