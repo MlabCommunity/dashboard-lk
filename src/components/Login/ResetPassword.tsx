@@ -1,4 +1,4 @@
-import styled, { CSSProperties } from "styled-components";
+import styled from "styled-components";
 import { ErrorMessage, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
@@ -10,27 +10,15 @@ import { Inputs } from "shared/loginRegister/Inputs";
 import useUserData from "services/UserLoginData";
 import InputField from "shared/loginRegister/InputField";
 
-import FormWrapper from "shared/loginRegister/FormWrapper";
+import FormWrapper, { override } from "shared/loginRegister/FormWrapper";
 
 const FormContainer = styled.form`
-  max-width: 34.4rem;
-  font-size: ${({ theme }) => theme.fontSizes.textMedium};
-  line-height: 2.2rem;
-  color: ${({ theme }) => theme.colors.textGrey};
-
-  .errorMessage {
-    color: ${({ theme }) => theme.colors.warning};
+  button[type="submit"] {
+    margin-top: 4rem;
   }
 `;
-const override: CSSProperties = {
-  position: "absolute",
-  zIndex: "10",
-  left: "50%",
-  top: "50%",
-  transform: "translate(-50%,-50%)",
-};
 
-const SignInSchema = Yup.object().shape({
+const ResetPasswordSchema = Yup.object().shape({
   email: Yup.string().email("Niepoprawny email").required("Wymagane pole"),
 });
 
@@ -50,7 +38,7 @@ const ResetPassword = () => {
     });
     localStorage.setItem("user", JSON.stringify(response.data));
     if (response.status === 200) {
-      navigate("/LoginLayout/ResetSuccess");
+      navigate("/ResetSuccess");
     }
   };
 
@@ -62,7 +50,7 @@ const ResetPassword = () => {
         initialValues={{
           email: "",
         }}
-        validationSchema={SignInSchema}
+        validationSchema={ResetPasswordSchema}
         onSubmit={async (values, actions) => {
           actions.validateForm();
           handleFormSubmit(values);
@@ -81,16 +69,25 @@ const ResetPassword = () => {
               )}
               <Grid2 container spacing={3}>
                 <Grid2 xs={12}>
-                  {/* <label htmlFor="email">password</label> */}
-                  <InputField id="email" name="email" type="email" />
+                  <label htmlFor="email">E-mail</label>
+                  <InputField
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="Wpisz"
+                  />
                 </Grid2>
               </Grid2>
-              <ErrorMessage component="p" className="error" name="email" />
+              <ErrorMessage
+                component="p"
+                className="errorMessage"
+                name="email"
+              />
             </Inputs>
             {error && <p className="errorMessage">Nieprawidłowy email</p>}
             <SubmitButton
               type="submit"
-              name="login"
+              name="next"
               disabled={props.isSubmitting}
             >
               Resetuj hasło

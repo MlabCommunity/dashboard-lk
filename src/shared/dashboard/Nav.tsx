@@ -4,11 +4,9 @@ import { ReactComponent as HomeIcon } from "assets/dashboard/HomeNavIcon.svg";
 import { ReactComponent as ChatIcon } from "assets/dashboard/ChatNavIcon.svg";
 import { ReactComponent as SmileIcon } from "assets/dashboard/SmileNavIcon.svg";
 import { ReactComponent as HeartIcon } from "assets/dashboard/HeartNavIcon.svg";
-// import { useState } from "react";
 
 const Navigation = styled.nav`
   width: 95vw;
-  /* background-color: ${({ theme }) => theme.colors.green}; */
   background-color: #fff;
 
   a {
@@ -35,11 +33,9 @@ const Navigation = styled.nav`
 `;
 
 const Nav = () => (
-  //   const [active, setActive] = useState();
-
   <Navigation>
     <NavLink
-      to="/dashboard/dashboardSection"
+      to="/dashboardSection"
       style={({ isActive }) =>
         isActive
           ? {
@@ -55,7 +51,7 @@ const Nav = () => (
     </NavLink>
 
     <NavLink
-      to="/dashboard/messagesSection"
+      to="/messagesSection"
       style={({ isActive }) =>
         isActive
           ? {
@@ -71,7 +67,7 @@ const Nav = () => (
     </NavLink>
 
     <NavLink
-      to="/dashboard/animalCardsSection"
+      to="/animalCardsSection"
       style={({ isActive }) =>
         isActive
           ? {
@@ -87,7 +83,7 @@ const Nav = () => (
     </NavLink>
 
     <NavLink
-      to="/dashboard/volunteeringSection"
+      to="/volunteeringSection"
       style={({ isActive }) =>
         isActive
           ? {

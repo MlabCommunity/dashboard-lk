@@ -27,6 +27,7 @@
     "import/no-unresolved": "off",
     "import/extensions": "off",
     "react/prop-types": "off",
+    "no-nested-ternary": "off",
     "jsx-a11y/label-has-associated-control": [
       "error",
       {

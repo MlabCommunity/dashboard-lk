@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled from "styled-components";
+// import styled from "styled-components";
 import { Stepper, Step, StepLabel } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { IRegisterFields } from "types/axiosApi";
@@ -16,16 +16,6 @@ import OrganizationForm from "./Forms/OrganizationForm";
 import UserForm from "./Forms/UserForm";
 import validationSchema from "./FormModel/validationSchema";
 import submitFormModel from "./FormModel/submitFormModel";
-
-const FormContainer = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.textMedium};
-  line-height: 2.2rem;
-  color: ${({ theme }) => theme.colors.textGrey};
-
-  .errorMessage {
-    color: ${({ theme }) => theme.colors.warning};
-  }
-`;
 
 const steps = [0, 1, 2];
 const { formId, formField } = submitFormModel;
@@ -62,8 +52,6 @@ const RegisterOrganization = () => {
 
   const currentValidationSchema = validationSchema[activeStep];
 
-  // const navigate = useNavigate();
-
   const { useData } = useRegisterData();
   const [{ loading, error }, onRegister] = useData();
 
@@ -73,8 +61,7 @@ const RegisterOrganization = () => {
     });
     localStorage.setItem("user", JSON.stringify(response.data));
     if (response.status === 201) {
-      // navigate("/LoginLayout/LoginForm");
-      setActiveStep(2);
+      setActiveStep(activeStep + 1);
     }
   };
 
@@ -95,7 +82,7 @@ const RegisterOrganization = () => {
   return (
     <FormWrapper>
       <h2 className="title">Zarejestruj schronisko</h2>
-      <p className="description">
+      <p style={{ paddingBottom: "0" }} className="description">
         Wypełnij poniższy formularz i załóż
         <span className="highlighted"> Konto schroniska</span>
       </p>
@@ -124,7 +111,7 @@ const RegisterOrganization = () => {
                 display: "none",
               },
               "& .MuiStepIcon-root": {
-                fontSize: "0.8rem",
+                fontSize: "1.2rem",
                 color: "#DDE2E4",
               },
               "& .MuiStepIcon-root.Mui-completed.MuiSvgIcon-root.path": {
@@ -135,6 +122,7 @@ const RegisterOrganization = () => {
               },
               "& .MuiStepIcon-root.Mui-active": {
                 color: "#43be8d",
+                fontSize: "1.6rem",
               },
               text: { display: "none" },
             }}
@@ -147,56 +135,52 @@ const RegisterOrganization = () => {
         <p>Dane organizacji</p>
         <p>Dane użytkownika</p>
       </div>
-      <FormContainer>
-        {activeStep === steps.length ? (
-          <RegistrationSuccessfull />
-        ) : (
-          <Formik
-            initialValues={initialValues}
-            validationSchema={currentValidationSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ isSubmitting }) => (
-              <Form id={formId}>
-                {renderStepContent(activeStep)}
+      {activeStep === steps.length ? (
+        <RegistrationSuccessfull />
+      ) : (
+        <Formik
+          initialValues={initialValues}
+          validationSchema={currentValidationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form id={formId}>
+              {renderStepContent(activeStep)}
 
-                <div>
-                  <Grid2 container spacing={3}>
-                    {activeStep === 1 && (
-                      <Grid2 xs={12} md={5}>
-                        <SubmitButton name="prev" onClick={handleBack}>
-                          <Arrow /> Powrót
-                        </SubmitButton>
-                      </Grid2>
-                    )}
-                    <Grid2 xs={12} md={activeStep === 0 ? 12 : 7}>
-                      <SubmitButton
-                        disabled={isSubmitting}
-                        name="next"
-                        type="submit"
-                      >
-                        {activeStep === 1 ? "Zarejestruj się" : "Następny krok"}
-                        {activeStep === 0 && <Arrow />}
+              <div>
+                <Grid2 container spacing={3}>
+                  {activeStep === 1 && (
+                    <Grid2 xs={12} md={5}>
+                      <SubmitButton name="prev" onClick={handleBack}>
+                        <Arrow /> Powrót
                       </SubmitButton>
                     </Grid2>
-                  </Grid2>
-
-                  <p className="errorMessage">
-                    {error && "Coś poszło nie tak"}
-                  </p>
-                  {loading && (
-                    <PuffLoader
-                      color="green"
-                      cssOverride={override}
-                      speedMultiplier={1.5}
-                    />
                   )}
-                </div>
-              </Form>
-            )}
-          </Formik>
-        )}
-      </FormContainer>
+                  <Grid2 xs={12} md={activeStep === 0 ? 12 : 7}>
+                    <SubmitButton
+                      disabled={isSubmitting}
+                      name="next"
+                      type="submit"
+                    >
+                      {activeStep === 1 ? "Zarejestruj się" : "Następny krok"}
+                      {activeStep === 0 && <Arrow />}
+                    </SubmitButton>
+                  </Grid2>
+                </Grid2>
+
+                <p className="errorMessage">{error && "Coś poszło nie tak"}</p>
+                {loading && (
+                  <PuffLoader
+                    color="green"
+                    cssOverride={override}
+                    speedMultiplier={1.5}
+                  />
+                )}
+              </div>
+            </Form>
+          )}
+        </Formik>
+      )}
     </FormWrapper>
   );
 };

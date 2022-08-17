@@ -1,99 +1,53 @@
 import styled from "styled-components";
 import { ErrorMessage, Formik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import * as Yup from "yup";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 import EyeOn from "assets/loginRegister/Eye-on.png";
 import EyeOff from "assets/loginRegister/Eye-off.png";
 import { SubmitButton } from "shared/loginRegister/SubmitButton";
 import { Inputs } from "shared/loginRegister/Inputs";
-import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
 import useUserData from "services/UserLoginData";
-import FormWrapper, { override } from "shared/loginRegister/FormWrapper";
 import InputField from "shared/loginRegister/InputField";
 
-const FormContainer = styled.form`
-  font-size: ${({ theme }) => theme.fontSizes.textMedium};
-  line-height: 2.2rem;
-  color: ${({ theme }) => theme.colors.textGrey};
+import FormWrapper, { override } from "shared/loginRegister/FormWrapper";
+import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
 
-  label {
-    font-weight: 500;
-    font-size: 1.3rem;
-    line-height: 1.8rem;
-    color: #252c32;
-  }
-  .passwordContainer {
-    position: relative;
-    input {
-      padding-right: 4rem;
-    }
-    button {
-      position: absolute;
-      top: 4.2rem;
-      right: 2rem;
-    }
-  }
-  .checkbox-section {
-    padding: 1.6rem 0 2.4rem;
-    display: flex;
-    justify-content: space-between;
-    opacity: 0.75;
-    div {
-      display: flex;
-      input {
-        accent-color: ${({ theme }) => theme.colors.green};
-      }
-      p {
-        padding-left: 0.5rem;
-      }
-    }
-    a {
-      position: relative;
-      text-decoration: none;
-      color: #369871;
-      line-height: 2.4rem;
-      transition: color 0.3s;
-      &::after {
-        content: "";
-        position: absolute;
-        background-color: #43be8d;
-        width: 100%;
-        height: 1px;
-        left: 0;
-        bottom: 0;
-        opacity: 0.2;
-        transition: opacity 0.3s;
-      }
-      &:hover::after {
-        opacity: 1;
-      }
-    }
-    @media (min-width: 768px) {
-      padding-bottom: 3.2rem;
-    }
+const FormContainer = styled.form`
+  button[type="submit"] {
+    margin-top: 4rem;
   }
   .errorMessage {
     color: ${({ theme }) => theme.colors.warning};
   }
 `;
 
-const SignInSchema = Yup.object().shape({
-  email: Yup.string().email("Niepoprawny email").required("Wymagane pole"),
-  password: Yup.string().required("Wymagane pole"),
+const ResetPasswordSchema = Yup.object().shape({
+  password: Yup.string()
+    .min(6, "Hasło musi zawierać conajmniej 6 znaków")
+    .matches(/^(?=.*?[a-z])/, "Wymagana: mała litera")
+    .matches(/^(?=.*?[A-Z])/, "Wymagana: duża litera")
+    .matches(/^(?=.*?[#?!@$%^&*-])/, "Wymagany: znak specjalny #?!@$%^&*-")
+    .matches(/^(?=.*?[0-9])/, "Wymagana: cyfra 0-9")
+    .required("Wymagane Pole"),
+  passwordConfirm: Yup.string()
+    .required("Wymagane Pole")
+    .oneOf([Yup.ref("password"), null], "Hasła muszą być takie same"),
 });
 
 interface ValuesProps {
-  email: string;
   password: string;
+  passwordConfirm: string;
 }
 
-const LoginForm = () => {
+const ResetPassword = () => {
   const navigate = useNavigate();
 
   const [passwordType, handlePasswordVisibility] =
+    useTogglePasswordVisibility();
+  const [repeatPasswordType, handleRepeatPasswordVisibility] =
     useTogglePasswordVisibility();
 
   const { useLoginData } = useUserData();
@@ -105,25 +59,24 @@ const LoginForm = () => {
     });
     localStorage.setItem("user", JSON.stringify(response.data));
     if (response.status === 200) {
-      navigate("/");
+      navigate("/ResetSuccess");
     }
   };
 
   return (
     <FormWrapper>
-      <h2 className="title">Zaloguj się</h2>
-      <p className="description">Witaj ponownie!</p>
+      <h2 className="title">Utwórz nowe hasło</h2>
+      <p className="description">Hasło powinno mieć m.in. 8 znaków.</p>
       <Formik
         initialValues={{
-          email: "",
           password: "",
+          passwordConfirm: "",
         }}
-        validationSchema={SignInSchema}
+        validationSchema={ResetPasswordSchema}
         onSubmit={async (values, actions) => {
           actions.validateForm();
           handleFormSubmit(values);
           actions.setSubmitting(false);
-          actions.resetForm();
         }}
       >
         {(props) => (
@@ -136,17 +89,6 @@ const LoginForm = () => {
                   speedMultiplier={1.5}
                 />
               )}
-              <Grid2 container spacing={3}>
-                <Grid2 xs={12}>
-                  <label htmlFor="email">E-mail</label>
-                  <InputField type="email" name="email" placeholder="Wpisz" />
-                </Grid2>
-              </Grid2>
-              <ErrorMessage
-                component="p"
-                className="errorMessage"
-                name="email"
-              />
               <Grid2 container spacing={3}>
                 <Grid2 className="passwordContainer" xs={12}>
                   <label htmlFor="password">Hasło</label>
@@ -173,23 +115,40 @@ const LoginForm = () => {
                 className="errorMessage"
                 name="password"
               />
+              <Grid2 container spacing={3}>
+                <Grid2 className="passwordContainer" xs={12}>
+                  <label htmlFor="passwordConfirm">Potwierdź hasło</label>
+                  <InputField
+                    type={repeatPasswordType}
+                    name="passwordConfirm"
+                    placeholder="Wpisz"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleRepeatPasswordVisibility}
+                    className={`${repeatPasswordType === "text" && "active"}`}
+                  >
+                    <img
+                      className="eye"
+                      src={repeatPasswordType === "text" ? EyeOff : EyeOn}
+                      alt=""
+                    />
+                  </button>
+                </Grid2>
+              </Grid2>
+              <ErrorMessage
+                component="p"
+                className="errorMessage"
+                name="passwordConfirm"
+              />
             </Inputs>
-            {error && (
-              <p className="errorMessage">Nieprawidłowy email lub hasło</p>
-            )}
-            <div className="checkbox-section">
-              <div>
-                <input type="checkbox" />
-                <p>Pamiętaj mnie</p>
-              </div>
-              <Link to="/auth/ResetPassword">Zapomniałem hasła</Link>
-            </div>
+            {error && <p className="errorMessage">Nieprawidłowy email</p>}
             <SubmitButton
               type="submit"
               name="next"
               disabled={props.isSubmitting}
             >
-              Zaloguj się
+              Resetuj hasło
             </SubmitButton>
           </FormContainer>
         )}
@@ -197,4 +156,4 @@ const LoginForm = () => {
     </FormWrapper>
   );
 };
-export default LoginForm;
+export default ResetPassword;

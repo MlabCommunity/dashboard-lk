@@ -14,12 +14,6 @@ export const Inputs = styled("div")`
       overflow: hidden;
     }
   }
-  .error {
-    margin: 0.5rem 0;
-    color: #db524e;
-    text-align: left;
-    padding-left: 0.4rem;
-  }
 
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {

@@ -11,6 +11,8 @@ import VolunteeringSection from "components/Dashboard/DashboardSections/Voluntee
 import LoginLayout from "shared/loginRegister/LoginLayout";
 import LoginForm from "components/Login/LoginForm";
 import ResetPassword from "components/Login/ResetPassword";
+import ResetSuccess from "components/Login/ResetSuccess";
+import NewPassword from "components/Login/NewPassword";
 import RegisterOrganization from "components/Register/RegisterOrganization";
 
 const App = () => (
@@ -19,34 +21,21 @@ const App = () => (
       <AnimatePresence>
         <Routes>
           <Route index element={<LoginLayout />} />
-          <Route path="LoginLayout" element={<LoginLayout />}>
+          <Route path="auth" element={<LoginLayout />}>
             <Route index element={<LoginForm />} />
-            <Route path="/LoginLayout/LoginForm" element={<LoginForm />} />
-            <Route
-              path="/LoginLayout/ResetPassword"
-              element={<ResetPassword />}
-            />
-            <Route
-              path="/LoginLayout/Register"
-              element={<RegisterOrganization />}
-            />
+            <Route path="LoginForm" element={<LoginForm />} />
+            <Route path="ResetPassword" element={<ResetPassword />} />
+            <Route path="ResetSuccess" element={<ResetSuccess />} />
+            <Route path="NewPassword" element={<NewPassword />} />
+            <Route path="Register" element={<RegisterOrganization />} />
           </Route>
-          <Route path="dashboard" element={<MainDashboard />}>
+          <Route path="/" element={<MainDashboard />}>
             <Route index element={<DashboardSection />} />
+            <Route path="dashboardSection" element={<DashboardSection />} />
+            <Route path="messagesSection" element={<MessagesSection />} />
+            <Route path="animalCardsSection" element={<AnimalCardsSection />} />
             <Route
-              path="/dashboard/dashboardSection"
-              element={<DashboardSection />}
-            />
-            <Route
-              path="/dashboard/messagesSection"
-              element={<MessagesSection />}
-            />
-            <Route
-              path="/dashboard/animalCardsSection"
-              element={<AnimalCardsSection />}
-            />
-            <Route
-              path="/dashboard/volunteeringSection"
+              path="volunteeringSection"
               element={<VolunteeringSection />}
             />
           </Route>
