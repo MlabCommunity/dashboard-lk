@@ -22,6 +22,7 @@ const OrganizationForm = (props: IInputTypes) => {
         <Grid2 xs={12}>
           <label htmlFor="organizationName">{organizationName.label}</label>
           <InputField
+            maxLength="64"
             type="text"
             name={organizationName.name}
             placeholder="Wpisz"
@@ -36,7 +37,12 @@ const OrganizationForm = (props: IInputTypes) => {
       <Grid2 container spacing={3}>
         <Grid2 xs={12}>
           <label htmlFor="streetName">{streetName.label}</label>
-          <InputField type="text" name={streetName.name} placeholder="Wpisz" />
+          <InputField
+            maxLength="64"
+            type="text"
+            name={streetName.name}
+            placeholder="Wpisz"
+          />
           <ErrorMessage
             component="p"
             className="errorMessage"
@@ -47,12 +53,22 @@ const OrganizationForm = (props: IInputTypes) => {
       <Grid2 container spacing={3}>
         <Grid2 xs={5}>
           <label htmlFor="zipcode">{zipcode.label}</label>
-          <InputField type="number" name={zipcode.name} placeholder="00-000" />
+          <InputField
+            maxLength="6"
+            type="text"
+            name={zipcode.name}
+            placeholder="00-000"
+          />
           <ErrorMessage component="p" className="errorMessage" name="zipcode" />
         </Grid2>
         <Grid2 xs={7}>
           <label htmlFor="city">{city.label}</label>
-          <InputField type="text" name={city.name} placeholder="Wpisz" />
+          <InputField
+            maxLength="64"
+            type="text"
+            name={city.name}
+            placeholder="Wpisz"
+          />
           <ErrorMessage component="p" className="errorMessage" name="city" />
         </Grid2>
       </Grid2>

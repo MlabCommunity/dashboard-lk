@@ -93,6 +93,7 @@ const ResetPassword = () => {
                 <Grid2 className="passwordContainer" xs={12}>
                   <label htmlFor="password">Hasło</label>
                   <InputField
+                    maxLength="128"
                     type={passwordType}
                     name="password"
                     placeholder="Wpisz"
@@ -119,6 +120,7 @@ const ResetPassword = () => {
                 <Grid2 className="passwordContainer" xs={12}>
                   <label htmlFor="passwordConfirm">Potwierdź hasło</label>
                   <InputField
+                    maxLength="128"
                     type={repeatPasswordType}
                     name="passwordConfirm"
                     placeholder="Wpisz"

@@ -1,16 +1,15 @@
-import styled from "styled-components";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { ErrorMessage, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
+import styled from "styled-components";
 import * as Yup from "yup";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-
-import { SubmitButton } from "shared/loginRegister/SubmitButton";
-import { Inputs } from "shared/loginRegister/Inputs";
-import useUserData from "services/UserLoginData";
-import InputField from "shared/loginRegister/InputField";
 
 import FormWrapper, { override } from "shared/loginRegister/FormWrapper";
+import { SubmitButton } from "shared/loginRegister/SubmitButton";
+import InputField from "shared/loginRegister/InputField";
+import { Inputs } from "shared/loginRegister/Inputs";
+import useUserData from "services/UserLoginData";
 
 const FormContainer = styled.form`
   button[type="submit"] {
@@ -70,12 +69,7 @@ const ResetPassword = () => {
               <Grid2 container spacing={3}>
                 <Grid2 xs={12}>
                   <label htmlFor="email">E-mail</label>
-                  <InputField
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="Wpisz"
-                  />
+                  <InputField name="email" type="email" placeholder="Wpisz" />
                 </Grid2>
               </Grid2>
               <ErrorMessage

@@ -45,6 +45,7 @@ export default function InputField(props: any) {
 
   return (
     <Input
+      style={{ border: meta.touched && meta.error && true && "1px solid red" }}
       error={meta.touched && meta.error && true}
       helperText={renderHelperText()}
       {...field}

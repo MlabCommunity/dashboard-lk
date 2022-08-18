@@ -112,7 +112,7 @@ const LayoutWrapper = styled("div")`
         max-width: 45rem;
         position: absolute;
         top: 50%;
-        transform: translateY(calc(-50% + 8rem));
+        transform: translateY(calc(-50% + 5rem));
       }
     }
   }

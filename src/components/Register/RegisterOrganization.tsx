@@ -1,21 +1,19 @@
 import { useState } from "react";
-// import styled from "styled-components";
 import { Stepper, Step, StepLabel } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { IRegisterFields } from "types/axiosApi";
-// import { useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
 import { Formik, Form } from "formik";
 
 import { ReactComponent as Arrow } from "assets/loginRegister/Arrow.svg";
-import { SubmitButton } from "shared/loginRegister/SubmitButton";
 import FormWrapper, { override } from "shared/loginRegister/FormWrapper";
+import { SubmitButton } from "shared/loginRegister/SubmitButton";
 import useRegisterData from "services/UserRegisterData";
 import RegistrationSuccessfull from "./Forms/RegistrationSuccessfull";
-import OrganizationForm from "./Forms/OrganizationForm";
-import UserForm from "./Forms/UserForm";
 import validationSchema from "./FormModel/validationSchema";
 import submitFormModel from "./FormModel/submitFormModel";
+import OrganizationForm from "./Forms/OrganizationForm";
+import UserForm from "./Forms/UserForm";
 
 const steps = [0, 1, 2];
 const { formId, formField } = submitFormModel;

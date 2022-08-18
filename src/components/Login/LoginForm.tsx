@@ -1,52 +1,34 @@
-import styled from "styled-components";
-import { ErrorMessage, Formik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
-import { PuffLoader } from "react-spinners";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { Link, useNavigate } from "react-router-dom";
+import { ErrorMessage, Formik } from "formik";
+import { PuffLoader } from "react-spinners";
+import styled from "styled-components";
 import * as Yup from "yup";
 
-import EyeOn from "assets/loginRegister/Eye-on.png";
-import EyeOff from "assets/loginRegister/Eye-off.png";
+import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
+import FormWrapper, { override } from "shared/loginRegister/FormWrapper";
 import { SubmitButton } from "shared/loginRegister/SubmitButton";
 import { Inputs } from "shared/loginRegister/Inputs";
-import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
-import useUserData from "services/UserLoginData";
-import FormWrapper, { override } from "shared/loginRegister/FormWrapper";
 import InputField from "shared/loginRegister/InputField";
+import EyeOn from "assets/loginRegister/Eye-on.png";
+import EyeOff from "assets/loginRegister/Eye-off.png";
+import useUserData from "services/UserLoginData";
 
 const FormContainer = styled.form`
-  font-size: ${({ theme }) => theme.fontSizes.textMedium};
-  line-height: 2.2rem;
-  color: ${({ theme }) => theme.colors.textGrey};
-
-  label {
-    font-weight: 500;
-    font-size: 1.3rem;
-    line-height: 1.8rem;
-    color: #252c32;
-  }
-  .passwordContainer {
-    position: relative;
-    input {
-      padding-right: 4rem;
-    }
-    button {
-      position: absolute;
-      top: 4.2rem;
-      right: 2rem;
-    }
-  }
   .checkbox-section {
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+    letter-spacing: -0.006em;
     padding: 1.6rem 0 2.4rem;
     display: flex;
     justify-content: space-between;
-    opacity: 0.75;
     div {
       display: flex;
       input {
         accent-color: ${({ theme }) => theme.colors.green};
       }
       p {
+        color: #252c32;
         padding-left: 0.5rem;
       }
     }
@@ -75,9 +57,6 @@ const FormContainer = styled.form`
       padding-bottom: 3.2rem;
     }
   }
-  .errorMessage {
-    color: ${({ theme }) => theme.colors.warning};
-  }
 `;
 
 const SignInSchema = Yup.object().shape({
@@ -105,7 +84,7 @@ const LoginForm = () => {
     });
     localStorage.setItem("user", JSON.stringify(response.data));
     if (response.status === 200) {
-      navigate("/");
+      navigate("/dashboardSection");
     }
   };
 
@@ -151,6 +130,7 @@ const LoginForm = () => {
                 <Grid2 className="passwordContainer" xs={12}>
                   <label htmlFor="password">Hasło</label>
                   <InputField
+                    maxLength="128"
                     type={passwordType}
                     name="password"
                     placeholder="Wpisz"
