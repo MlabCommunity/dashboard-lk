@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const ReturnLink = styled("div")`
   height: 3.2rem;
-  background: #ffffff;
-  border: 1px solid #e1f5ed;
+  background: ${({ theme }) => theme.colorsPrimary.white};
+  border: 1px solid ${({ theme }) => theme.colorsGray.lightGray2};
   box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
   border-radius: 8px;
   a {
@@ -23,7 +23,7 @@ export const ReturnLink = styled("div")`
     color: #252c32;
     border-radius: 8px;
     &:hover {
-      background: #e5e5e5;
+      background: ${({ theme }) => theme.colorsGray.lightGray5};
     }
   }
   @media (min-width: 768px) {

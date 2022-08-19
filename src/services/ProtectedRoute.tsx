@@ -10,6 +10,5 @@ export const ProtectedRoute: React.FC<ChildrenProps> = ({ children }) => {
     return <Navigate to="/auth/LoginForm" />;
   }
 
-  // eslint-disable-next-line react/jsx-no-useless-fragment
   return <>{children}</>;
 };

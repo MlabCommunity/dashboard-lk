@@ -15,7 +15,7 @@ const GlobalStyles = createGlobalStyle`
     align-items: center;
     text-align: center;
     font-family: 'Inter', sans-serif;
-    background-color: #F6F6F6;
+    background-color: #E5E5E5;
     font-size: 1.6rem;
     @media (min-width: 768px) {
     height: 100vh;

@@ -20,7 +20,7 @@ const FormContainer = styled.form`
     margin-top: 4rem;
   }
   .errorMessage {
-    color: ${({ theme }) => theme.colors.warning};
+    color: ${({ theme }) => theme.colorsRed.r500};
   }
 `;
 

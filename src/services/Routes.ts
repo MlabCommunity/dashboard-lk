@@ -8,4 +8,16 @@ export const Routes = {
   register: {
     path: "/auth/register",
   },
+  dashboard: {
+    path: "/dashboardSection",
+  },
+  messages: {
+    path: "/messagesSection",
+  },
+  animalCards: {
+    path: "/animalCardsSection",
+  },
+  volunteering: {
+    path: "/volunteeringSection",
+  },
 };

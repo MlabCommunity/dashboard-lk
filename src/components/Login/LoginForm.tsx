@@ -25,23 +25,23 @@ const FormContainer = styled.form`
     div {
       display: flex;
       input {
-        accent-color: ${({ theme }) => theme.colors.green};
+        accent-color: ${({ theme }) => theme.colorsPrimary.pr500};
       }
       p {
-        color: #252c32;
+        color: ${({ theme }) => theme.colorsGray.darkGray2};
         padding-left: 0.5rem;
       }
     }
     a {
       position: relative;
       text-decoration: none;
-      color: #369871;
+      color: ${({ theme }) => theme.colorsPrimary.pr600};
       line-height: 2.4rem;
       transition: color 0.3s;
       &::after {
         content: "";
         position: absolute;
-        background-color: #43be8d;
+        background-color: ${({ theme }) => theme.colorsPrimary.pr500};
         width: 100%;
         height: 1px;
         left: 0;

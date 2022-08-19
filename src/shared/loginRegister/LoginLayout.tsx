@@ -40,7 +40,7 @@ const LayoutWrapper = styled("div")`
         }
       }
       .errorMessage {
-        color: ${({ theme }) => theme.colors.warning};
+        color: ${({ theme }) => theme.colorsRed.r500};
         font-size: ${({ theme }) => theme.fontSizes.textMedium};
         line-height: 2.2rem;
       }
@@ -48,7 +48,7 @@ const LayoutWrapper = styled("div")`
         font-weight: 500;
         font-size: 1.3rem;
         line-height: 1.8rem;
-        color: #252c32;
+        color: ${({ theme }) => theme.colorsGray.darkGray2};
       }
       .controls {
         display: flex;
@@ -81,7 +81,7 @@ const LayoutWrapper = styled("div")`
     display: flex;
     width: 95vw;
     min-height: 86rem;
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colorsPrimary.white};
     box-shadow: 0px 0px 29px rgba(0, 0, 0, 0.15);
     max-width: 144rem;
     .authSection {

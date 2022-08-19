@@ -4,10 +4,10 @@ import GlobalStyles from "styles/GlobalStyles";
 import Theme from "styles/Theme";
 import { ProtectedRoute } from "services/ProtectedRoute";
 
-import VolunteeringSection from "components/Dashboard/DashboardSections/VolunteeringSection";
-import AnimalCardsSection from "components/Dashboard/DashboardSections/AnimalCardsSection";
-import DashboardSection from "components/Dashboard/DashboardSections/DashboardSection";
-import MessagesSection from "components/Dashboard/DashboardSections/MessagesSection";
+import VolunteeringSection from "components/Dashboard/VolunteeringSection/VolunteeringSection";
+import AnimalCardsSection from "components/Dashboard/AnimalCardsSection/AnimalCardsSection";
+import DashboardSection from "components/Dashboard/DashboardSection/DashboardSection";
+import MessagesSection from "components/Dashboard/MessagesSection/MessagesSection";
 import RegisterOrganization from "components/Register/RegisterOrganization";
 import MainDashboard from "components/Dashboard/MainDashboard";
 import LoginLayout from "shared/loginRegister/LoginLayout";

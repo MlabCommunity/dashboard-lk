@@ -1,13 +1,13 @@
-import React from "react";
+import SectionLayout from "shared/dashboard/SectionLayout";
 
 const AnimalCardsSection = () => (
-  <div>
+  <SectionLayout>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, velit.
     Quisquam vitae veritatis magnam architecto, esse libero optio rerum omnis ab
     consequuntur delectus reprehenderit doloribus deserunt cum at! Minima nulla
     eos consequatur saepe facere laboriosam impedit possimus. Ea molestias,
     aperiam cupiditate minus omnis eveniet quis.
-  </div>
+  </SectionLayout>
 );
 
 export default AnimalCardsSection;
