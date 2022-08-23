@@ -4,6 +4,7 @@ import GlobalStyles from "styles/GlobalStyles";
 import Theme from "styles/Theme";
 import { ProtectedRoute } from "services/ProtectedRoute";
 
+import OrganizationSection from "components/Dashboard/OrganizationSection/OrganizationSection";
 import VolunteeringSection from "components/Dashboard/VolunteeringSection/VolunteeringSection";
 import AnimalCardsSection from "components/Dashboard/AnimalCardsSection/AnimalCardsSection";
 import DashboardSection from "components/Dashboard/DashboardSection/DashboardSection";
@@ -52,6 +53,10 @@ const App = () => (
                     <Route
                       path="volunteeringSection"
                       element={<VolunteeringSection />}
+                    />
+                    <Route
+                      path="organizationSection"
+                      element={<OrganizationSection />}
                     />
                   </Route>
                 </Routes>

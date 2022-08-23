@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { PropsWithChildren } from "react";
 import styled, { CSSProperties } from "styled-components";
 import { motion } from "framer-motion";
 
@@ -20,18 +20,12 @@ const StyledWrapper = styled(motion.div)`
   border-radius: 8px;
 
   .title {
-    font-weight: 600;
-    font-size: 3rem;
-    line-height: 4rem;
-    letter-spacing: -0.008em;
+    ${({ theme }) => theme.heading30Semi};
     color: ${({ theme }) => theme.colorsPrimary.pr800};
   }
   .description {
     padding: 0.8rem 0 1.6rem;
-    font-weight: 400;
-    font-size: 1.4rem;
-    line-height: 2rem;
-    letter-spacing: -0.006em;
+    ${({ theme }) => theme.text14Regular};
     color: ${({ theme }) => theme.colorsGray.midGray2};
     .highlighted {
       color: ${({ theme }) => theme.colorsPrimary.pr500};
@@ -41,9 +35,7 @@ const StyledWrapper = styled(motion.div)`
     padding: 0.5rem 0 2.4rem;
     display: flex;
     p {
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 16px;
+      ${({ theme }) => theme.text12Regular};
       width: 50%;
     }
   }
@@ -81,11 +73,7 @@ const StyledWrapper = styled(motion.div)`
   }
 `;
 
-interface WrapperProps {
-  children: ReactNode;
-}
-
-const FormWrapper = ({ children }: WrapperProps) => (
+const FormWrapper = ({ children }: PropsWithChildren) => (
   <StyledWrapper
     layout
     initial={{ opacity: 0 }}

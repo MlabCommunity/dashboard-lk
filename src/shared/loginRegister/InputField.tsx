@@ -4,19 +4,17 @@ import { useField } from "formik";
 
 const Input = styled("input")`
   padding: 1rem 1.5rem;
-  font-size: 1.4rem;
-  line-height: 2.2rem;
-  letter-spacing: -0.006em;
-  color: #232233;
-  opacity: 0.75;
+  ${({ theme }) => theme.text14Regular};
+  color: ${({ theme }) => theme.colorsGray.darkGray2};
   outline: none;
   width: 100%;
-  height: 40px;
+  height: 4rem;
   background: ${({ theme }) => theme.colorsPrimary.white};
   border: 1px solid ${({ theme }) => theme.colorsGray.lightGray1};
-  border-radius: 6px;
+  border-radius: 0.6rem;
   &::placeholder {
-    font-weight: normal;
+    ${({ theme }) => theme.text14Regular};
+    color: ${({ theme }) => theme.colorsGray.midGray4};
     font-family: "Inter";
   }
   &:focus {

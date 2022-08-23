@@ -1,4 +1,4 @@
-import React from "react";
+import { PropsWithChildren } from "react";
 import { ThemeProvider } from "styled-components";
 
 const theme = {
@@ -40,20 +40,99 @@ const theme = {
     r500: "#f76659",
     r100: "#ffefeb",
   },
-  fontSizes: {
-    titleLarge: "4.2rem",
-    title: "4rem",
-    textLarge: "1.6rem",
-    textMedium: "1.4rem",
-    textSmall: "1.2rem",
+  heading30Semi: {
+    "font-weight": "600",
+    "font-size": "3rem",
+    "line-height": "4rem",
+    "letter-spacing": "-0.008em",
+  },
+  heading24Semi: {
+    "font-weight": "600",
+    "font-size": "2.4rem",
+    "line-height": "3.2rem",
+    "letter-spacing": "-0.019em",
+  },
+  heading20Semi: {
+    "font-weight": "600",
+    "font-size": "2rem",
+    "line-height": "2.6rem",
+    "letter-spacing": "-0.01em",
+  },
+  heading18Semi: {
+    "font-weight": "600",
+    "font-size": "1.8rem",
+    "line-height": "2.4rem",
+    "letter-spacing": "-0.014em",
+  },
+  heading12Semi: {
+    "font-weight": "600",
+    "font-size": "1.2rem",
+    "line-height": "1.6rem",
+    "letter-spacing": "0.018em",
+  },
+  text16Semi: {
+    "font-weight": "600",
+    "font-size": "1.6rem",
+    "line-height": "2.4rem",
+    "letter-spacing": "-0.004em",
+  },
+  text16Medium: {
+    "font-weight": "500",
+    "font-size": "1.6rem",
+    "line-height": "2.4rem",
+    "letter-spacing": "-0.008em",
+  },
+  text14Regular: {
+    "font-weight": "400",
+    "font-size": "1.4rem",
+    "line-height": "2.4rem",
+    "letter-spacing": "-0.006em",
+  },
+  text14Semi: {
+    "font-weight": "600",
+    "font-size": "1.4rem",
+    "line-height": "2.4rem",
+    "letter-spacing": "-0.006em",
+  },
+  text14Medium: {
+    "font-weight": "500",
+    "font-size": "1.4rem",
+    "line-height": "2rem",
+    "letter-spacing": "-0.003em",
+  },
+  text14ReularNumbers: {
+    "font-weight": "400",
+    "font-size": "1.4rem",
+    "line-height": "2.4rem",
+    "letter-spacing": "-0.006em",
+  },
+  text13Medium: {
+    "font-weight": "500",
+    "font-size": "1.3rem",
+    "line-height": "1.8rem",
+    "letter-spacing": "0",
+  },
+  text13Regular: {
+    "font-weight": "400",
+    "font-size": "1.3rem",
+    "line-height": "1.6rem",
+    "letter-spacing": "0",
+  },
+  text12Regular: {
+    "font-weight": "400",
+    "font-size": "1.2rem",
+    "line-height": "1.6rem",
+    "letter-spacing": "0",
+  },
+  text12Semi: {
+    "font-weight": "600",
+    "font-size": "1.2rem",
+    "line-height": "1.6rem",
+    "letter-spacing": "0",
   },
 };
 
-interface Props {
-  children: React.ReactNode;
-}
-
-const Theme = ({ children }: Props) => (
+const Theme = ({ children }: PropsWithChildren) => (
   <ThemeProvider theme={theme}>{children}</ThemeProvider>
 );
 

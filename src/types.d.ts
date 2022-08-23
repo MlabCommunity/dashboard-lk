@@ -40,12 +40,101 @@ declare module "styled-components" {
       r500: string;
       r100: string;
     };
-    fontSizes: {
-      titleLarge: string;
-      title: string;
-      textLarge: string;
-      textMedium: string;
-      textSmall: string;
+    heading30Semi: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    heading30Semi: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    heading24Semi: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    heading20Semi: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    heading18Semi: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    heading12Semi: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    text16Semi: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    text16Medium: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    text14Regular: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    text14Semi: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    text14Medium: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    text14ReularNumbers: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    text13Medium: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    text13Regular: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    text12Regular: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
+    };
+    text12Semi: {
+      "font-weight": string;
+      "font-size": string;
+      "line-height": string;
+      "letter-spacing": string;
     };
   }
 }

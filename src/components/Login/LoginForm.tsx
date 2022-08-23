@@ -16,18 +16,48 @@ import useUserData from "services/UserLoginData";
 
 const FormContainer = styled.form`
   .checkbox-section {
-    font-size: 1.4rem;
-    line-height: 2.4rem;
-    letter-spacing: -0.006em;
     padding: 1.6rem 0 2.4rem;
     display: flex;
     justify-content: space-between;
     div {
       display: flex;
-      input {
+      align-items: center;
+      input[type="checkbox"] {
+        position: relative;
+        height: 1.6rem;
+        width: 1.6rem;
+        opacity: 1;
+        border-radius: 4px;
         accent-color: ${({ theme }) => theme.colorsPrimary.pr500};
+        cursor: pointer;
+        &:checked:before {
+          content: "";
+          display: block;
+          position: absolute;
+          width: 1.6rem;
+          height: 1.6rem;
+          top: 0;
+          left: 0;
+          border-radius: 4px;
+          background-color: ${({ theme }) => theme.colorsPrimary.pr500};
+        }
+        &:checked:after {
+          content: "";
+          display: block;
+          width: 4px;
+          height: 9px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          transform: rotate(40deg);
+          position: absolute;
+          top: 1px;
+          left: 5px;
+        }
       }
       p {
+        ${({ theme }) => theme.text14Regular};
         color: ${({ theme }) => theme.colorsGray.darkGray2};
         padding-left: 0.5rem;
       }
@@ -35,8 +65,8 @@ const FormContainer = styled.form`
     a {
       position: relative;
       text-decoration: none;
+      ${({ theme }) => theme.text14Regular};
       color: ${({ theme }) => theme.colorsPrimary.pr600};
-      line-height: 2.4rem;
       transition: color 0.3s;
       &::after {
         content: "";
@@ -67,6 +97,7 @@ const SignInSchema = Yup.object().shape({
 interface ValuesProps {
   email: string;
   password: string;
+  remember: boolean;
 }
 
 const LoginForm = () => {
@@ -78,11 +109,14 @@ const LoginForm = () => {
   const { useLoginData } = useUserData();
   const [{ error, loading }, login] = useLoginData();
 
-  const handleFormSubmit = async (values: ValuesProps) => {
+  const handleFormSubmit = async ({ remember, ...values }: ValuesProps) => {
     const response = await login({
       data: values,
     });
     localStorage.setItem("user", JSON.stringify(response.data));
+    if (remember) {
+      localStorage.setItem("remember", "true");
+    }
     if (response.status === 200) {
       navigate("/dashboardSection");
     }
@@ -96,6 +130,7 @@ const LoginForm = () => {
         initialValues={{
           email: "",
           password: "",
+          remember: false,
         }}
         validationSchema={SignInSchema}
         onSubmit={async (values, actions) => {
@@ -159,7 +194,7 @@ const LoginForm = () => {
             )}
             <div className="checkbox-section">
               <div>
-                <input type="checkbox" />
+                <InputField type="checkbox" name="remember" />
                 <p>Pamiętaj mnie</p>
               </div>
               <Link to="/auth/ResetPassword">Zapomniałem hasła</Link>

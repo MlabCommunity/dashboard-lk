@@ -1,5 +1,5 @@
+import { PropsWithChildren } from "react";
 import styled from "styled-components";
-import { IChildren } from "types/IChildren";
 
 const Layout = styled.div`
   background-color: ${({ theme }) => theme.colorsGray.lightGray5};
@@ -7,6 +7,8 @@ const Layout = styled.div`
   padding: 2.4rem;
 `;
 
-const SectionLayout = ({ children }: IChildren) => <Layout>{children}</Layout>;
+const SectionLayout = ({ children }: PropsWithChildren) => (
+  <Layout>{children}</Layout>
+);
 
 export default SectionLayout;

@@ -1,8 +1,8 @@
 import { NavLink, NavLinkProps } from "react-router-dom";
 
-interface Children extends NavLinkProps {}
+interface SideBarLinkProps extends NavLinkProps {}
 
-export const SideBarLink = ({ children, ...props }: Children) => (
+export const SideBarLink = ({ children, ...props }: SideBarLinkProps) => (
   <NavLink
     style={({ isActive }) =>
       isActive

@@ -9,7 +9,7 @@ import EyeOn from "assets/loginRegister/Eye-on.png";
 import EyeOff from "assets/loginRegister/Eye-off.png";
 import { SubmitButton } from "shared/loginRegister/SubmitButton";
 import { Inputs } from "shared/loginRegister/Inputs";
-import useUserData from "services/UserLoginData";
+import userNewPasswordData from "services/UserNewPasswordData";
 import InputField from "shared/loginRegister/InputField";
 
 import FormWrapper, { override } from "shared/loginRegister/FormWrapper";
@@ -32,14 +32,14 @@ const ResetPasswordSchema = Yup.object().shape({
     .matches(/^(?=.*?[#?!@$%^&*-])/, "Wymagany: znak specjalny #?!@$%^&*-")
     .matches(/^(?=.*?[0-9])/, "Wymagana: cyfra 0-9")
     .required("Wymagane Pole"),
-  passwordConfirm: Yup.string()
+  confirmPassword: Yup.string()
     .required("Wymagane Pole")
     .oneOf([Yup.ref("password"), null], "Hasła muszą być takie same"),
 });
 
 interface ValuesProps {
   password: string;
-  passwordConfirm: string;
+  confirmPassword: string;
 }
 
 const ResetPassword = () => {
@@ -50,8 +50,8 @@ const ResetPassword = () => {
   const [repeatPasswordType, handleRepeatPasswordVisibility] =
     useTogglePasswordVisibility();
 
-  const { useLoginData } = useUserData();
-  const [{ error, loading }, login] = useLoginData();
+  const { newPasswordData } = userNewPasswordData();
+  const [{ error, loading }, login] = newPasswordData();
 
   const handleFormSubmit = async (values: ValuesProps) => {
     const response = await login({
@@ -70,7 +70,7 @@ const ResetPassword = () => {
       <Formik
         initialValues={{
           password: "",
-          passwordConfirm: "",
+          confirmPassword: "",
         }}
         validationSchema={ResetPasswordSchema}
         onSubmit={async (values, actions) => {
@@ -118,11 +118,11 @@ const ResetPassword = () => {
               />
               <Grid2 container spacing={3}>
                 <Grid2 className="passwordContainer" xs={12}>
-                  <label htmlFor="passwordConfirm">Potwierdź hasło</label>
+                  <label htmlFor="confirmPassword">Potwierdź hasło</label>
                   <InputField
                     maxLength="128"
                     type={repeatPasswordType}
-                    name="passwordConfirm"
+                    name="confirmPassword"
                     placeholder="Wpisz"
                   />
                   <button
@@ -141,7 +141,7 @@ const ResetPassword = () => {
               <ErrorMessage
                 component="p"
                 className="errorMessage"
-                name="passwordConfirm"
+                name="confirmPassword"
               />
             </Inputs>
             {error && <p className="errorMessage">Nieprawidłowy email</p>}

@@ -20,4 +20,7 @@ export const Routes = {
   volunteering: {
     path: "/volunteeringSection",
   },
+  organization: {
+    path: "/organizationSection",
+  },
 };

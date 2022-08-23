@@ -10,5 +10,5 @@ export const refreshToken = async (token: string) => {
       token,
     }
   );
-  return [response.data];
+  return [response.data, response.status];
 };
