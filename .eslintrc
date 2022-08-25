@@ -20,6 +20,9 @@
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
     "no-underscore-dangle": "off",
+    "import/no-extraneous-dependencies": "off",
+    "react/require-default-props": "off",
+    "react/no-unescaped-entities": "off",
     "no-param-reassign": 0,
     "react/function-component-definition": "off",
     "react/jsx-no-useless-fragment": "off",

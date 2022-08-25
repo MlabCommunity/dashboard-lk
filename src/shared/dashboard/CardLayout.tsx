@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Card = styled.div`
+export const CardLayout = styled.div`
   display: flex;
   align-items: flex-start;
   background: ${({ theme }) => theme.colorsPrimary.white};
