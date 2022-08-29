@@ -77,7 +77,7 @@ const LayoutWrapper = styled("div")`
     display: flex;
     width: 95vw;
     min-height: 86rem;
-    background-color: ${({ theme }) => theme.colorsPrimary.white};
+    background-color: ${({ theme }) => theme.colorsBlackandWhite.white};
     box-shadow: 0px 0px 29px rgba(0, 0, 0, 0.15);
     max-width: 144rem;
 

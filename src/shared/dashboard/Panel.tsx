@@ -8,7 +8,7 @@ const PanelTop = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 1.2rem 3.2rem;
-  background-color: ${({ theme }) => theme.colorsPrimary.white};
+  background-color: ${({ theme }) => theme.colorsBlackandWhite.white};
   box-shadow: 0px 4px 1px rgba(0, 0, 0, 0.02), 0px 8px 4px rgba(0, 0, 0, 0.02),
     0px 12px 1px rgba(0, 0, 0, 0.01);
   .title {

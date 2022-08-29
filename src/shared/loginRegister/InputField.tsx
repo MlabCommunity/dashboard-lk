@@ -4,14 +4,14 @@ import { useField } from "formik";
 
 const Input = styled("input")`
   padding: 1rem 1.5rem;
-  ${({ theme }) => theme.text14Regular};
-  color: ${({ theme }) => theme.colorsGray.darkGray2};
-  outline: none;
   width: 100%;
   height: 4rem;
-  background: ${({ theme }) => theme.colorsPrimary.white};
+  ${({ theme }) => theme.text14Regular};
+  color: ${({ theme }) => theme.colorsGray.darkGray2};
+  background: ${({ theme }) => theme.colorsBlackandWhite.white};
   border: 1px solid ${({ theme }) => theme.colorsGray.lightGray1};
   border-radius: 0.6rem;
+  outline: none;
   &::placeholder {
     ${({ theme }) => theme.text14Regular};
     color: ${({ theme }) => theme.colorsGray.midGray4};

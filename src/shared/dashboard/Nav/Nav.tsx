@@ -12,12 +12,12 @@ import { useHandleLogout } from "services/HandleLogout";
 import { SideBarLink } from "./SideBarLink";
 
 const Navigation = styled.nav`
-  background-color: ${({ theme }) => theme.colorsPrimary.white};
-  padding: 1.6rem;
-  border-right: 1px solid ${({ theme }) => theme.colorsGray.lightGray3};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 1.6rem;
+  background-color: ${({ theme }) => theme.colorsBlackandWhite.white};
+  border-right: 1px solid ${({ theme }) => theme.colorsGray.lightGray3};
   img {
     padding: 0.4rem 0 4rem 1.6rem;
     margin-right: 100%;
@@ -30,12 +30,12 @@ const Navigation = styled.nav`
     color: ${({ theme }) => theme.colorsGray.midGray3};
   }
   a {
-    text-decoration: none;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding: 0.8rem 1.6rem;
     color: ${({ theme }) => theme.colorsGray.darkGray2};
+    text-decoration: none;
     font-weight: 500;
     font-size: 1.4rem;
     line-height: 2rem;

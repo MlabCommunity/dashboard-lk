@@ -13,7 +13,7 @@ export const override: CSSProperties = {
 const StyledWrapper = styled(motion.div)`
   padding: 2.4rem 1.6rem;
   width: clamp(30rem, 80vw, 45.6rem);
-  background: ${({ theme }) => theme.colorsPrimary.white};
+  background: ${({ theme }) => theme.colorsBlackandWhite.white};
   border: 1px solid ${({ theme }) => theme.colorsGray.lightGray5};
   box-shadow: 0px 0px 1px rgba(26, 32, 36, 0.32),
     0px 1px 2px rgba(91, 104, 113, 0.32);

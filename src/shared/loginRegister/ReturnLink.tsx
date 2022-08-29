@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ReturnLink = styled("div")`
   height: 3.2rem;
-  background: ${({ theme }) => theme.colorsPrimary.white};
+  background: ${({ theme }) => theme.colorsBlackandWhite.white};
   border: 1px solid ${({ theme }) => theme.colorsGray.lightGray2};
   box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
   border-radius: 0.8rem;

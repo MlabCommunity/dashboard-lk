@@ -15,7 +15,7 @@ export const SelectDateCard = styled("div")`
   height: 3.2rem;
   ${({ theme }) => theme.text14Regular}
   color: ${({ theme }) => theme.colorsGray.darkGray2};
-  background: ${({ theme }) => theme.colorsPrimary.white};
+  background: ${({ theme }) => theme.colorsBlackandWhite.white};
   border: 1px solid ${({ theme }) => theme.colorsGray.lightGray3};
   box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
   border-radius: 0.6rem;
@@ -36,7 +36,7 @@ export const DropDownListContainer = styled("div")`
 export const DropDown = styled("ul")`
   margin-top: 1rem;
   padding: 1.2rem 1.6rem;
-  background: ${({ theme }) => theme.colorsPrimary.white};
+  background: ${({ theme }) => theme.colorsBlackandWhite.white};
   border: 1px solid ${({ theme }) => theme.colorsGray.lightGray3};
   box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
   border-radius: 0.6rem;

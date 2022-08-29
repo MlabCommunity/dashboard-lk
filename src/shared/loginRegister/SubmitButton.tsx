@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-interface IProps {
+interface IPropsName {
   name: string;
 }
 
 export const SubmitButton = styled("button")(
-  ({ name }: IProps) => `
+  ({ name }: IPropsName) => `
   position: relative;
   margin-top: ${name === "next" ? "0" : "1rem"};
   display: flex;

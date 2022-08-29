@@ -2,9 +2,11 @@ import "styled-components";
 
 declare module "styled-components" {
   export interface DefaultTheme {
-    colorsPrimary: {
+    colorsBlackandWhite: {
       white: string;
       black: string;
+    };
+    colorsPrimary: {
       pr900: string;
       pr800: string;
       pr700: string;
@@ -39,6 +41,11 @@ declare module "styled-components" {
       r600: string;
       r500: string;
       r100: string;
+    };
+    colorsStatus: {
+      statusSuccess: string;
+      redR500: string;
+      statusFocus: string;
     };
     heading30Semi: {
       "font-weight": string;

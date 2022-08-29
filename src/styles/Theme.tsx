@@ -2,9 +2,11 @@ import { PropsWithChildren } from "react";
 import { ThemeProvider } from "styled-components";
 
 const theme = {
-  colorsPrimary: {
+  colorsBlackandWhite: {
     white: "#ffffff",
     black: "#000000",
+  },
+  colorsPrimary: {
     pr900: "#194634",
     pr800: "#205b43",
     pr700: "#287154",
@@ -39,6 +41,11 @@ const theme = {
     r600: "#f2271c",
     r500: "#f76659",
     r100: "#ffefeb",
+  },
+  colorsStatus: {
+    statusSuccess: "#47D16C",
+    redR500: "#f76659",
+    statusFocus: "#1a73e8",
   },
   heading30Semi: {
     "font-weight": "600",

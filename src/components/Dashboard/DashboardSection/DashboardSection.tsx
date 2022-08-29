@@ -18,6 +18,8 @@ import { StatisticsWrapper } from "./StatisticCardWrapper";
 import StatisticCards from "./StatisticsCards";
 import { VolunteeringStatus } from "./VolunteeringWrapper";
 
+import Chart from "./Chart";
+
 const Card = styled(CardLayout)`
   display: flex;
   flex-direction: column;
@@ -114,13 +116,11 @@ const DashboardSection = () => {
                         key={Math.random()}
                         onBlur={isOpen && onBlur}
                         // tabIndex="0"
-                        // ref={focusElement}
                       >
                         <input
                           type="radio"
                           checked={selectedOption === option}
                           id={option}
-                          onChange={(e) => console.log(e)}
                         />
                         {option}
                       </Option>
@@ -130,7 +130,7 @@ const DashboardSection = () => {
               </DropDownListContainer>
             </SelectDateCard>
           </div>
-          <div>CHART</div>
+          <Chart />
         </Card>
         <Card className="volunteering">
           <div className="titleOnly">
