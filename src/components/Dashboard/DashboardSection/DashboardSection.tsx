@@ -1,24 +1,16 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import SectionLayout from "shared/dashboard/SectionLayout";
 import { CardLayout } from "shared/dashboard/CardLayout";
 import CalendarIcon from "assets/dashboard/CalendarIcon.png";
-import ArrowDown from "assets/dashboard/ArrowDown.svg";
 import { ReturnLink } from "shared/loginRegister/ReturnLink";
-import {
-  DropDownListContainer,
-  Option,
-  DropDown,
-  DropDownHeader,
-  SelectDateCard,
-} from "shared/dashboard/Dropdown";
+import { SelectDateCard, Dropdown, OptionType } from "hooks/useDropDown";
 import { ReactComponent as StatusIcon } from "assets/dashboard/Status.svg";
 import { StatisticsWrapper } from "./StatisticCardWrapper";
 import StatisticCards from "./StatisticsCards";
 import { VolunteeringStatus } from "./VolunteeringWrapper";
 
-import Chart from "./Chart";
+import { Chart } from "./Chart";
 
 const Card = styled(CardLayout)`
   display: flex;
@@ -67,31 +59,17 @@ const Card = styled(CardLayout)`
   }
 `;
 
-const options = ["Tydzień", "Miesiąc", "Rok"];
+const options: OptionType[] = [
+  { id: "Tydzień", name: "Tydzień" },
+  { id: "Miesiąc", name: "Miesiąc" },
+  { id: "Rok", name: "Rok" },
+];
 
 const DashboardSection = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<string>("Rok");
-  // const [isChecked, setIsChecked] = useState<boolean>(false);
-
-  const toggling = () => setIsOpen(!isOpen);
-
-  const onBlur = (event: any) => {
-    if (!event.currentTarget.contains(event.relatedTarget)) {
-      setIsOpen(false);
-    }
+  const handleChange = (id: string) => {
+    // eslint-disable-next-line no-console
+    console.log(id);
   };
-
-  const onOptionClicked = (value: string) => () => {
-    setSelectedOption(value);
-  };
-  // const handleChecked = (event: ChangeEvent<HTMLInputElement>) => {
-  //   setIsChecked(event.target.checked);
-
-  //   // console.log(event.target.checked);
-  //   // console.log(isChecked);
-  // };
-
   return (
     <SectionLayout>
       <StatisticsWrapper>
@@ -103,31 +81,7 @@ const DashboardSection = () => {
             <p>Liczba wyświetleń podopiecznych</p>
             <SelectDateCard>
               <img src={CalendarIcon} alt="" />
-              <DropDownListContainer className={`${isOpen && "active"}`}>
-                <DropDownHeader onClick={toggling}>
-                  {selectedOption || "Rok"}
-                  <img src={ArrowDown} alt="" />
-                </DropDownHeader>
-                {isOpen && (
-                  <DropDown>
-                    {options.map((option) => (
-                      <Option
-                        onClick={onOptionClicked(option)}
-                        key={Math.random()}
-                        onBlur={isOpen && onBlur}
-                        // tabIndex="0"
-                      >
-                        <input
-                          type="radio"
-                          checked={selectedOption === option}
-                          id={option}
-                        />
-                        {option}
-                      </Option>
-                    ))}
-                  </DropDown>
-                )}
-              </DropDownListContainer>
+              <Dropdown options={options} onChange={handleChange} />
             </SelectDateCard>
           </div>
           <Chart />

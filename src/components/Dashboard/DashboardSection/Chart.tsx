@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { useState } from "react";
 import {
   BarChart,
   Bar,
@@ -8,11 +8,12 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import Bottom from "assets/dashboard/Bottom.png";
 
 const data = [
   {
     name: "Sty",
-    uv: 4000,
+    uv: 5300,
     amt: 2400,
   },
   {
@@ -81,51 +82,80 @@ const data = [
   },
 ];
 
-// const getIntroOfPage = (label) => {
-
-//   }
-//   return "";
-// };
-
-// const CustomTooltip = ({ active, payload, label }) => {
-//   if (active && payload && payload.length) {
-//     return (
-//       <div className="custom-tooltip">
-//         <p className="label">{`${label} : ${payload[0].value}`}</p>
-//         <p className="intro">{getIntroOfPage(label)}</p>
-//         <p className="desc">Anything you want can be displayed here.</p>
-//       </div>
-//     );
-//   }
-
-//   return null;
-// };
-
-export default class Example extends PureComponent {
-  static demoUrl = "https://codesandbox.io/s/simple-bar-chart-tpz8r";
-
-  render() {
+const CustomTooltip = (position: any) => {
+  // console.log('CustomTooltip -> data', data)
+  const { active, payload } = position;
+  if (active && payload && payload.length) {
     return (
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 25,
-            right: 30,
-            left: 30,
-            bottom: 15,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          {/* content={<CustomTooltip />} */}
-          <Bar dataKey="uv" barSize={10} fill="#B0BABF" />
-        </BarChart>
-      </ResponsiveContainer>
+      <>
+        <div className="custom-tooltip">
+          <p className="label">{payload[0].value}</p>
+        </div>
+        <img src={Bottom} alt="" style={{ position: "absolute", bottom: -5 }} />
+      </>
     );
   }
-}
+  return null;
+};
+
+export const Chart = () => {
+  const [posData, setposData] = useState<any>({});
+
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart
+        width={500}
+        height={300}
+        data={data}
+        margin={{
+          top: 25,
+          right: 30,
+          left: 30,
+          bottom: 15,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" vertical={false} />
+        <XAxis
+          dataKey="name"
+          axisLine={false}
+          tickLine={false}
+          tick={{ fontSize: "1.2rem" }}
+          stroke="#9AA6AC"
+        />
+        <YAxis
+          tick={{ fontSize: "1.2rem" }}
+          axisLine={false}
+          tickLine={false}
+          tickCount={6}
+          stroke="#9AA6AC"
+        />
+        <Tooltip
+          content={<CustomTooltip />}
+          wrapperStyle={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 53,
+            height: 24,
+            borderRadius: 4,
+            background: "#303940",
+            right: 0,
+            fontSize: 12,
+            color: "#fff",
+          }}
+          position={{ x: posData.x - 14, y: posData.y - 40 }}
+          cursor={false}
+        />
+
+        <Bar
+          onMouseOver={(position) => {
+            setposData(position);
+          }}
+          dataKey="uv"
+          barSize={24}
+          fill="#B0BABF"
+        />
+      </BarChart>
+    </ResponsiveContainer>
+  );
+};
