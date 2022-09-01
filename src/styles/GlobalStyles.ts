@@ -18,7 +18,7 @@ const GlobalStyles = createGlobalStyle`
     background-color: #E5E5E5;
     font-size: 1.6rem;
     @media (min-width: 768px) {
-    height: 100vh;
+    min-height: 100vh;
     }
   }
 `;

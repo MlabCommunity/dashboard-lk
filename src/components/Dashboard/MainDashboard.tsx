@@ -5,10 +5,11 @@ import Panel from "shared/dashboard/Panel";
 import { Outlet } from "react-router-dom";
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
   @media (min-width: 768px) {
-    width: 118.4rem;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 118.4rem;
   }
 `;
 

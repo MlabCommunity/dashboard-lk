@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const VolunteeringStatus = styled.div`
   margin: 0 auto;
-  width: 24rem;
+  width: 85%;
   padding: 1.4rem 0;
   text-align: left;
   border-bottom: 1px solid ${({ theme }) => theme.colorsGray.lightGray3};

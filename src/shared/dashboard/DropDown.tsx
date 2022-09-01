@@ -1,6 +1,7 @@
-import { RefObject, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { ReactComponent as ArrowDown } from "assets/dashboard/ArrowDown.svg";
 import styled from "styled-components";
+import { useClickOutside } from "../../hooks/useClickOutside";
 
 export const SelectDateCard = styled("div")`
   position: relative;
@@ -15,7 +16,7 @@ export const SelectDateCard = styled("div")`
   border-radius: 0.6rem;
 `;
 
-const DropDownButton = styled("button")`
+export const DropDownButton = styled("button")`
   padding: 0.6rem 1rem;
   display: flex;
   align-items: center;
@@ -32,14 +33,14 @@ const DropDownButton = styled("button")`
   }
 `;
 
-const DropDownListContainer = styled("div")`
+export const DropDownListContainer = styled("div")`
   position: absolute;
   z-index: 500;
   top: 3.2rem;
   right: 0;
 `;
 
-const DropDownList = styled("ul")`
+export const DropDownList = styled("ul")`
   padding: 1.2rem 1.6rem;
   background: ${({ theme }) => theme.colorsBlackandWhite.white};
   border: 1px solid ${({ theme }) => theme.colorsGray.lightGray3};
@@ -48,7 +49,7 @@ const DropDownList = styled("ul")`
   z-index: 15;
 `;
 
-const Option = styled("li")`
+export const Option = styled("li")`
   display: flex;
   align-items: center;
   margin-bottom: 0.8em;
@@ -82,31 +83,6 @@ export type OptionType = {
   id: string;
 };
 
-const useClickOutside = <T extends HTMLElement = HTMLElement>({
-  ref,
-  handler,
-}: {
-  ref: RefObject<T>;
-  handler: () => void;
-}) => {
-  useEffect(() => {
-    const listener = (event: Event) => {
-      if (!ref.current || ref.current.contains(event.target as Node)) {
-        return;
-      }
-
-      handler();
-    };
-    document.addEventListener("mousedown", listener);
-    document.addEventListener("touchstart", listener);
-
-    return () => {
-      document.removeEventListener("mousedown", listener);
-      document.removeEventListener("touchstart", listener);
-    };
-  });
-};
-
 type DropdownTypes = {
   options: OptionType[];
   // eslint-disable-next-line no-unused-vars
@@ -114,7 +90,7 @@ type DropdownTypes = {
 };
 
 export const Dropdown = ({ options, onChange }: DropdownTypes) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [checkedOption, setCheckedOption] = useState(options[2].id);
 
   const toggleOpen = () => setIsOpen(!isOpen);
@@ -127,7 +103,11 @@ export const Dropdown = ({ options, onChange }: DropdownTypes) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useClickOutside({ ref: containerRef, handler: toggleOpen });
+  useClickOutside({
+    ref: containerRef,
+    refButton: buttonRef,
+    handler: toggleOpen,
+  });
 
   return (
     <>

@@ -4,7 +4,11 @@ import SectionLayout from "shared/dashboard/SectionLayout";
 import { CardLayout } from "shared/dashboard/CardLayout";
 import CalendarIcon from "assets/dashboard/CalendarIcon.png";
 import { ReturnLink } from "shared/loginRegister/ReturnLink";
-import { SelectDateCard, Dropdown, OptionType } from "hooks/useDropDown";
+import {
+  SelectDateCard,
+  Dropdown,
+  OptionType,
+} from "shared/dashboard/DropDown";
 import { ReactComponent as StatusIcon } from "assets/dashboard/Status.svg";
 import { StatisticsWrapper } from "./StatisticCardWrapper";
 import StatisticCards from "./StatisticsCards";
@@ -16,25 +20,40 @@ const Card = styled(CardLayout)`
   display: flex;
   flex-direction: column;
   &.chart,
-  &.volunteering {
-    margin: 1.6rem 0;
-    height: 35.1rem;
-  }
-  &.chart {
-    width: 84.8rem;
-  }
-  &.volunteering {
-    width: 27.2rem;
-  }
+  &.volunteering,
   &.animalCards,
   &.popular {
-    height: 36rem;
+    height: 35.6rem;
   }
+  &.chart {
+    width: 100%;
+    max-width: 84.8rem;
+    order: 1;
+  }
+  &.volunteering {
+    width: 27rem;
+    order: 4;
+    @media (min-width: 1200px) {
+      order: 2;
+    }
+  }
+  /* &.animalCards,
+  &.popular {
+    height: 36.1rem;
+  } */
   &.animalCards {
-    width: 75.2rem;
+    order: 2;
+    width: 100%;
+    max-width: 75.2rem;
+    @media (min-width: 1200px) {
+      order: 3;
+    }
   }
   &.popular {
-    width: 36.8rem;
+    order: 3;
+    @media (min-width: 1200px) {
+      order: 4;
+    }
   }
   .titleDouble {
     padding: 0.8rem 1.6rem;
@@ -72,10 +91,10 @@ const DashboardSection = () => {
   };
   return (
     <SectionLayout>
+      {/* <StatisticsWrapper>
+      </StatisticsWrapper> */}
       <StatisticsWrapper>
         <StatisticCards />
-      </StatisticsWrapper>
-      <StatisticsWrapper>
         <Card className="chart">
           <div className="titleDouble">
             <p>Liczba wyświetleń podopiecznych</p>
@@ -112,8 +131,6 @@ const DashboardSection = () => {
             </div>
           </VolunteeringStatus>
         </Card>
-      </StatisticsWrapper>
-      <StatisticsWrapper>
         <Card className="animalCards">
           <div className="titleDouble">
             <p>Najnowsze karty zwierząt</p>
@@ -128,6 +145,7 @@ const DashboardSection = () => {
           </div>
         </Card>
       </StatisticsWrapper>
+      {/* <StatisticsWrapper></StatisticsWrapper> */}
     </SectionLayout>
   );
 };

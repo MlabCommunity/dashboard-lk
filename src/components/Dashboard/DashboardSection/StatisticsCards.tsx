@@ -7,8 +7,9 @@ import IconPerson from "assets/dashboard/IconPerson.png";
 import IconZoom from "assets/dashboard/IconZoom.png";
 
 const StatisticCard = styled(CardLayout)`
-  width: 27.2rem;
   padding: 1.6rem;
+  width: 27.2rem;
+  flex-direction: row;
   div {
     display: flex;
     flex-direction: column;
@@ -23,6 +24,9 @@ const StatisticCard = styled(CardLayout)`
       color: ${({ theme }) => theme.colorsGray.darkGray2};
     }
   }
+  /* @media (min-width: 992px) {
+    width: 25rem;
+  } */
 `;
 
 const StatisticCards = () => (
