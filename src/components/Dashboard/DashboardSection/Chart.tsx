@@ -88,11 +88,15 @@ const data = [
 
 const CustomTooltip = (position: any) => {
   const { active, payload } = position;
+  const windowWidth = window.innerWidth;
 
-  if (active) {
+  if (active && payload && payload.length) {
     return (
       <>
         <div className="custom-tooltip">
+          <p style={{ display: windowWidth > 576 ? "none" : "block" }}>
+            {payload[0].payload.name}
+          </p>
           <p className="label">{payload[0].value}</p>
         </div>
         <img src={Bottom} alt="" style={{ position: "absolute", bottom: -5 }} />
@@ -101,41 +105,10 @@ const CustomTooltip = (position: any) => {
   }
   return null;
 };
-// const CustomTooltip = (position: any) => {
-//   const { active, payload } = position;
-
-//   if (active && payload && payload.length) {
-//     // console.log(position);
-//     return (
-//       <>
-//         <div className="custom-tooltip">
-//           <p className="label">{payload[0].value}</p>
-//         </div>
-//         <img src={Bottom} alt="" style={{ position: "absolute", bottom: -5 }} />
-//       </>
-//     );
-//   }
-//   return (
-//     <>
-//       <div className="custom-tooltip">
-//         <p className="label">lipa</p>
-//       </div>
-//       <img src={Bottom} alt="" style={{ position: "absolute", bottom: -5 }} />
-//     </>
-//   );
-// };
 
 export const Chart = () => {
   const [posData, setposData] = useState<any>({});
   const [activeIndex, setActiveIndex] = useState(0);
-
-  // const handleClick = useCallback(
-  //   (entry: any, index: number) => {
-  //     console.log(entry);
-  //     setActiveIndex(index);
-  //   },
-  //   [setActiveIndex]
-  // );
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -144,10 +117,8 @@ export const Chart = () => {
         height={300}
         data={data}
         margin={{
-          top: 25,
-          right: 30,
-          left: 30,
-          bottom: 15,
+          top: 20,
+          right: 15,
         }}
         barSize={32}
         barGap={1}
@@ -174,25 +145,25 @@ export const Chart = () => {
             alignItems: "center",
             justifyContent: "center",
             width: 53,
-            height: 24,
-            right: 0,
+            height: 28,
             fontSize: 12,
             color: "#fff",
             background: "#303940",
             outline: "none",
             borderRadius: 4,
           }}
-          position={{ x: posData.x - 14, y: posData.y - 40 }}
+          position={{
+            x: posData.width < 24 ? posData.x - 17 : posData.x - 11,
+            y: posData.y - 40,
+          }}
           cursor={false}
         />
 
         <Bar
           onMouseEnter={(position) => {
-            // console.log(position);
             setposData(position);
             setActiveIndex(position.id - 1);
           }}
-          // onClick={handleClick}
           dataKey="uv"
           radius={[4, 4, 0, 0]}
         >

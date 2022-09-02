@@ -23,11 +23,9 @@ import { SideBarLink } from "./SideBarLink";
 
 const Navigation = styled.nav`
   display: flex;
-
   width: 80%;
   position: absolute;
   z-index: 1000;
-
   flex-direction: column;
   justify-content: space-between;
   padding: 1.6rem;
@@ -39,7 +37,14 @@ const Navigation = styled.nav`
   .active {
     transform: translateX(0);
   }
-
+  .dropdown {
+    display: flex;
+    align-items: center;
+    img {
+      width: 4.2rem;
+      height: 4.2rem;
+    }
+  }
   .links {
     img {
       padding: 0.4rem 0 4rem 1.6rem;
@@ -57,12 +62,9 @@ const Navigation = styled.nav`
       justify-content: flex-start;
       align-items: center;
       padding: 0.8rem 1.6rem;
+      ${({ theme }) => theme.text14Medium};
       color: ${({ theme }) => theme.colorsGray.darkGray2};
       text-decoration: none;
-      font-weight: 500;
-      font-size: 1.4rem;
-      line-height: 2rem;
-      letter-spacing: -0.003em;
       border-radius: 0.6rem;
       transition: background 0.4s;
       svg {
@@ -89,6 +91,34 @@ const Navigation = styled.nav`
     width: 20%;
     max-width: 25.6rem;
     transform: translateX(0);
+  }
+`;
+
+const DropDownContainer = styled(DropDownListContainer)`
+  position: absolute;
+  z-index: 500;
+  top: unset;
+  bottom: 100%;
+  width: 17.1rem;
+  left: -25%;
+  @media (min-width: 768px) {
+    left: 0;
+  }
+`;
+
+const DropDownNavButton = styled(DropDownButton)`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 0.6rem 0 0.6rem 0.6rem;
+  .username {
+    display: flex;
+    align-items: center;
+  }
+  .organization-name {
+    ${({ theme }) => theme.text12Regular};
+    color: ${({ theme }) => theme.colorsPrimary.pr600};
   }
 `;
 
@@ -132,29 +162,29 @@ const Nav = () => {
           Pracownicy
         </SideBarLink>
       </div>
-      <div style={{ display: "flex" }}>
+      <div className="dropdown">
         <img src={UserLogo} alt="" />
-        <DropDownButton
-          type="button"
-          onClick={toggleOpen}
-          ref={buttonRef}
-          style={{ position: "relative" }}
-        >
-          <p>Jan Kowalski</p>
-          <ArrowDown className={`${isOpen && "active"}`} />
+        <DropDownNavButton type="button" onClick={toggleOpen} ref={buttonRef}>
+          <p className="username">
+            Jan Kowalski <ArrowDown className={`${isOpen && "active"}`} />
+          </p>
+
+          <p className="organization-name">Psiaki Adopciaki z Psiej Wioski</p>
           {isOpen && (
-            <DropDownListContainer ref={containerRef}>
+            <DropDownContainer ref={containerRef}>
               <DropDownList>
-                <Option>Ustawienia Konta</Option>
+                <Option>
+                  <Link to="/auth/LoginForm">Ustawienia konta</Link>
+                </Option>
                 <Option>
                   <Link to="/auth/LoginForm" onClick={useHandleLogout}>
                     Wyloguj się
                   </Link>
                 </Option>
               </DropDownList>
-            </DropDownListContainer>
+            </DropDownContainer>
           )}
-        </DropDownButton>
+        </DropDownNavButton>
       </div>
     </Navigation>
   );

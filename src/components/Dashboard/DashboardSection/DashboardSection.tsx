@@ -27,31 +27,38 @@ const Card = styled(CardLayout)`
   }
   &.chart {
     width: 100%;
+    min-width: 30rem;
     max-width: 84.8rem;
     order: 1;
+    @media (min-width: 992px) {
+      width: 75%;
+    }
   }
   &.volunteering {
-    width: 27rem;
+    flex: 1;
+    min-width: 16rem;
+    max-width: 27.2rem;
     order: 4;
-    @media (min-width: 1200px) {
+    @media (min-width: 992px) {
+      flex: 1;
       order: 2;
     }
   }
-  /* &.animalCards,
-  &.popular {
-    height: 36.1rem;
-  } */
   &.animalCards {
-    order: 2;
     width: 100%;
     max-width: 75.2rem;
-    @media (min-width: 1200px) {
+    order: 2;
+    @media (min-width: 992px) {
+      flex: 2;
       order: 3;
     }
   }
   &.popular {
+    flex: 2;
+    max-width: 36.8rem;
     order: 3;
-    @media (min-width: 1200px) {
+    @media (min-width: 992px) {
+      flex: 1;
       order: 4;
     }
   }

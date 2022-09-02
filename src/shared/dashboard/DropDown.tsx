@@ -8,7 +8,6 @@ export const SelectDateCard = styled("div")`
   display: flex;
   padding: 0.4rem 0.6rem;
   height: 3.2rem;
-  ${({ theme }) => theme.text14Regular}
   color: ${({ theme }) => theme.colorsGray.darkGray2};
   background: ${({ theme }) => theme.colorsBlackandWhite.white};
   border: 1px solid ${({ theme }) => theme.colorsGray.lightGray3};
@@ -17,11 +16,13 @@ export const SelectDateCard = styled("div")`
 `;
 
 export const DropDownButton = styled("button")`
+  position: relative;
   padding: 0.6rem 1rem;
   display: flex;
   align-items: center;
   border: none;
   ${({ theme }) => theme.text14Regular}
+  font-family: "Inter";
   color: ${({ theme }) => theme.colorsGray.darkGray2};
   background: ${({ theme }) => theme.colorsBlackandWhite.white};
   cursor: pointer;
@@ -75,6 +76,10 @@ export const Option = styled("li")`
   }
   &:hover {
     background: ${({ theme }) => theme.colorsGray.lightGray4};
+  }
+  a {
+    text-decoration: none;
+    color: ${({ theme }) => theme.colorsGray.darkGray1};
   }
 `;
 

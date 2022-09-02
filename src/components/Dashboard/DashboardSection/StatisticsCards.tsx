@@ -14,6 +14,7 @@ const StatisticCard = styled(CardLayout)`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    text-align: left;
     padding: 0 1.2rem;
     p {
       ${({ theme }) => theme.text12Semi}
@@ -24,9 +25,12 @@ const StatisticCard = styled(CardLayout)`
       color: ${({ theme }) => theme.colorsGray.darkGray2};
     }
   }
-  /* @media (min-width: 992px) {
-    width: 25rem;
-  } */
+  @media (min-width: 992px) {
+    flex: 1;
+    div {
+      justify-content: center;
+    }
+  }
 `;
 
 const StatisticCards = () => (
