@@ -1,4 +1,3 @@
-import { IChildren } from "types/IChildren";
 import styled from "styled-components";
 
 const StyledWrapper = styled.div`
@@ -6,12 +5,16 @@ const StyledWrapper = styled.div`
   position: relative;
   @media (min-width: 768px) {
     display: flex;
-    min-height: 93rem;
+    min-height: 93.1rem;
     max-width: 144rem;
   }
 `;
 
-const DashboardWrapper = ({ children }: IChildren) => (
+interface IChildrenProps {
+  children: React.ReactNode;
+}
+
+const DashboardWrapper = ({ children }: IChildrenProps) => (
   <StyledWrapper>{children}</StyledWrapper>
 );
 

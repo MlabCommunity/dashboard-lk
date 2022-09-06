@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from "react";
 import DashboardWrapper from "shared/dashboard/DashboardWrapper";
 import Nav from "shared/dashboard/Nav/Nav";
 import Panel from "shared/dashboard/Panel";
@@ -13,14 +14,22 @@ const Container = styled.div`
   }
 `;
 
-const MainDashboard = () => (
-  <DashboardWrapper>
-    <Nav />
-    <Container>
-      <Panel />
-      <Outlet />
-    </Container>
-  </DashboardWrapper>
-);
+const MainDashboard = () => {
+  const [isHidden, setIsHidden] = useState(false);
+
+  const handleHidden = () => {
+    setIsHidden((prev) => !prev);
+  };
+
+  return (
+    <DashboardWrapper>
+      <Nav toggleNav={handleHidden} isHidden={isHidden} />
+      <Container>
+        <Panel toggleNav={handleHidden} />
+        <Outlet />
+      </Container>
+    </DashboardWrapper>
+  );
+};
 
 export default MainDashboard;

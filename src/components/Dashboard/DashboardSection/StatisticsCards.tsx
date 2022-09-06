@@ -9,6 +9,7 @@ import IconZoom from "assets/dashboard/IconZoom.png";
 const StatisticCard = styled(CardLayout)`
   padding: 1.6rem;
   width: 27.2rem;
+  height: 8.2rem;
   flex-direction: row;
   div {
     display: flex;

@@ -12,6 +12,7 @@ import Logo from "assets/dashboard/Logo.png";
 import UserLogo from "assets/dashboard/UserLogo.png";
 import { ReactComponent as ArrowDown } from "assets/dashboard/ArrowDown.svg";
 import { useHandleLogout } from "services/HandleLogout";
+import { ReactComponent as Close } from "assets/dashboard/Close.svg";
 import {
   DropDownListContainer,
   DropDownButton,
@@ -23,8 +24,10 @@ import { SideBarLink } from "./SideBarLink";
 
 const Navigation = styled.nav`
   display: flex;
-  width: 80%;
-  position: absolute;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  position: fixed;
   z-index: 1000;
   flex-direction: column;
   justify-content: space-between;
@@ -32,12 +35,18 @@ const Navigation = styled.nav`
   background-color: ${({ theme }) => theme.colorsBlackandWhite.white};
   border-right: 1px solid ${({ theme }) => theme.colorsGray.lightGray3};
   border-bottom: 1px solid ${({ theme }) => theme.colorsGray.lightGray3};
+  overflow-y: scroll;
+  overflow-x: hidden;
 
+  opacity: 0;
   transform: translateX(-150%);
-  .active {
+  transition: opacity 0.6s, transform 0.6s;
+  &.active {
+    opacity: 1;
     transform: translateX(0);
   }
   .dropdown {
+    margin-top: 3rem;
     display: flex;
     align-items: center;
     img {
@@ -46,9 +55,26 @@ const Navigation = styled.nav`
     }
   }
   .links {
-    img {
-      padding: 0.4rem 0 4rem 1.6rem;
-      margin-right: 100%;
+    .logo-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      img {
+        padding: 0.4rem 0 4rem 1.6rem;
+      }
+      button {
+        padding: 1rem;
+        background: none;
+        border: none;
+        border-radius: 0.4rem;
+        transition: background 0.3s;
+        &:active {
+          background: lightgray;
+        }
+        @media (min-width: 768px) {
+          display: none;
+        }
+      }
     }
     .organization {
       text-align: left;
@@ -87,10 +113,15 @@ const Navigation = styled.nav`
   }
   @media (min-width: 768px) {
     position: initial;
-    min-width: 20rem;
+    height: initial;
+    min-height: initial;
     width: 20%;
+    min-width: 20rem;
     max-width: 25.6rem;
     transform: translateX(0);
+    opacity: 1;
+    overflow-y: initial;
+    overflow-x: initial;
   }
 `;
 
@@ -122,7 +153,12 @@ const DropDownNavButton = styled(DropDownButton)`
   }
 `;
 
-const Nav = () => {
+interface IsHiddenProp {
+  isHidden: boolean;
+  toggleNav: () => void;
+}
+
+const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => setIsOpen((prevIsOpen) => !prevIsOpen);
@@ -137,27 +173,32 @@ const Nav = () => {
   });
 
   return (
-    <Navigation>
+    <Navigation className={isHidden ? "active" : ""}>
       <div className="links">
-        <img src={Logo} alt="" />
-        <SideBarLink to={Routes.dashboard.path}>
+        <div className="logo-top">
+          <img src={Logo} alt="" />
+          <button type="button" onClick={toggleNav}>
+            <Close />
+          </button>
+        </div>
+        <SideBarLink onClick={toggleNav} to={Routes.dashboard.path}>
           <HomeIcon />
           Dashboard
         </SideBarLink>
-        <SideBarLink to={Routes.messages.path}>
+        <SideBarLink onClick={toggleNav} to={Routes.messages.path}>
           <ChatIcon />
           Wiadomości
         </SideBarLink>
-        <SideBarLink to={Routes.animalCards.path}>
+        <SideBarLink onClick={toggleNav} to={Routes.animalCards.path}>
           <SmileIcon />
           Karty Zwierząt
         </SideBarLink>
-        <SideBarLink to={Routes.volunteering.path}>
+        <SideBarLink onClick={toggleNav} to={Routes.volunteering.path}>
           <HeartIcon />
           Wolontariat
         </SideBarLink>
         <p className="organization">organizacja</p>
-        <SideBarLink to={Routes.organization.path}>
+        <SideBarLink onClick={toggleNav} to={Routes.organization.path}>
           <OrganizationIcon />
           Pracownicy
         </SideBarLink>

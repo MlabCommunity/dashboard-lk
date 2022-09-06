@@ -8,7 +8,7 @@ const PanelTop = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.2rem 3.2rem;
+  padding: 1.2rem 1.2rem 1.2rem 3.2rem;
   background-color: ${({ theme }) => theme.colorsBlackandWhite.white};
   box-shadow: 0px 4px 1px rgba(0, 0, 0, 0.02), 0px 8px 4px rgba(0, 0, 0, 0.02),
     0px 12px 1px rgba(0, 0, 0, 0.01);
@@ -22,6 +22,12 @@ const PanelTop = styled.div`
     button {
       background: none;
       border: none;
+      padding: 1rem;
+      border-radius: 0.4rem;
+      transition: background 0.3s;
+      &:active {
+        background: lightgray;
+      }
     }
   }
   .title {
@@ -43,7 +49,11 @@ const PanelTop = styled.div`
   }
 `;
 
-const Panel = () => {
+interface IToggleProps {
+  toggleNav: () => void;
+}
+
+const Panel = ({ toggleNav }: IToggleProps) => {
   const location = window.location.pathname;
 
   const match = useMatch({
@@ -70,7 +80,7 @@ const Panel = () => {
       <p className="title">{title()}</p>
       <div>
         <IconNotification className="notification" />
-        <button type="button">
+        <button type="button" onClick={toggleNav}>
           <Burger />
         </button>
       </div>

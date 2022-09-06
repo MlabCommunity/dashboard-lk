@@ -13,6 +13,7 @@ import { ReactComponent as StatusIcon } from "assets/dashboard/Status.svg";
 import { StatisticsWrapper } from "./StatisticCardWrapper";
 import StatisticCards from "./StatisticsCards";
 import { VolunteeringStatus } from "./VolunteeringWrapper";
+import AnimalCards from "./LatestAnimalCard";
 
 import { Chart } from "./Chart";
 
@@ -21,13 +22,11 @@ const Card = styled(CardLayout)`
   flex-direction: column;
   &.chart,
   &.volunteering,
-  &.animalCards,
   &.popular {
     height: 35.6rem;
   }
   &.chart {
     width: 100%;
-    min-width: 30rem;
     max-width: 84.8rem;
     order: 1;
     @media (min-width: 992px) {
@@ -48,6 +47,9 @@ const Card = styled(CardLayout)`
     width: 100%;
     max-width: 75.2rem;
     order: 2;
+    @media (min-width: 768px) {
+      max-height: 35.6rem;
+    }
     @media (min-width: 992px) {
       flex: 2;
       order: 3;
@@ -98,8 +100,6 @@ const DashboardSection = () => {
   };
   return (
     <SectionLayout>
-      {/* <StatisticsWrapper>
-      </StatisticsWrapper> */}
       <StatisticsWrapper>
         <StatisticCards />
         <Card className="chart">
@@ -145,6 +145,7 @@ const DashboardSection = () => {
               <Link to="/animalCardsSection">Wszystkie</Link>
             </ReturnLink>
           </div>
+          <AnimalCards />
         </Card>
         <Card className="popular">
           <div className="titleOnly">
@@ -152,7 +153,6 @@ const DashboardSection = () => {
           </div>
         </Card>
       </StatisticsWrapper>
-      {/* <StatisticsWrapper></StatisticsWrapper> */}
     </SectionLayout>
   );
 };
