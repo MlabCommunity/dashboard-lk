@@ -5,11 +5,14 @@ import { PuffLoader } from "react-spinners";
 import styled from "styled-components";
 import * as Yup from "yup";
 
-import FormWrapper, { override } from "shared/loginRegister/FormWrapper";
-import { SubmitButton } from "shared/loginRegister/SubmitButton";
-import InputField from "shared/loginRegister/InputField";
-import { Inputs } from "shared/loginRegister/Inputs";
 import useUserData from "services/UserLoginData";
+import {
+  FormWrapper,
+  override,
+  SubmitButton,
+  Inputs,
+  InputField,
+} from "shared/loginRegister";
 
 const FormContainer = styled.form`
   button[type="submit"] {
@@ -25,7 +28,7 @@ interface ValuesProps {
   email: string;
 }
 
-const ResetPassword = () => {
+export const ResetPassword = () => {
   const navigate = useNavigate();
 
   const { useLoginData } = useUserData();
@@ -92,4 +95,3 @@ const ResetPassword = () => {
     </FormWrapper>
   );
 };
-export default ResetPassword;

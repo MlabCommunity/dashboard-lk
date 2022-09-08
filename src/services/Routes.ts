@@ -23,4 +23,13 @@ export const Routes = {
   organization: {
     path: "/organizationSection",
   },
+  addAnimalCard: {
+    path: "/addAnimal",
+  },
+  accountSettings: {
+    path: "/accountSettings",
+  },
+  addEmployee: {
+    path: "/addEmployee",
+  },
 };

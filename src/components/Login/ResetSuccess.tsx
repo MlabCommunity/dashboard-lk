@@ -1,8 +1,7 @@
-import FormWrapper from "shared/loginRegister/FormWrapper";
+import { FormWrapper, SubmitButton } from "shared/loginRegister";
 import { useNavigate } from "react-router-dom";
-import { SubmitButton } from "shared/loginRegister/SubmitButton";
 
-const ResetSuccess = () => {
+export const ResetSuccess = () => {
   const navigate = useNavigate();
   return (
     <FormWrapper>
@@ -20,4 +19,3 @@ const ResetSuccess = () => {
     </FormWrapper>
   );
 };
-export default ResetSuccess;

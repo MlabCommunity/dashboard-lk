@@ -6,13 +6,16 @@ import styled from "styled-components";
 import * as Yup from "yup";
 
 import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
-import FormWrapper, { override } from "shared/loginRegister/FormWrapper";
-import { SubmitButton } from "shared/loginRegister/SubmitButton";
-import { Inputs } from "shared/loginRegister/Inputs";
-import InputField from "shared/loginRegister/InputField";
+import useUserData from "services/UserLoginData";
 import EyeOn from "assets/loginRegister/Eye-on.png";
 import EyeOff from "assets/loginRegister/Eye-off.png";
-import useUserData from "services/UserLoginData";
+import {
+  FormWrapper,
+  override,
+  SubmitButton,
+  Inputs,
+  InputField,
+} from "shared/loginRegister";
 
 const FormContainer = styled.form`
   .checkbox-section {
@@ -100,7 +103,7 @@ interface ValuesProps {
   remember: boolean;
 }
 
-const LoginForm = () => {
+export const LoginForm = () => {
   const navigate = useNavigate();
 
   const [passwordType, handlePasswordVisibility] =
@@ -212,4 +215,3 @@ const LoginForm = () => {
     </FormWrapper>
   );
 };
-export default LoginForm;

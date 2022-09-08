@@ -1,10 +1,9 @@
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import InputField from "shared/loginRegister/InputField";
-import { Inputs } from "shared/loginRegister/Inputs";
-import { IInputTypes } from "types/axiosApi";
 import { ErrorMessage } from "formik";
+import { IInputTypes } from "types/axiosApi";
+import { Inputs, InputField } from "shared/loginRegister";
 
-const OrganizationForm = (props: IInputTypes) => {
+export const OrganizationForm = (props: IInputTypes) => {
   const {
     formField: {
       organizationName,
@@ -97,5 +96,3 @@ const OrganizationForm = (props: IInputTypes) => {
     </Inputs>
   );
 };
-
-export default OrganizationForm;

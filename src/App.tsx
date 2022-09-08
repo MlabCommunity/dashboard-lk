@@ -4,18 +4,25 @@ import GlobalStyles from "styles/GlobalStyles";
 import Theme from "styles/Theme";
 import { ProtectedRoute } from "services/ProtectedRoute";
 
-import OrganizationSection from "components/Dashboard/OrganizationSection/OrganizationSection";
-import VolunteeringSection from "components/Dashboard/VolunteeringSection/VolunteeringSection";
-import AnimalCardsSection from "components/Dashboard/AnimalCardsSection/AnimalCardsSection";
-import DashboardSection from "components/Dashboard/DashboardSection/DashboardSection";
-import MessagesSection from "components/Dashboard/MessagesSection/MessagesSection";
-import RegisterOrganization from "components/Register/RegisterOrganization";
-import MainDashboard from "components/Dashboard/MainDashboard";
-import LoginLayout from "shared/loginRegister/LoginLayout";
-import ResetPassword from "components/Login/ResetPassword";
-import ResetSuccess from "components/Login/ResetSuccess";
-import NewPassword from "components/Login/NewPassword";
-import LoginForm from "components/Login/LoginForm";
+import { RegisterOrganization } from "components/Register/RegisterOrganization";
+import { LoginLayout } from "shared/loginRegister/LoginLayout";
+import {
+  MainDashboard,
+  AccountSettings,
+  DashboardSection,
+  MessagesSection,
+  AnimalCardsSection,
+  VolunteeringSection,
+  NewAnimalCard,
+  Employee,
+  OrganizationSection,
+} from "components/Dashboard";
+import {
+  LoginForm,
+  ResetPassword,
+  NewPassword,
+  ResetSuccess,
+} from "components/Login";
 
 const App = () => (
   <>
@@ -50,6 +57,7 @@ const App = () => (
                       path="animalCardsSection"
                       element={<AnimalCardsSection />}
                     />
+                    <Route path="addAnimal" element={<NewAnimalCard />} />
                     <Route
                       path="volunteeringSection"
                       element={<VolunteeringSection />}
@@ -58,6 +66,11 @@ const App = () => (
                       path="organizationSection"
                       element={<OrganizationSection />}
                     />
+                    <Route
+                      path="accountSettings"
+                      element={<AccountSettings />}
+                    />
+                    <Route path="addEmployee" element={<Employee />} />
                   </Route>
                 </Routes>
               </ProtectedRoute>

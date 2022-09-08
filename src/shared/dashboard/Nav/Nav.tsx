@@ -158,7 +158,7 @@ interface IsHiddenProp {
   toggleNav: () => void;
 }
 
-const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
+export const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => setIsOpen((prevIsOpen) => !prevIsOpen);
@@ -215,7 +215,7 @@ const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
             <DropDownContainer ref={containerRef}>
               <DropDownList>
                 <Option>
-                  <Link to="/auth/LoginForm">Ustawienia konta</Link>
+                  <Link to="/accountSettings">Ustawienia konta</Link>
                 </Option>
                 <Option>
                   <Link to="/auth/LoginForm" onClick={useHandleLogout}>
@@ -230,4 +230,3 @@ const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
     </Navigation>
   );
 };
-export default Nav;

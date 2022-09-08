@@ -8,8 +8,6 @@ const Layout = styled.div`
   background-color: ${({ theme }) => theme.colorsGray.lightGray5};
 `;
 
-const SectionLayout = ({ children }: PropsWithChildren) => (
+export const SectionLayout = ({ children }: PropsWithChildren) => (
   <Layout>{children}</Layout>
 );
-
-export default SectionLayout;

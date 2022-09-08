@@ -1,6 +1,6 @@
-import SectionLayout from "shared/dashboard/SectionLayout";
+import { SectionLayout } from "shared/dashboard";
 
-const MessagesSection = () => (
+export const MessagesSection = () => (
   <SectionLayout>
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti facere
     quaerat aut minima, iusto adipisci cum et similique non totam fuga nisi
@@ -8,5 +8,3 @@ const MessagesSection = () => (
     exercitationem repellendus accusamus dolor dicta labore, sapiente obcaecati!
   </SectionLayout>
 );
-
-export default MessagesSection;

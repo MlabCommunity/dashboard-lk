@@ -10,7 +10,7 @@ export const override: CSSProperties = {
   transform: "translate(-50%,-50%)",
 };
 
-const StyledWrapper = styled(motion.div)`
+export const StyledWrapper = styled(motion.div)`
   padding: 2.4rem 1.6rem;
   width: clamp(30rem, 80vw, 45.6rem);
   background: ${({ theme }) => theme.colorsBlackandWhite.white};
@@ -73,7 +73,7 @@ const StyledWrapper = styled(motion.div)`
   }
 `;
 
-const FormWrapper = ({ children }: PropsWithChildren) => (
+export const FormWrapper = ({ children }: PropsWithChildren) => (
   <StyledWrapper
     layout
     initial={{ opacity: 0 }}
@@ -84,5 +84,3 @@ const FormWrapper = ({ children }: PropsWithChildren) => (
     {children}
   </StyledWrapper>
 );
-
-export default FormWrapper;

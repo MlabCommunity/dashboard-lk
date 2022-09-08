@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import SectionLayout from "shared/dashboard/SectionLayout";
-import { CardLayout } from "shared/dashboard/CardLayout";
+import { SectionLayout, CardLayout } from "shared/dashboard";
 import CalendarIcon from "assets/dashboard/CalendarIcon.png";
 import { ReturnLink } from "shared/loginRegister/ReturnLink";
 import {
@@ -11,10 +10,9 @@ import {
 } from "shared/dashboard/DropDown";
 import { ReactComponent as StatusIcon } from "assets/dashboard/Status.svg";
 import { StatisticsWrapper } from "./StatisticCardWrapper";
-import StatisticCards from "./StatisticsCards";
+import { StatisticCards } from "./StatisticsCards";
 import { VolunteeringStatus } from "./VolunteeringWrapper";
-import AnimalCards from "./LatestAnimalCard";
-
+import { LatestAnimalCards } from "./LatestAnimalCard";
 import { Chart } from "./Chart";
 
 const Card = styled(CardLayout)`
@@ -93,7 +91,7 @@ const options: OptionType[] = [
   { id: "Rok", name: "Rok" },
 ];
 
-const DashboardSection = () => {
+export const DashboardSection = () => {
   const handleChange = (id: string) => {
     // eslint-disable-next-line no-console
     console.log(id);
@@ -145,7 +143,7 @@ const DashboardSection = () => {
               <Link to="/animalCardsSection">Wszystkie</Link>
             </ReturnLink>
           </div>
-          <AnimalCards />
+          <LatestAnimalCards />
         </Card>
         <Card className="popular">
           <div className="titleOnly">
@@ -156,4 +154,3 @@ const DashboardSection = () => {
     </SectionLayout>
   );
 };
-export default DashboardSection;

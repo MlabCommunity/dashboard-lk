@@ -3,12 +3,11 @@ import { IInputTypes } from "types/axiosApi";
 import { ErrorMessage } from "formik";
 
 import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
-import { Inputs } from "shared/loginRegister/Inputs";
-import InputField from "shared/loginRegister/InputField";
+import { Inputs, InputField } from "shared/loginRegister";
 import EyeOff from "assets/loginRegister/Eye-off.png";
 import EyeOn from "assets/loginRegister/Eye-on.png";
 
-const UserForm = (props: IInputTypes) => {
+export const UserForm = (props: IInputTypes) => {
   const {
     formField: { firstName, lastName, email, password, confirmPassword },
   } = props;
@@ -110,5 +109,3 @@ const UserForm = (props: IInputTypes) => {
     </Inputs>
   );
 };
-
-export default UserForm;

@@ -114,7 +114,7 @@ const LayoutWrapper = styled("div")`
   }
 `;
 
-const LoginLayout = () => {
+export const LoginLayout = () => {
   const location = window.location.pathname;
 
   const match = useMatch({
@@ -205,5 +205,3 @@ const LoginLayout = () => {
     </LayoutWrapper>
   );
 };
-
-export default LoginLayout;

@@ -4,8 +4,7 @@ import { refreshToken } from "services/RefreshToken";
 import { useHandleLogout } from "services/HandleLogout";
 
 const axiosInstance = axios.create({
-  // baseURL: "http://lappka.mobitouch.pl/api/identity",
-  baseURL: "http://192.168.10.171:5000",
+  baseURL: "http://lappka.mobitouch.pl",
 });
 
 axios.interceptors.request.use(

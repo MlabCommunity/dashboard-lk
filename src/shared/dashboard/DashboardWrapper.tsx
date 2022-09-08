@@ -14,8 +14,6 @@ interface IChildrenProps {
   children: React.ReactNode;
 }
 
-const DashboardWrapper = ({ children }: IChildrenProps) => (
+export const DashboardWrapper = ({ children }: IChildrenProps) => (
   <StyledWrapper>{children}</StyledWrapper>
 );
-
-export default DashboardWrapper;

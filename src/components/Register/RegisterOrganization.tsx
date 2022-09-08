@@ -6,19 +6,18 @@ import { PuffLoader } from "react-spinners";
 import { Formik, Form } from "formik";
 
 import { ReactComponent as Arrow } from "assets/loginRegister/Arrow.svg";
-import FormWrapper, { override } from "shared/loginRegister/FormWrapper";
-import { SubmitButton } from "shared/loginRegister/SubmitButton";
+import { FormWrapper, override, SubmitButton } from "shared/loginRegister";
 import useRegisterData from "services/UserRegisterData";
 import RegistrationSuccessfull from "./Forms/RegistrationSuccessfull";
 import validationSchema from "./FormModel/validationSchema";
 import submitFormModel from "./FormModel/submitFormModel";
-import OrganizationForm from "./Forms/OrganizationForm";
-import UserForm from "./Forms/UserForm";
+import { OrganizationForm } from "./Forms/OrganizationForm";
+import { UserForm } from "./Forms/UserForm";
 
 const steps = [0, 1, 2];
 const { formId, formField } = submitFormModel;
 
-function renderStepContent(step: number) {
+const renderStepContent = (step: number) => {
   switch (step) {
     case 0:
       return <OrganizationForm formField={formField} />;
@@ -29,7 +28,7 @@ function renderStepContent(step: number) {
     default:
       return <div>Not Found</div>;
   }
-}
+};
 
 const initialValues = {
   organizationName: "",
@@ -45,7 +44,7 @@ const initialValues = {
   confirmPassword: "",
 };
 
-const RegisterOrganization = () => {
+export const RegisterOrganization = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   const currentValidationSchema = validationSchema[activeStep];
@@ -182,5 +181,3 @@ const RegisterOrganization = () => {
     </FormWrapper>
   );
 };
-
-export default RegisterOrganization;

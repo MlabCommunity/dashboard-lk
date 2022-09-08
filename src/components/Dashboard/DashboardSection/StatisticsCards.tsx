@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CardLayout } from "shared/dashboard/CardLayout";
+import { CardLayout } from "shared/dashboard";
 
 import IconCard from "assets/dashboard/IconCard.png";
 import IconHeart from "assets/dashboard/IconHeart.png";
@@ -34,7 +34,7 @@ const StatisticCard = styled(CardLayout)`
   }
 `;
 
-const StatisticCards = () => (
+export const StatisticCards = () => (
   <>
     <StatisticCard>
       <img src={IconCard} alt="" />
@@ -66,5 +66,3 @@ const StatisticCards = () => (
     </StatisticCard>
   </>
 );
-
-export default StatisticCards;

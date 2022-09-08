@@ -5,15 +5,17 @@ import { PuffLoader } from "react-spinners";
 import * as Yup from "yup";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
+import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
+import userNewPasswordData from "services/UserNewPasswordData";
 import EyeOn from "assets/loginRegister/Eye-on.png";
 import EyeOff from "assets/loginRegister/Eye-off.png";
-import { SubmitButton } from "shared/loginRegister/SubmitButton";
-import { Inputs } from "shared/loginRegister/Inputs";
-import userNewPasswordData from "services/UserNewPasswordData";
-import InputField from "shared/loginRegister/InputField";
-
-import FormWrapper, { override } from "shared/loginRegister/FormWrapper";
-import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
+import {
+  FormWrapper,
+  override,
+  Inputs,
+  InputField,
+  SubmitButton,
+} from "shared/loginRegister";
 
 const FormContainer = styled.form`
   button[type="submit"] {
@@ -42,7 +44,7 @@ interface ValuesProps {
   confirmPassword: string;
 }
 
-const ResetPassword = () => {
+export const NewPassword = () => {
   const navigate = useNavigate();
 
   const [passwordType, handlePasswordVisibility] =
@@ -158,4 +160,3 @@ const ResetPassword = () => {
     </FormWrapper>
   );
 };
-export default ResetPassword;

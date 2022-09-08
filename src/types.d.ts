@@ -143,5 +143,20 @@ declare module "styled-components" {
       "line-height": string;
       "letter-spacing": string;
     };
+    buttonXLarge: {
+      height: string;
+      "border-radius": string;
+      padding: string;
+    };
+    buttonLarge: {
+      height: string;
+      "border-radius": string;
+      padding: string;
+    };
+    buttonMedium: {
+      height: string;
+      "border-radius": string;
+      padding: string;
+    };
   }
 }

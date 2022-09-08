@@ -1,9 +1,7 @@
-import styled from "styled-components";
 import { useState } from "react";
-import DashboardWrapper from "shared/dashboard/DashboardWrapper";
-import Nav from "shared/dashboard/Nav/Nav";
-import Panel from "shared/dashboard/Panel";
 import { Outlet } from "react-router-dom";
+import styled from "styled-components";
+import { DashboardWrapper, Nav, Panel } from "shared/dashboard";
 
 const Container = styled.div`
   @media (min-width: 768px) {
@@ -14,7 +12,7 @@ const Container = styled.div`
   }
 `;
 
-const MainDashboard = () => {
+export const MainDashboard = () => {
   const [isHidden, setIsHidden] = useState(false);
 
   const handleHidden = () => {
@@ -31,5 +29,3 @@ const MainDashboard = () => {
     </DashboardWrapper>
   );
 };
-
-export default MainDashboard;

@@ -1,6 +1,6 @@
-import SectionLayout from "shared/dashboard/SectionLayout";
+import { SectionLayout } from "shared/dashboard";
 
-const OrganizationSection = () => (
+export const OrganizationSection = () => (
   <SectionLayout>
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti facere
     quaerat aut minima, iusto adipisci cum et similique non totam fuga nisi
@@ -13,5 +13,3 @@ const OrganizationSection = () => (
     vero. Sit voluptatum odit at amet quisquam, esse a?
   </SectionLayout>
 );
-
-export default OrganizationSection;

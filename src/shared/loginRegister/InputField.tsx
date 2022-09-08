@@ -28,7 +28,7 @@ const Input = styled("input")`
   }
 `;
 
-export default function InputField(props: any) {
+export const InputField = (props: any) => {
   const { errorText, ...rest } = props;
   const [field, meta] = useField(props);
 
@@ -50,4 +50,4 @@ export default function InputField(props: any) {
       {...rest}
     />
   );
-}
+};

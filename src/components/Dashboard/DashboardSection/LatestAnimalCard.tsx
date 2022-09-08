@@ -49,7 +49,7 @@ const NewAnimalCard = styled("div")`
 `;
 
 // eslint-disable-next-line arrow-body-style
-const AnimalCards = () => {
+export const LatestAnimalCards = () => {
   return (
     <NewAnimalWrapper>
       <NewAnimalCard>
@@ -85,5 +85,3 @@ const AnimalCards = () => {
     </NewAnimalWrapper>
   );
 };
-
-export default AnimalCards;

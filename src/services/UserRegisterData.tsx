@@ -5,7 +5,7 @@ const useRegisterData = () => {
   const useData = () =>
     useAxios<IRegisterFields>(
       {
-        url: "/auth/signup",
+        url: "identity/Auth/signup",
         method: "POST",
       },
       { manual: true }

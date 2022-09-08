@@ -137,6 +137,21 @@ const theme = {
     "line-height": "1.6rem",
     "letter-spacing": "0",
   },
+  buttonXLarge: {
+    height: "4.8rem",
+    "border-radius": "0.8rem",
+    padding: "1.2rem 1.6rem",
+  },
+  buttonLarge: {
+    height: "4rem",
+    "border-radius": "0.8rem",
+    padding: "0.8rem 1.6rem",
+  },
+  buttonMedium: {
+    height: "3.2rem",
+    "border-radius": "0.6rem",
+    padding: "0.4rem 1.2rem",
+  },
 };
 
 const Theme = ({ children }: PropsWithChildren) => (
