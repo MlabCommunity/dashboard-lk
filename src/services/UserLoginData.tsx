@@ -5,7 +5,7 @@ const useUserData = () => {
   const useLoginData = () =>
     useAxios<ILogin>(
       {
-        url: "/auth/signin",
+        url: "/identity/Auth/login",
         method: "POST",
       },
       { manual: true }

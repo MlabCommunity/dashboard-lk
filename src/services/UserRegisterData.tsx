@@ -1,11 +1,11 @@
 import useAxios from "axios-hooks";
-import { IRegister } from "types/axiosApi";
+import { IRegisterFields } from "types/axiosApi";
 
 const useRegisterData = () => {
   const useData = () =>
-    useAxios<IRegister>(
+    useAxios<IRegisterFields>(
       {
-        url: "/auth/signup",
+        url: "identity/Auth/signup",
         method: "POST",
       },
       { manual: true }

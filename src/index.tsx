@@ -5,7 +5,6 @@ import { configure } from "axios-hooks";
 import axiosInstance from "api/axios";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "./index.scss";
 
 configure({ axios: axiosInstance });
 

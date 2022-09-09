@@ -1,0 +1,74 @@
+import { Meta, Typeset } from "@storybook/addon-docs/blocks";
+
+<Meta title="Styleguide/Typography" />
+
+export const typography = {
+  type: {
+    primary: "Inter",
+  },
+  weight: {
+    regular: "400",
+    medium: "500",
+    semi: "600",
+  },
+  size: {
+    l1: 30,
+    l2: 24,
+    l3: 20,
+    m1: 18,
+    m2: 16,
+    m3: 14,
+    s1: 13,
+    s2: 12,
+  },
+};
+
+export const SampleText =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+
+# Typography
+
+**Font:** Inter
+
+**Font-Weight:** 600 (semi Bold)
+
+<Typeset
+  fontSizes={[
+    Number(typography.size.l1),
+    Number(typography.size.l2),
+    Number(typography.size.l3),
+    Number(typography.size.m1),
+    Number(typography.size.m2),
+    Number(typography.size.m3),
+    Number(typography.size.s2),
+  ]}
+  fontWeight={typography.weight.semi}
+  sampleText={SampleText}
+  fontFamily={typography.type.primary}
+/>
+
+**Font-Weight:** 500 (medium)
+
+<Typeset
+  fontSizes={[
+    Number(typography.size.m2),
+    Number(typography.size.m3),
+    Number(typography.size.s1),
+  ]}
+  fontWeight={typography.weight.medium}
+  sampleText={SampleText}
+  fontFamily={typography.type.primary}
+/>
+
+**Font-Weight:** 400 (regular)
+
+<Typeset
+  fontSizes={[
+    Number(typography.size.m3),
+    Number(typography.size.s1),
+    Number(typography.size.s2),
+  ]}
+  fontWeight={typography.weight.regular}
+  sampleText={SampleText}
+  fontFamily={typography.type.primary}
+/>
