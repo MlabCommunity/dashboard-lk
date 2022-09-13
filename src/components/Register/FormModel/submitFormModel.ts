@@ -5,24 +5,24 @@ export default {
       name: "organizationName",
       label: "Pełna nazwa Organizacji",
     },
-    streetName: {
-      name: "streetName",
+    street: {
+      name: "street",
       label: "Ulica",
     },
-    zipcode: {
-      name: "zipcode",
+    zipCode: {
+      name: "zipCode",
       label: "Kod pocztowy",
     },
     city: {
       name: "city",
       label: "Miasto",
     },
-    numberNIP: {
-      name: "numberNIP",
+    nip: {
+      name: "nip",
       label: "Numer NIP",
     },
-    numberKRS: {
-      name: "numberKRS",
+    krs: {
+      name: "krs",
       label: "Numer KRS",
     },
     firstName: {
@@ -33,8 +33,8 @@ export default {
       name: "lastName",
       label: "Nazwisko",
     },
-    email: {
-      name: "email",
+    emailAddress: {
+      name: "emailAddress",
       label: "Adres e-mail",
     },
     password: {
@@ -44,6 +44,10 @@ export default {
     confirmPassword: {
       name: "confirmPassword",
       label: "Powtórz hasło",
+    },
+    phoneNumber: {
+      name: "phoneNumber",
+      label: "Numer Telefonu",
     },
   },
 };

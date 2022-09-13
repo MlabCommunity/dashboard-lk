@@ -1,4 +1,4 @@
-export { FormWrapper, override } from "./FormWrapper";
+export { FormWrapper } from "./FormWrapper";
 export { InputField } from "./InputField";
 export { Inputs } from "./Inputs";
 export { LoginLayout } from "./LoginLayout";

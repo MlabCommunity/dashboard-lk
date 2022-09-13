@@ -7,11 +7,12 @@ export const OrganizationForm = (props: IInputTypes) => {
   const {
     formField: {
       organizationName,
-      streetName,
-      zipcode,
+      street,
+      zipCode,
       city,
-      numberNIP,
-      numberKRS,
+      nip,
+      krs,
+      phoneNumber,
     },
   } = props;
 
@@ -35,11 +36,11 @@ export const OrganizationForm = (props: IInputTypes) => {
       </Grid2>
       <Grid2 container spacing={3}>
         <Grid2 xs={12}>
-          <label htmlFor="streetName">{streetName.label}</label>
+          <label htmlFor="street">{street.label}</label>
           <InputField
             maxLength="64"
             type="text"
-            name={streetName.name}
+            name={street.name}
             placeholder="Wpisz"
           />
           <ErrorMessage
@@ -51,11 +52,11 @@ export const OrganizationForm = (props: IInputTypes) => {
       </Grid2>
       <Grid2 container spacing={3}>
         <Grid2 xs={5}>
-          <label htmlFor="zipcode">{zipcode.label}</label>
+          <label htmlFor="zipcode">{zipCode.label}</label>
           <InputField
             maxLength="6"
             type="text"
-            name={zipcode.name}
+            name={zipCode.name}
             placeholder="00-000"
           />
           <ErrorMessage component="p" className="errorMessage" name="zipcode" />
@@ -73,26 +74,25 @@ export const OrganizationForm = (props: IInputTypes) => {
       </Grid2>
       <Grid2 container spacing={3}>
         <Grid2 xs={12}>
-          <label htmlFor="numberNIP">{numberNIP.label}</label>
-          <InputField type="number" name={numberNIP.name} placeholder="Wpisz" />
-          <ErrorMessage
-            component="p"
-            className="errorMessage"
-            name="numberNIP"
-          />
+          <label htmlFor="nip">{nip.label}</label>
+          <InputField type="text" name={nip.name} placeholder="Wpisz" />
+          <ErrorMessage component="p" className="errorMessage" name="nip" />
         </Grid2>
       </Grid2>
       <Grid2 container spacing={3}>
         <Grid2 xs={12}>
-          <label htmlFor="numberKRS">{numberKRS.label}</label>
-          <InputField type="number" name={numberKRS.name} placeholder="Wpisz" />
-          <ErrorMessage
-            component="p"
-            className="errorMessage"
-            name="numberKRS"
-          />
+          <label htmlFor="krs">{krs.label}</label>
+          <InputField type="text" name={krs.name} placeholder="Wpisz" />
+          <ErrorMessage component="p" className="errorMessage" name="krs" />
         </Grid2>
       </Grid2>
+      <Grid2 container spacing={3}>
+        <Grid2 xs={12}>
+          <label htmlFor="phoneNumber">{phoneNumber.label}</label>
+          <InputField type="text" name={phoneNumber.name} placeholder="Wpisz" />
+        </Grid2>
+      </Grid2>
+      <ErrorMessage component="p" className="errorMessage" name="phoneNumber" />
     </Inputs>
   );
 };

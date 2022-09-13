@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Stepper, Step, StepLabel } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { IRegisterFields } from "types/axiosApi";
-import { PuffLoader } from "react-spinners";
+import { Loader } from "shared/dashboard/Loader";
 import { Formik, Form } from "formik";
 
 import { ReactComponent as Arrow } from "assets/loginRegister/Arrow.svg";
-import { FormWrapper, override, SubmitButton } from "shared/loginRegister";
+import { FormWrapper, SubmitButton } from "shared/loginRegister";
 import useRegisterData from "services/UserRegisterData";
 import RegistrationSuccessfull from "./Forms/RegistrationSuccessfull";
 import validationSchema from "./FormModel/validationSchema";
@@ -32,16 +32,17 @@ const renderStepContent = (step: number) => {
 
 const initialValues = {
   organizationName: "",
-  streetName: "",
-  zipcode: "",
+  street: "",
+  zipCode: "",
   city: "",
-  numberNIP: "",
-  numberKRS: "",
+  nip: "",
+  krs: "",
   firstName: "",
   lastName: "",
-  email: "",
+  emailAddress: "",
   password: "",
   confirmPassword: "",
+  phoneNumber: "",
 };
 
 export const RegisterOrganization = () => {
@@ -54,17 +55,34 @@ export const RegisterOrganization = () => {
 
   const handleRegisterFormSubmit = async (values: IRegisterFields) => {
     const response = await onRegister({
-      data: values,
+      data: {
+        shelter: {
+          organizationName: values.organizationName,
+          street: values.street,
+          zipCode: values.zipCode,
+          city: values.city,
+          nip: values.nip,
+          krs: values.krs,
+          phoneNumber: values.phoneNumber,
+        },
+        user: {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          emailAddress: values.emailAddress,
+          password: values.password,
+          confirmPassword: values.confirmPassword,
+        },
+      },
     });
     localStorage.setItem("user", JSON.stringify(response.data));
-    if (response.status === 201) {
+    if (response.status === 204) {
       setActiveStep(activeStep + 1);
     }
   };
 
-  const handleSubmit = (values: IRegisterFields, actions: any) => {
+  const handleSubmit = (data: IRegisterFields, actions: any) => {
     if (activeStep === 1) {
-      handleRegisterFormSubmit(values);
+      handleRegisterFormSubmit(data);
     } else {
       setActiveStep(activeStep + 1);
       actions.setTouched({});
@@ -166,13 +184,7 @@ export const RegisterOrganization = () => {
                 </Grid2>
 
                 <p className="errorMessage">{error && "Coś poszło nie tak"}</p>
-                {loading && (
-                  <PuffLoader
-                    color="green"
-                    cssOverride={override}
-                    speedMultiplier={1.5}
-                  />
-                )}
+                {loading && <Loader />}
               </div>
             </Form>
           )}

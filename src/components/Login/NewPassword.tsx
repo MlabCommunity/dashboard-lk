@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ErrorMessage, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { PuffLoader } from "react-spinners";
+import { Loader } from "shared/dashboard/Loader";
 import * as Yup from "yup";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
@@ -11,7 +11,6 @@ import EyeOn from "assets/loginRegister/Eye-on.png";
 import EyeOff from "assets/loginRegister/Eye-off.png";
 import {
   FormWrapper,
-  override,
   Inputs,
   InputField,
   SubmitButton,
@@ -84,13 +83,7 @@ export const NewPassword = () => {
         {(props) => (
           <FormContainer onSubmit={props.handleSubmit}>
             <Inputs>
-              {loading && (
-                <PuffLoader
-                  color="green"
-                  cssOverride={override}
-                  speedMultiplier={1.5}
-                />
-              )}
+              {loading && <Loader />}
               <Grid2 container spacing={3}>
                 <Grid2 className="passwordContainer" xs={12}>
                   <label htmlFor="password">Hasło</label>

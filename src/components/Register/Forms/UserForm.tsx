@@ -9,7 +9,7 @@ import EyeOn from "assets/loginRegister/Eye-on.png";
 
 export const UserForm = (props: IInputTypes) => {
   const {
-    formField: { firstName, lastName, email, password, confirmPassword },
+    formField: { firstName, lastName, emailAddress, password, confirmPassword },
   } = props;
 
   const [passwordType, handlePasswordVisibility] =
@@ -51,9 +51,17 @@ export const UserForm = (props: IInputTypes) => {
       </Grid2>
       <Grid2 container spacing={3}>
         <Grid2 xs={12}>
-          <label htmlFor="email">{email.label}</label>
-          <InputField type="email" name={email.name} placeholder="Wpisz" />
-          <ErrorMessage component="p" className="errorMessage" name="email" />
+          <label htmlFor="emailAddress">{emailAddress.label}</label>
+          <InputField
+            type="emailAddress"
+            name={emailAddress.name}
+            placeholder="Wpisz"
+          />
+          <ErrorMessage
+            component="p"
+            className="errorMessage"
+            name="emailAddress"
+          />
         </Grid2>
       </Grid2>
       <Grid2 container spacing={3}>

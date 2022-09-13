@@ -1,7 +1,9 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Routes } from "services/Routes";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 import { ReactComponent as OrganizationIcon } from "assets/dashboard/Organization.svg";
 import { ReactComponent as HomeIcon } from "assets/dashboard/HomeNavIcon.svg";
@@ -158,6 +160,35 @@ interface IsHiddenProp {
   toggleNav: () => void;
 }
 
+const LinkData = [
+  {
+    id: 1,
+    icon: HomeIcon,
+    route: Routes.dashboard.path,
+    text: "Dashboard",
+  },
+  {
+    id: 2,
+    icon: ChatIcon,
+    route: Routes.messages.path,
+    text: "Wiadomości",
+  },
+  {
+    id: 3,
+    icon: SmileIcon,
+    route: Routes.animalCards.path,
+    text: "Karty zwierząt",
+  },
+  {
+    id: 4,
+    icon: HeartIcon,
+    route: Routes.volunteering.path,
+    text: "Wolontariat",
+  },
+];
+
+const url = "http://lappka.mobitouch.pl/identity/User";
+
 export const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -172,6 +203,16 @@ export const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
     handler: toggleOpen,
   });
 
+  // eslint-disable-next-line no-unused-vars
+  const { isLoading, data, isFetching } = useQuery(["userData"], async () => {
+    try {
+      const response = await axios(url);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
   return (
     <Navigation className={isHidden ? "active" : ""}>
       <div className="links">
@@ -181,22 +222,11 @@ export const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
             <Close />
           </button>
         </div>
-        <SideBarLink onClick={toggleNav} to={Routes.dashboard.path}>
-          <HomeIcon />
-          Dashboard
-        </SideBarLink>
-        <SideBarLink onClick={toggleNav} to={Routes.messages.path}>
-          <ChatIcon />
-          Wiadomości
-        </SideBarLink>
-        <SideBarLink onClick={toggleNav} to={Routes.animalCards.path}>
-          <SmileIcon />
-          Karty Zwierząt
-        </SideBarLink>
-        <SideBarLink onClick={toggleNav} to={Routes.volunteering.path}>
-          <HeartIcon />
-          Wolontariat
-        </SideBarLink>
+        {LinkData.map((link) => (
+          <SideBarLink key={link.id} onClick={toggleNav} to={link.route}>
+            <link.icon /> {link.text}
+          </SideBarLink>
+        ))}
         <p className="organization">organizacja</p>
         <SideBarLink onClick={toggleNav} to={Routes.organization.path}>
           <OrganizationIcon />

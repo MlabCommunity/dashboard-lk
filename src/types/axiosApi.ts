@@ -20,13 +20,32 @@ export interface IInputTypes {
 export interface IRegisterFields {
   firstName: string;
   lastName: string;
-  email: string;
+  emailAddress: string;
   password: string;
   confirmPassword: string;
   organizationName: string;
-  streetName: string;
-  zipcode: string;
+  street: string;
+  zipCode: string;
   city: string;
-  numberNIP: string;
-  numberKRS: string;
+  nip: string;
+  krs: string;
+  phoneNumber: string;
+}
+export interface IRegisterShelter {
+  shelter: {
+    organizationName: string;
+    street: string;
+    zipCode: string;
+    city: string;
+    nip: string;
+    krs: string;
+  };
+  user: {
+    firstName: string;
+    lastName: string;
+    emailAddress: string;
+    password: string;
+    confirmPassword: string;
+    phoneNumber: string;
+  };
 }
