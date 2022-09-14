@@ -34,7 +34,7 @@ export const SubmitButton = styled("button")(
     transform: rotate(${name === "prev" ? "180deg" : "0"});
   }
   &:hover {
-    background: ${name === "next" ? "#287154" : "#E5E5E5"}
+    background: ${name === "next" ? "#287154" : "#F6F7F9"};
   }
   @media (min-width: 768px) {
      margin-top: 1rem;
