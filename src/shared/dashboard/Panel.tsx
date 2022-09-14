@@ -82,35 +82,38 @@ export const Panel = ({ toggleNav }: IToggleProps) => {
 
   const title = () => {
     if (match?.pathname === Routes.dashboard.path) {
-      return "Dashboard";
+      return <p className="title">Dashboard</p>;
     }
     if (match?.pathname === Routes.messages.path) {
-      return "Wiadomości";
+      return <p className="title">Wiadomości</p>;
     }
     if (match?.pathname === Routes.animalCards.path) {
-      return "Karty Zwierząt";
+      return <p className="title">Karty zwierząt</p>;
     }
     if (match?.pathname === Routes.addAnimalCard.path) {
       return (
         <p className="title">
-          <span className="dash-card">Karty Zwierząt /</span>
+          <span className="dash-card">Karty Zwierząt / </span>
           Nowa Karta
         </p>
       );
-
-      // `${(<span className="dash-card">Karty Zwierząt /</span>)} Nowa karta`;
     }
     if (match?.pathname === Routes.volunteering.path) {
-      return "Wolontariat";
+      return <p className="title">Wolontariat</p>;
     }
     if (match?.pathname === Routes.accountSettings.path) {
-      return "Ustawienia konta";
+      return <p className="title">Ustawienia konta</p>;
     }
     if (match?.pathname === Routes.organization.path) {
-      return "Pracownicy";
+      return <p className="title">Pracownicy</p>;
     }
     if (match?.pathname === Routes.addEmployee.path) {
-      return "Pracownicy / Nowa karta";
+      return (
+        <p className="title">
+          <span className="dash-card">Pracownicy / </span>
+          Nowa Karta
+        </p>
+      );
     }
     return null;
   };

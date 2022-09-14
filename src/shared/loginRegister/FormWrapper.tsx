@@ -1,14 +1,6 @@
 import { PropsWithChildren } from "react";
-import styled, { CSSProperties } from "styled-components";
+import styled from "styled-components";
 import { motion } from "framer-motion";
-
-export const override: CSSProperties = {
-  position: "absolute",
-  zIndex: "10",
-  left: "50%",
-  top: "50%",
-  transform: "translate(-50%,-50%)",
-};
 
 export const StyledWrapper = styled(motion.div)`
   padding: 2.4rem 1.6rem;

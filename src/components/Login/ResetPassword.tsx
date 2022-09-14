@@ -1,14 +1,13 @@
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { ErrorMessage, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { PuffLoader } from "react-spinners";
+import { Loader } from "shared/dashboard/Loader";
 import styled from "styled-components";
 import * as Yup from "yup";
 
 import useUserData from "services/UserLoginData";
 import {
   FormWrapper,
-  override,
   SubmitButton,
   Inputs,
   InputField,
@@ -62,13 +61,7 @@ export const ResetPassword = () => {
         {(props) => (
           <FormContainer onSubmit={props.handleSubmit}>
             <Inputs>
-              {loading && (
-                <PuffLoader
-                  color="green"
-                  cssOverride={override}
-                  speedMultiplier={1.5}
-                />
-              )}
+              {loading && <Loader />}
               <Grid2 container spacing={3}>
                 <Grid2 xs={12}>
                   <label htmlFor="email">E-mail</label>

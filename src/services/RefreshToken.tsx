@@ -5,7 +5,7 @@ import type { IResponse } from "types/axiosApi";
 
 export const refreshToken = async (token: string) => {
   const response: AxiosResponse<IResponse> = await axiosInstance.post(
-    "/auth/use",
+    "/auth/useToken",
     {
       token,
     }

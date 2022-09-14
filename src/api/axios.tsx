@@ -9,11 +9,13 @@ const axiosInstance = axios.create({
 
 axios.interceptors.request.use(
   async (config) => {
-    const user = localStorage.getItem("user");
+    const user = JSON.parse(localStorage.getItem("user")!);
 
     if (user) {
       config.headers = {
-        Authorization: `Bearer ${user}`,
+        Authorization: `Bearer ${user.accessToken}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       };
     }
     return config;
