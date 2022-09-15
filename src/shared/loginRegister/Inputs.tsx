@@ -2,6 +2,11 @@ import styled from "styled-components";
 
 export const Inputs = styled("div")`
   width: 100%;
+  label {
+    ${({ theme }) => theme.text13Medium}
+    color: ${({ theme }) => theme.colorsGray.darkGray2};
+  }
+
   .passwordContainer {
     position: relative;
     button {

@@ -43,10 +43,6 @@ const LayoutWrapper = styled("div")`
       color: ${({ theme }) => theme.colorsRed.r500};
       ${({ theme }) => theme.text12Regular};
     }
-    label {
-      ${({ theme }) => theme.text13Medium};
-      color: ${({ theme }) => theme.colorsGray.darkGray2};
-    }
     .controls {
       display: flex;
       justify-content: space-between;
