@@ -1,8 +1,8 @@
 import axiosInstance from "api/axios";
 
-export const revokeToken = async (token: string) => {
-  await axiosInstance.post("/auth/revoke", {
-    token,
+export const revokeToken = async (refreshToken: string) => {
+  await axiosInstance.post("/identity/Auth/revokeToken", {
+    refreshToken,
   });
 };
 

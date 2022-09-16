@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Field } from "formik";
 
@@ -22,12 +23,31 @@ const SelectField = styled("select")`
 interface SelectProps {
   selectId: string;
   options: string[];
+  getSelectedValue: any;
 }
 
 // eslint-disable-next-line arrow-body-style
-export const Select = ({ selectId, options }: SelectProps) => {
+export const Select = ({
+  selectId,
+  options,
+  getSelectedValue,
+}: SelectProps) => {
+  const [selectedValue, setSelectedValue] = useState("");
+  const handleValue = (e: any) => {
+    setSelectedValue(e.target.value);
+  };
+  useEffect(() => {
+    getSelectedValue(selectedValue);
+  }, [selectedValue]);
+
   return (
-    <Field defaultValue="" as={SelectField} name={selectId} id={selectId}>
+    <Field
+      onChange={(e: any) => handleValue(e)}
+      defaultValue=""
+      as={SelectField}
+      name={selectId}
+      id={selectId}
+    >
       <option value="" disabled hidden>
         Wybierz z listy
       </option>

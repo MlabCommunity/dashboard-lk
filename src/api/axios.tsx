@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { refreshToken } from "services/RefreshToken";
 import { useHandleLogout } from "services/HandleLogout";
+import { useNavigate } from "react-router-dom";
 
 const axiosInstance = axios.create({
   baseURL: "http://lappka.mobitouch.pl",
