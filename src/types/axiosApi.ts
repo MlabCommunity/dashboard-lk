@@ -60,4 +60,7 @@ export interface IAnimalCardTypes {
   isSterilized: string;
   photos: string[];
   dateOfBirth: string;
+  options: [];
+  value: string;
+  label: string;
 }

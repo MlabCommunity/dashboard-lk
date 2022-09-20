@@ -1,7 +1,11 @@
 export default {
+  type: {
+    name: "type",
+    label: "Gatunek",
+  },
   dogBreed: {
     name: "dogBreed",
-    label: "Gatunek",
+    label: "Rasa",
   },
   dogColor: {
     name: "dogColor",
@@ -9,7 +13,7 @@ export default {
   },
   catBreed: {
     name: "catBreed",
-    label: "Gatunek",
+    label: "Rasa",
   },
   catColor: {
     name: "catColor",

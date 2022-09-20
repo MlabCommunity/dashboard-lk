@@ -36,6 +36,10 @@ export const FormContainer = styled("form")`
     ${({ theme }) => theme.text13Medium};
     color: ${({ theme }) => theme.colorsGray.darkGray2};
   }
+  .errorMessage {
+    ${({ theme }) => theme.text12Regular};
+    color: ${({ theme }) => theme.colorsStatus.redR500};
+  }
 `;
 
 export const FileInputWrapper = styled("div")`
