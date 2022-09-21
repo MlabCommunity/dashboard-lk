@@ -5,9 +5,10 @@ import { IRegisterFields } from "types/axiosApi";
 import { Loader } from "shared/dashboard/Loader";
 import { Formik, Form } from "formik";
 
+import useGeocode from "services/Geocode";
 import { ReactComponent as Arrow } from "assets/loginRegister/Arrow.svg";
 import { FormWrapper, SubmitButton } from "shared/loginRegister";
-import useRegisterData from "services/UserRegisterData";
+import { useRegisterData } from "services/UserRegisterData";
 import RegistrationSuccessfull from "./Forms/RegistrationSuccessfull";
 import validationSchema from "./FormModel/validationSchema";
 import submitFormModel from "./FormModel/submitFormModel";
@@ -47,6 +48,7 @@ const initialValues = {
 
 export const RegisterOrganization = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [coordinatesError, setCoordinatesError] = useState(false);
 
   const currentValidationSchema = validationSchema[activeStep];
 
@@ -54,13 +56,36 @@ export const RegisterOrganization = () => {
   const [{ loading, error }, onRegister] = useData();
 
   const handleRegisterFormSubmit = async (values: IRegisterFields) => {
+    const address = `${values.street}, ${values.city}, ${values.zipCode}`;
+    let lati = null;
+    let long = null;
+
+    const getCoordinates = (lat: number, lng: number) => {
+      lati = lat;
+      long = lng;
+    };
+
+    await useGeocode()
+      .fromAddress(address)
+      .then(
+        (response) => {
+          const { lat, lng } = response.results[0].geometry.location;
+          getCoordinates(lat, lng);
+          if (lat < 49 || lat > 59.34 || lng < 14.07 || lng > 24.15) {
+            setCoordinatesError(true);
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    // console.log(coordinates);
     const response = await onRegister({
       data: {
         shelter: {
           organizationName: values.organizationName,
-          street: values.street,
-          zipCode: values.zipCode,
-          city: values.city,
+          latitude: lati,
+          longitude: long,
           nip: values.nip,
           krs: values.krs,
           phoneNumber: values.phoneNumber,
@@ -158,11 +183,11 @@ export const RegisterOrganization = () => {
           validationSchema={currentValidationSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting }) => (
+          {({ isValidating }) => (
             <Form id={formId}>
               {renderStepContent(activeStep)}
 
-              <div>
+              <div style={{ position: "relative" }}>
                 <Grid2 container spacing={3}>
                   {activeStep === 1 && (
                     <Grid2 xs={12} md={5}>
@@ -172,18 +197,26 @@ export const RegisterOrganization = () => {
                     </Grid2>
                   )}
                   <Grid2 xs={12} md={activeStep === 0 ? 12 : 7}>
-                    <SubmitButton
-                      disabled={isSubmitting}
-                      name="next"
-                      type="submit"
-                    >
-                      {activeStep === 1 ? "Zarejestruj się" : "Następny krok"}
-                      {activeStep === 0 && <Arrow />}
-                    </SubmitButton>
+                    {activeStep !== 2 && (
+                      <SubmitButton
+                        disabled={isValidating}
+                        name="next"
+                        type="submit"
+                      >
+                        {activeStep === 1 ? "Zarejestruj się" : "Następny krok"}
+                        {activeStep === 0 && <Arrow />}
+                      </SubmitButton>
+                    )}
                   </Grid2>
                 </Grid2>
-
-                <p className="errorMessage">{error && "Coś poszło nie tak"}</p>
+                {!coordinatesError && error && (
+                  <p className="errorMessage">Coś poszło nie tak</p>
+                )}
+                {coordinatesError && (
+                  <p className="errorMessage">
+                    Podane miejsce nie znajduje się w Polsce
+                  </p>
+                )}
                 {loading && <Loader />}
               </div>
             </Form>

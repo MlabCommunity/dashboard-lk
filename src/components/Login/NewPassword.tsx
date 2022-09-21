@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { ErrorMessage, Formik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Loader } from "shared/dashboard/Loader";
 import * as Yup from "yup";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
-import userNewPasswordData from "services/UserNewPasswordData";
+import { useResetPasswordData } from "services/ResetPassword";
 import EyeOn from "assets/loginRegister/Eye-on.png";
 import EyeOff from "assets/loginRegister/Eye-off.png";
 import {
@@ -45,22 +45,28 @@ interface ValuesProps {
 
 export const NewPassword = () => {
   const navigate = useNavigate();
+  const { postId } = useParams();
 
   const [passwordType, handlePasswordVisibility] =
     useTogglePasswordVisibility();
   const [repeatPasswordType, handleRepeatPasswordVisibility] =
     useTogglePasswordVisibility();
 
-  const { newPasswordData } = userNewPasswordData();
-  const [{ error, loading }, login] = newPasswordData();
+  const { useResetPassword } = useResetPasswordData();
+  const [{ error, loading }, setPassword] = useResetPassword(postId!);
+
+  // UP
 
   const handleFormSubmit = async (values: ValuesProps) => {
-    const response = await login({
-      data: values,
+    const response = await setPassword({
+      data: {
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+        // email: EMAIL FROM URL HERE,
+      },
     });
-    localStorage.setItem("user", JSON.stringify(response.data));
-    if (response.status === 200) {
-      navigate("/ResetSuccess");
+    if (response.status === 204) {
+      navigate("/NewPasswordSuccess");
     }
   };
 
@@ -139,7 +145,7 @@ export const NewPassword = () => {
                 name="confirmPassword"
               />
             </Inputs>
-            {error && <p className="errorMessage">Nieprawidłowy email</p>}
+            {error && <p className="errorMessage">Nieprawidłowe dane</p>}
             <SubmitButton
               type="submit"
               name="next"

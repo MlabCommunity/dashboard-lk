@@ -5,7 +5,7 @@ import { Loader } from "shared/dashboard/Loader";
 import styled from "styled-components";
 import * as Yup from "yup";
 
-import useUserData from "services/UserLoginData";
+import { useEmailData } from "services/ResetPassword";
 import {
   FormWrapper,
   SubmitButton,
@@ -30,15 +30,14 @@ interface ValuesProps {
 export const ResetPassword = () => {
   const navigate = useNavigate();
 
-  const { useLoginData } = useUserData();
-  const [{ error, loading }, login] = useLoginData();
+  const { useEmail } = useEmailData();
+  const [{ error, loading }, sendEmail] = useEmail();
 
-  const handleFormSubmit = async (values: ValuesProps) => {
-    const response = await login({
-      data: values,
+  const handleFormSubmit = async (value: ValuesProps) => {
+    const response = await sendEmail({
+      data: value,
     });
-    localStorage.setItem("user", JSON.stringify(response.data));
-    if (response.status === 200) {
+    if (response.status === 204) {
       navigate("/ResetSuccess");
     }
   };
@@ -74,7 +73,9 @@ export const ResetPassword = () => {
                 name="email"
               />
             </Inputs>
-            {error && <p className="errorMessage">Nieprawidłowy email</p>}
+            {error && (
+              <p className="errorMessage">Podany adres email nie istnieje</p>
+            )}
             <SubmitButton
               type="submit"
               name="next"

@@ -54,6 +54,9 @@ export default [
       .required(required)
       .matches(/^\d{10}$/, "Numer KRS musi mieć 10 cyfr")
       .length(10, "Numer KRS musi mieć 10 cyfr"),
+    [phoneNumber.name]: Yup.string()
+      .matches(/^\d{9,10}$/, "Numer telefonu musi mieć między 9-10 cyfr")
+      .required(required),
   }),
   Yup.object().shape({
     [firstName.name]: Yup.string()
@@ -83,6 +86,5 @@ export default [
     [confirmPassword.name]: Yup.string()
       .required(required)
       .oneOf([Yup.ref("password"), null], "Hasła muszą być takie same"),
-    [phoneNumber.name]: Yup.string().required(required),
   }),
 ];

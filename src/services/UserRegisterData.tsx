@@ -1,7 +1,7 @@
 import useAxios from "axios-hooks";
 import { IRegisterShelter } from "types/axiosApi";
 
-const useRegisterData = () => {
+export const useRegisterData = () => {
   const useData = () =>
     useAxios<IRegisterShelter>(
       {
@@ -12,5 +12,3 @@ const useRegisterData = () => {
     );
   return { useData };
 };
-
-export default useRegisterData;

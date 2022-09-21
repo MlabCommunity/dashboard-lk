@@ -22,6 +22,7 @@ import {
   ResetPassword,
   NewPassword,
   ResetSuccess,
+  NewPasswordSuccess,
 } from "components/Login";
 
 const App = () => (
@@ -34,7 +35,8 @@ const App = () => (
             <Route path="LoginForm" element={<LoginForm />} />
             <Route path="ResetPassword" element={<ResetPassword />} />
             <Route path="ResetSuccess" element={<ResetSuccess />} />
-            <Route path="NewPassword" element={<NewPassword />} />
+            <Route path="NewPassword/:postId" element={<NewPassword />} />
+            <Route path="NewPasswordSuccess" element={<NewPasswordSuccess />} />
             <Route path="Register" element={<RegisterOrganization />} />
           </Route>
 
@@ -43,7 +45,7 @@ const App = () => (
             element={
               <ProtectedRoute>
                 <Routes>
-                  <Route path="/*" element={<MainDashboard />}>
+                  <Route path="/" element={<MainDashboard />}>
                     <Route index element={<DashboardSection />} />
                     <Route
                       path="dashboardSection"

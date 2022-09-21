@@ -34,12 +34,12 @@ export interface IRegisterFields {
 export interface IRegisterShelter {
   shelter: {
     organizationName: string;
-    street: string;
-    zipCode: string;
-    city: string;
+    longitude: number;
+    latitude: number;
     nip: string;
     krs: string;
   };
+
   user: {
     firstName: string;
     lastName: string;
@@ -48,4 +48,19 @@ export interface IRegisterShelter {
     confirmPassword: string;
     phoneNumber: string;
   };
+}
+
+export interface IGetCoordinates {
+  street: string;
+  zipCode: string;
+  city: string;
+}
+
+export interface IEmail {
+  email: string;
+}
+export interface IResetPassword {
+  password: string;
+  confirmPassword: string;
+  email: string;
 }
