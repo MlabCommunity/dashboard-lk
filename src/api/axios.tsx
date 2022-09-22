@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { refreshToken } from "services/RefreshToken";
+import { useRefreshToken } from "services/RefreshToken";
 import { useHandleLogout } from "services/HandleLogout";
 
 const axiosInstance = axios.create({
@@ -39,14 +39,14 @@ axios.interceptors.response.use(
       );
       const navigate = useNavigate();
       if (expiryTimeout > new Date()) {
-        const [data, refreshTokenStatus] = await refreshToken(
-          user.refreshToken
+        const [data, refreshTokenStatus] = await useRefreshToken(
+          user.refreshToken,
+          user.accessToken
         );
         if (data && refreshTokenStatus === 204) {
           localStorage.setItem("user", JSON.stringify(data));
           return axios.request(config);
         }
-
         if (refreshTokenStatus !== 204) {
           useHandleLogout();
           navigate("/auth/LoginForm");

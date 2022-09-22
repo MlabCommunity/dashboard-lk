@@ -8,6 +8,7 @@ export const revokeToken = async (token: string) => {
 
 export const useHandleLogout = async () => {
   const user = JSON.parse(localStorage.getItem("user")!);
+  console.log(user);
   await revokeToken(user.refreshToken);
   localStorage.removeItem("user");
   localStorage.removeItem("remember");

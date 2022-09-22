@@ -37,7 +37,7 @@ const StatisticCard = styled(CardLayout)`
   }
 `;
 
-const url = "http://lappka.mobitouch.pl/pet/api/pets/shelters/stats";
+const url = "http://lappka.mobitouch.pl/pet/shelters/stats";
 
 export const StatisticCards = () => {
   const [isLoading, setLoading] = useState(false);

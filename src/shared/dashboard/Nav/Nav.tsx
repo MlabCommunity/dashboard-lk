@@ -187,10 +187,13 @@ const LinkData = [
   },
 ];
 
-const url = "http://lappka.mobitouch.pl/identity/User";
+const OrganizationUrl = "http://lappka.mobitouch.pl/pet/shelters";
 
 export const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [organizationName, setOrganizationName] = useState("");
 
   const toggleOpen = () => setIsOpen((prevIsOpen) => !prevIsOpen);
 
@@ -204,14 +207,19 @@ export const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
   });
 
   // eslint-disable-next-line no-unused-vars
-  const { isLoading, data, isFetching } = useQuery(["userData"], async () => {
-    try {
-      const response = await axios(url);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
+  const { isLoading, data, isFetching } = useQuery(
+    ["OrganizationData"],
+    async () => {
+      try {
+        const response = await axios(OrganizationUrl);
+        setFirstName(response.data.firstName);
+        setLastName(response.data.lastName);
+        setOrganizationName(response.data.organizationName);
+      } catch (error) {
+        console.log(error);
+      }
     }
-  });
+  );
 
   return (
     <Navigation className={isHidden ? "active" : ""}>
@@ -237,10 +245,11 @@ export const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
         <img src={UserLogo} alt="" />
         <DropDownNavButton type="button" onClick={toggleOpen} ref={buttonRef}>
           <p className="username">
-            Jan Kowalski <ArrowDown className={`${isOpen && "active"}`} />
+            {firstName} {lastName}{" "}
+            <ArrowDown className={`${isOpen && "active"}`} />
           </p>
 
-          <p className="organization-name">Psiaki Adopciaki z Psiej Wioski</p>
+          <p className="organization-name">{organizationName}</p>
           {isOpen && (
             <DropDownContainer ref={containerRef}>
               <DropDownList>

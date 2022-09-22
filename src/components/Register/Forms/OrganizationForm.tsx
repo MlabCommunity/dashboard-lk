@@ -43,23 +43,19 @@ export const OrganizationForm = (props: IInputTypes) => {
             name={street.name}
             placeholder="Wpisz"
           />
-          <ErrorMessage
-            component="p"
-            className="errorMessage"
-            name="streetName"
-          />
+          <ErrorMessage component="p" className="errorMessage" name="street" />
         </Grid2>
       </Grid2>
       <Grid2 container spacing={3}>
         <Grid2 xs={5}>
-          <label htmlFor="zipcode">{zipCode.label}</label>
+          <label htmlFor="zipCode">{zipCode.label}</label>
           <InputField
             maxLength="6"
             type="text"
             name={zipCode.name}
             placeholder="00-000"
           />
-          <ErrorMessage component="p" className="errorMessage" name="zipcode" />
+          <ErrorMessage component="p" className="errorMessage" name="zipCode" />
         </Grid2>
         <Grid2 xs={7}>
           <label htmlFor="city">{city.label}</label>
