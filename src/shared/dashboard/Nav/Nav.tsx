@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Routes } from "services/Routes";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -53,11 +53,19 @@ export const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
         setFirstName(response.data.firstName);
         setLastName(response.data.lastName);
         setOrganizationName(response.data.organizationName);
+        console.log(response);
       } catch (error) {
         console.log(error);
       }
     }
   );
+
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    await useHandleLogout();
+    navigate("/auth/LoginForm");
+  };
 
   return (
     <Navigation className={isHidden ? "active" : ""}>
@@ -95,9 +103,12 @@ export const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
                   <Link to="/accountSettings">Ustawienia konta</Link>
                 </Option>
                 <Option>
-                  <Link to="/auth/LoginForm" onClick={useHandleLogout}>
+                  {/* <Link to="/auth/LoginForm" onClick={useHandleLogout}>
                     Wyloguj się
-                  </Link>
+                  </Link> */}
+                  <button type="button" onClick={logout}>
+                    WDWADWDAWDWA
+                  </button>
                 </Option>
               </DropDownList>
             </DropDownContainer>
