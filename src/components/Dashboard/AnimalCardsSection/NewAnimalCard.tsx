@@ -1,8 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
-// eslint-disable-next-line no-unused-vars
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ErrorMessage } from "@hookform/error-message";
+import { ErrorMessage } from "@hookform/error-message/dist";
 import Select from "react-select";
 
 import React from "react";
@@ -89,6 +88,7 @@ export const NewAnimalCard = () => {
   });
   const onSubmit = (formData: any) => {
     console.log(formData);
+    // eslint-disable-next-line no-alert
     alert(JSON.stringify(formData));
   };
 
