@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { at } from "lodash";
 import { useField } from "formik";
 
-const Input = styled("input")`
+export const Input = styled("input")`
   padding: 1rem 1.5rem;
   width: 100%;
   height: 4rem;

@@ -49,3 +49,18 @@ export interface IRegisterShelter {
     phoneNumber: string;
   };
 }
+export interface IAnimalCardTypes {
+  name: string;
+  dogBreed: string;
+  dogColor: string;
+  catBreed: string;
+  catColor: string;
+  gender: string;
+  weight: string;
+  isSterilized: string;
+  photos: string[];
+  dateOfBirth: string;
+  options: [];
+  value: string;
+  label: string;
+}
