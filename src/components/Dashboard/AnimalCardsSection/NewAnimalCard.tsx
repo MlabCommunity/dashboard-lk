@@ -1,279 +1,274 @@
+import { useForm, Controller } from "react-hook-form";
+// eslint-disable-next-line no-unused-vars
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ErrorMessage } from "@hookform/error-message";
+import Select from "react-select";
+
+import React from "react";
 import { SectionLayout } from "shared/dashboard";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { useNavigate, Link } from "react-router-dom";
-import { ErrorMessage, Formik } from "formik";
-import styled from "styled-components";
-import * as Yup from "yup";
+import { Link } from "react-router-dom";
+// import { ErrorMessage, Formik } from "formik";
 
-import { Select } from "shared/dashboard/Select";
+// import { Select } from "shared/dashboard/Select";
 import Plus from "assets/dashboard/Plus.png";
-import useUserData from "services/UserLoginData";
+
+import { Input } from "shared/loginRegister/InputField";
+// import { SelectField } from "shared/dashboard/Select";
+
 import {
   SubmitButton,
   Inputs,
-  InputField,
+  // InputField,
   ReturnLink,
 } from "shared/loginRegister";
+// import {
+//   useDogCardData,
+//   useCatCardData,
+//   useOtherCardData,
+// } from "services/AnimalCardData";
+// import { IAnimalCardTypes } from "types/axiosApi";
+import { FormContainer, FormWrapper, FileInputWrapper } from "./FormComponents";
+// import SubmitForm from "./FormModel/SubmitFormModel";
+// import Validation from "./FormModel/Validation";
+import { data } from "./FormModel/FormInputsData";
+// const { formId, FormField } = SubmitForm;
 
-const FormWrapper = styled("div")`
-  padding: 2.4rem 0;
-  margin: 0 auto;
-  width: clamp(27rem, 80vw, 56rem);
-  background: ${({ theme }) => theme.colorsBlackandWhite.white};
-  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
-    0px 1px 2px rgba(16, 24, 40, 0.06);
-  border-radius: 8px;
-  @media (min-width: 768px) {
-    padding: 4rem 0 2.4rem;
-    margin: unset;
-  }
-`;
-const FormContainer = styled("form")`
-  text-align: left;
-  .controls {
-    padding: 1.6rem 2.4rem 0;
-    display: flex;
-    justify-content: flex-end;
-    gap: 1.6rem;
-    border-top: 1px solid ${({ theme }) => theme.colorsGray.lightGray4};
-    button,
-    div a {
-      ${({ theme }) => theme.buttonLarge}
-    }
-    button {
-      margin-top: 0;
-    }
-    div {
-      height: auto;
-    }
-  }
-  .photos-title {
-    ${({ theme }) => theme.text13Medium};
-    color: ${({ theme }) => theme.colorsGray.darkGray2};
-  }
-`;
+import submitForm from "./FormModel/SubmitFormModel";
 
-const FileInputWrapper = styled("div")`
-  width: 100%;
-  height: 4rem;
-  ${({ theme }) => theme.text14Regular};
-  color: ${({ theme }) => theme.colorsGray.darkGray2};
-  background: ${({ theme }) => theme.colorsBlackandWhite.white};
-  border: 1px solid ${({ theme }) => theme.colorsGray.lightGray1};
-  border-radius: 0.6rem;
-  outline: none;
-  &:focus {
-    border: 1px solid #1a73e8;
-  }
-  label {
-    padding-left: 1.6rem;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    ${({ theme }) => theme.text14Regular};
-    color: ${({ theme }) => theme.colorsGray.midGray4};
-    overflow: hidden;
-    cursor: pointer;
-    div {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      width: 4rem;
-      background: ${({ theme }) => theme.colorsGray.lightGray4};
-      border-left: 1px solid ${({ theme }) => theme.colorsGray.lightGray1};
-      border-radius: 0 0.5rem 0.5rem 0;
-    }
-  }
-`;
+const {
+  type,
+  dogColor,
+  dogBreed,
+  catColor,
+  catBreed,
+  name,
+  gender,
+  dateOfBirth,
+  photos,
+  weight,
+  isSterilized,
+} = submitForm;
 
-const SignInSchema = Yup.object().shape({
-  email: Yup.string().email("Niepoprawny email").required("Wymagane pole"),
-  password: Yup.string().required("Wymagane pole"),
+const required = "Wymagane Pole";
+
+const Schema = Yup.object().shape({
+  [type.name]: Yup.string()
+    .min(2, "Minimum 2 znaki")
+    .matches(
+      /^[a-zA-ZzżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9\\-]{2,64}$/,
+      "Znaki specjalne z wyjątkiem - są niedozwolone"
+    )
+    .required(required),
+  [dogColor.name]: Yup.string().required(required),
+  [dogBreed.name]: Yup.string().required(required),
+  [catColor.name]: Yup.string().required(required),
+  [catBreed.name]: Yup.string().required(required),
+  [name.name]: Yup.string().required(required),
+  [gender.name]: Yup.string().required(required),
+  [isSterilized.name]: Yup.string().required(required),
+  [photos.name]: Yup.array()
+    .min(1, "Wybierz przynajmniej 1 zdjęcie")
+    .nullable()
+    .required(required),
+  [weight.name]: Yup.string().required(required),
+  [dateOfBirth.name]: Yup.string().required(required),
 });
 
-interface ValuesProps {
-  name: string;
-  breed: string;
-  gender: string;
-  color: string;
-  weight: string;
-  isSterilized: boolean;
-}
-
 export const NewAnimalCard = () => {
-  const navigate = useNavigate();
-
-  const { useLoginData } = useUserData();
-  const [{ error, loading }, login] = useLoginData();
-
-  // eslint-disable-next-line no-unused-vars
-  const handleFormSubmit = async ({ ...values }: ValuesProps) => {
-    const response = await login({
-      data: values,
-    });
-    localStorage.setItem("user", JSON.stringify(response.data));
-    // if (remember) {
-    //   localStorage.setItem("remember", "true");
-    // }
-    if (response.status === 200) {
-      navigate("/dashboardSection");
-    }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm({
+    resolver: yupResolver(Schema),
+    mode: "onChange",
+    reValidateMode: "onBlur",
+  });
+  const onSubmit = (formData: any) => {
+    console.log(formData);
+    alert(JSON.stringify(formData));
   };
-  if (loading) console.log("tak");
 
   return (
     <SectionLayout>
       <FormWrapper>
-        <Formik
-          initialValues={{
-            email: "",
-            password: "",
-            remember: false,
-            photos: [],
-          }}
-          validationSchema={SignInSchema}
-          onSubmit={async (values, actions) => {
-            actions.validateForm();
-            // handleFormSubmit(values);
-            actions.setSubmitting(false);
-            actions.resetForm();
-          }}
-        >
-          {(props) => (
-            <FormContainer onSubmit={props.handleSubmit}>
-              <Inputs style={{ padding: "0 2.4rem 2.4rem" }}>
-                <Grid2 container spacing={3}>
-                  <Grid2 columnSpacing={5} xs={12}>
-                    <label htmlFor="name">Imię zwierzaka</label>
-                    <InputField type="name" name="name" placeholder="Wpisz" />
-                  </Grid2>
-                </Grid2>
+        <FormContainer onSubmit={handleSubmit(onSubmit)}>
+          <Inputs style={{ padding: "0 2.4rem 2.4rem" }}>
+            <Grid2 container spacing={3}>
+              <Grid2 xs={12}>
+                <label htmlFor="name">Imię zwierzaka</label>
+                <Input type="text" placeholder="Wpisz" {...register("name")} />
                 <ErrorMessage
-                  component="p"
-                  className="errorMessage"
+                  errors={errors}
                   name="name"
+                  render={({ message }: any) => (
+                    <p className="errorMessage">{message}</p>
+                  )}
                 />
-
+              </Grid2>
+            </Grid2>
+            {data.map((dat) => (
+              <React.Fragment key={dat.label}>
                 <Grid2 container spacing={3}>
                   <Grid2 xs={12}>
-                    <label htmlFor="breed">Gatunek</label>
-                    <Select
-                      selectId="breed"
-                      options={["Pies", "Kot", "Inne.."]}
-                    />
-                  </Grid2>
-                </Grid2>
-                <ErrorMessage
-                  component="p"
-                  className="errorMessage"
-                  name="breed"
-                />
-
-                <Grid2 container spacing={3}>
-                  <Grid2 xs={12}>
-                    <label htmlFor="gender">Płeć</label>
-                    <Select
-                      selectId="gender"
-                      options={["Samiec", "Samiczka"]}
-                    />
-                  </Grid2>
-                </Grid2>
-                <ErrorMessage
-                  component="p"
-                  className="errorMessage"
-                  name="gender"
-                />
-
-                <Grid2 container spacing={3}>
-                  <Grid2 xs={12}>
-                    <label htmlFor="color">Umaszczenie</label>
-                    <Select
-                      selectId="color"
-                      options={["Czerwony", "Zielony"]}
-                    />
-                  </Grid2>
-                </Grid2>
-                <ErrorMessage
-                  component="p"
-                  className="errorMessage"
-                  name="color"
-                />
-
-                <Grid2 container spacing={3}>
-                  <Grid2 xs={12}>
-                    <label htmlFor="weight">Waga</label>
-                    <InputField
-                      type="text"
-                      name="weight"
-                      placeholder="Kilogramy"
-                    />
-                  </Grid2>
-                </Grid2>
-                <ErrorMessage
-                  component="p"
-                  className="errorMessage"
-                  name="weight"
-                />
-
-                <Grid2 container spacing={3}>
-                  <Grid2 columnSpacing={5} xs={12}>
-                    <p className="photos-title">Dodaj zdjęcia</p>
-                    <FileInputWrapper tabIndex={0}>
-                      <label htmlFor="photos">
-                        Dodaj
-                        <InputField
-                          type="file"
-                          id="photos"
-                          name="photos"
-                          accept="image/*"
-                          style={{ display: "none" }}
+                    <label htmlFor={dat.name}>{dat.label}</label>
+                    <Controller
+                      name="dogBreed"
+                      control={control}
+                      render={({ field, field: { value } }) => (
+                        <Select
+                          options={dat.options}
+                          placeholder="Wybierz z listy"
+                          {...register("dogBreed")}
+                          isDisabled={value === "Inne"}
+                          {...field}
+                          value={value}
+                          onChange={(e) => e.value}
                         />
-                        <div>
-                          <img src={Plus} alt="" />
-                        </div>
-                      </label>
-                    </FileInputWrapper>
+                      )}
+                    />
+                    <ErrorMessage
+                      errors={errors}
+                      name={dat.name}
+                      render={({ message }: any) => (
+                        <p className="errorMessage">{message}</p>
+                      )}
+                    />
                   </Grid2>
                 </Grid2>
-                <ErrorMessage
-                  component="p"
-                  className="errorMessage"
-                  name="name"
-                />
+              </React.Fragment>
+            ))}
 
-                <Grid2 container spacing={3}>
-                  <Grid2 xs={12}>
-                    <label htmlFor="isSterilized">Sterylizacja</label>
-                    <Select selectId="isSterilized" options={["Tak", "Nie"]} />
-                  </Grid2>
-                </Grid2>
+            <Grid2 container spacing={3}>
+              <Grid2 xs={12}>
+                <p className="photos-title">Dodaj zdjęcia</p>
+                <FileInputWrapper tabIndex={0}>
+                  <label htmlFor="photos">
+                    Dodaj
+                    <Input
+                      type="file"
+                      id="photos"
+                      style={{ display: "none" }}
+                      {...register("photos")}
+                    />
+                    <div>
+                      <img src={Plus} alt="" />
+                    </div>
+                  </label>
+                </FileInputWrapper>
                 <ErrorMessage
-                  component="p"
-                  className="errorMessage"
-                  name="weight"
+                  errors={errors}
+                  name="photos"
+                  render={({ message }) => (
+                    <p className="errorMessage">{message}</p>
+                  )}
                 />
-              </Inputs>
-              {error && <p className="errorMessage">Coś poszło nie tak</p>}
-              <div className="controls">
-                <ReturnLink>
-                  <Link to="/animalCardsSection">Anuluj</Link>
-                </ReturnLink>
-                <SubmitButton
-                  type="submit"
-                  name="next"
-                  disabled={props.isSubmitting}
-                  style={{ width: "unset" }}
-                >
-                  Zapisz
-                </SubmitButton>
-              </div>
-            </FormContainer>
-          )}
-        </Formik>
+              </Grid2>
+            </Grid2>
+
+            <Grid2 container spacing={3}>
+              <Grid2 xs={12}>
+                <label htmlFor="weight">Waga</label>
+                <Input
+                  type="text"
+                  placeholder="Kilogramy"
+                  {...register("weight")}
+                />
+              </Grid2>
+            </Grid2>
+            <ErrorMessage
+              errors={errors}
+              name="weight"
+              render={({ message }) => (
+                <p className="errorMessage">{message}</p>
+              )}
+            />
+          </Inputs>
+
+          <div className="controls">
+            <ReturnLink>
+              <Link to="/animalCardsSection">Anuluj</Link>
+            </ReturnLink>
+            <SubmitButton type="submit" name="next" style={{ width: "unset" }}>
+              Zapisz
+            </SubmitButton>
+          </div>
+        </FormContainer>
       </FormWrapper>
     </SectionLayout>
   );
 };
+
+// const [selectedAnimalType, setSelectedAnimalType] = useState("");
+// console.log(selectedAnimalType);
+
+// const { dogCardData } = useDogCardData();
+// // const { catCardData } = useCatCardData();
+// // const { otherCardData } = useOtherCardData();
+
+// const [{ error, loading }, addDog] = dogCardData();
+// const handleFormSubmit = async (values: IAnimalCardTypes) => {
+//   if (selectedAnimalType === "Pies") {
+//     console.log(error, loading);
+//     const response = await addDog({
+//       data: {
+//         name: values.name,
+//         dogBreed: values.dogBreed,
+//         dogColor: values.dogColor,
+//         weight: values.weight,
+//         photos: values.photos,
+//         isSterilized: values.isSterilized,
+//         gender: values.gender,
+//         dateOfBirth: values.dateOfBirth,
+//       },
+//     });
+//     console.log(response);
+// } else if (selectedAnimalType === "Kot") {
+//   const [{ error, loading }, addCat] = catCardData();
+//   console.log(error, loading);
+
+//   const response = await addCat({
+//     data: {
+//       name: values.name,
+//       dogBreed: values.dogBreed,
+//       dogColor: values.dogColor,
+//       weight: values.weight,
+//       photos: values.photos,
+//       isSterilized: values.isSterilized,
+//       gender: values.gender,
+//       dateOfBirth: values.dateOfBirth,
+//     },
+//   });
+//   console.log(response);
+// } else {
+//   const [{ error, loading }, addOther] = otherCardData();
+//   console.log(error, loading);
+
+//   const response = await addOther({
+//     data: {
+//       name: values.name,
+//       weight: values.weight,
+//       photos: values.photos,
+//       isSterilized: values.isSterilized,
+//       gender: values.gender,
+//       dateOfBirth: values.dateOfBirth,
+//     },
+//   });
+//   console.log(response);
+//   }
+// };
+
+// const handleSubmit = (inputsData: IAnimalCardTypes, actions: any) => {
+//   console.log("inputsData");
+//   handleFormSubmit(inputsData);
+
+//   actions.setTouched({});
+//   actions.setSubmitting(false);
+// };
+
+// const saveSelectedBreed = (selectedBreed: string) => {
+//   setSelectedAnimalType(selectedBreed);
+// };

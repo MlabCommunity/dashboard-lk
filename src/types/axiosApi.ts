@@ -38,6 +38,7 @@ export interface IRegisterShelter {
     latitude: number;
     nip: string;
     krs: string;
+    phoneNumber: string;
   };
 
   user: {
@@ -46,8 +47,22 @@ export interface IRegisterShelter {
     emailAddress: string;
     password: string;
     confirmPassword: string;
-    phoneNumber: string;
   };
+}
+export interface IAnimalCardTypes {
+  name: string;
+  dogBreed: string;
+  dogColor: string;
+  catBreed: string;
+  catColor: string;
+  gender: string;
+  weight: string;
+  isSterilized: string;
+  photos: string[];
+  dateOfBirth: string;
+  options: [];
+  value: string;
+  label: string;
 }
 
 export interface IGetCoordinates {
