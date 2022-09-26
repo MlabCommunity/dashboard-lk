@@ -12,7 +12,7 @@ export const ResetSuccess = () => {
       <SubmitButton
         name="next"
         type="button"
-        onClick={() => navigate("/auth/newPassword")}
+        onClick={() => navigate("/auth/LoginForm")}
       >
         Zamknij
       </SubmitButton>

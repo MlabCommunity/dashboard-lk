@@ -38,7 +38,7 @@ export const ResetPassword = () => {
       data: value,
     });
     if (response.status === 204) {
-      navigate("/ResetSuccess");
+      navigate("/auth/ResetSuccess");
     }
   };
 

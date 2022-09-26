@@ -79,3 +79,20 @@ export interface IResetPassword {
   confirmPassword: string;
   email: string;
 }
+
+export interface IUpdateOrganizationData {
+  organizationName: string;
+  street: string;
+  zipCode: string;
+  city: string;
+  nip: string;
+  krs: string;
+  phoneNumber: string;
+}
+export interface IUpdateUserData {
+  firstName: string;
+  lastName: string;
+  emailAddress: string;
+  password: string;
+  confirmPassword: string;
+}

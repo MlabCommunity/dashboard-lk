@@ -1,10 +1,10 @@
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorMessage } from "@hookform/error-message/dist";
 import Select from "react-select";
 
-import React from "react";
 import { SectionLayout } from "shared/dashboard";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { Link } from "react-router-dom";
@@ -22,6 +22,7 @@ import {
   // InputField,
   ReturnLink,
 } from "shared/loginRegister";
+import { customStyles } from "./CustomSelectStyles";
 // import {
 //   useDogCardData,
 //   useCatCardData,
@@ -40,8 +41,8 @@ const {
   type,
   dogColor,
   dogBreed,
-  catColor,
-  catBreed,
+  // catColor,
+  // catBreed,
   name,
   gender,
   dateOfBirth,
@@ -62,8 +63,8 @@ const Schema = Yup.object().shape({
     .required(required),
   [dogColor.name]: Yup.string().required(required),
   [dogBreed.name]: Yup.string().required(required),
-  [catColor.name]: Yup.string().required(required),
-  [catBreed.name]: Yup.string().required(required),
+  // [catColor.name]: Yup.string().required(required),
+  // [catBreed.name]: Yup.string().required(required),
   [name.name]: Yup.string().required(required),
   [gender.name]: Yup.string().required(required),
   [isSterilized.name]: Yup.string().required(required),
@@ -87,15 +88,19 @@ export const NewAnimalCard = () => {
     reValidateMode: "onBlur",
   });
   const onSubmit = (formData: any) => {
+    console.log(formData.photos[0]);
     console.log(formData);
     // eslint-disable-next-line no-alert
     alert(JSON.stringify(formData));
+  };
+  const onError = (error: any) => {
+    console.log(error);
   };
 
   return (
     <SectionLayout>
       <FormWrapper>
-        <FormContainer onSubmit={handleSubmit(onSubmit)}>
+        <FormContainer onSubmit={handleSubmit(onSubmit, onError)}>
           <Inputs style={{ padding: "0 2.4rem 2.4rem" }}>
             <Grid2 container spacing={3}>
               <Grid2 xs={12}>
@@ -116,17 +121,17 @@ export const NewAnimalCard = () => {
                   <Grid2 xs={12}>
                     <label htmlFor={dat.name}>{dat.label}</label>
                     <Controller
-                      name="dogBreed"
+                      name={dat.name}
                       control={control}
-                      render={({ field, field: { value } }) => (
+                      render={({ field, field: { value, ref } }) => (
                         <Select
                           options={dat.options}
                           placeholder="Wybierz z listy"
-                          {...register("dogBreed")}
-                          isDisabled={value === "Inne"}
-                          {...field}
-                          value={value}
-                          onChange={(e) => e.value}
+                          {...register(dat.name)}
+                          ref={ref}
+                          styles={customStyles}
+                          value={dat.options.find((c) => c.value === value)}
+                          onChange={(val) => field.onChange(val!.value)}
                         />
                       )}
                     />

@@ -66,7 +66,7 @@ export const NewPassword = () => {
       },
     });
     if (response.status === 204) {
-      navigate("/NewPasswordSuccess");
+      navigate("/auth/NewPasswordSuccess");
     }
   };
 

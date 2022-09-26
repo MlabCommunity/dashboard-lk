@@ -1,31 +1,3 @@
-// export const data = [
-//   {
-//     label: "Gatunek",
-//     name: "type",
-//     options: ["Pies", "Kot", "Inne"],
-//   },
-//   {
-//     label: "Rasa",
-//     name: "dogBreed",
-//     options: ["Bure", "Sssss", "OOwczarek"],
-//   },
-//   {
-//     label: "Umaszczenie",
-//     name: "dogColor",
-//     options: ["Czarny", "Biały", "Niebieski"],
-//   },
-//   {
-//     label: "Płeć",
-//     name: "gender",
-//     options: ["Samiczka", "Samiec"],
-//   },
-//   {
-//     label: "Sterylizacja",
-//     name: "isSterilized",
-//     options: ["Tak", "Nie"],
-//   },
-// ];
-
 export const data = [
   {
     label: "Gatunek",
@@ -66,6 +38,17 @@ export const data = [
   {
     label: "Płeć",
     name: "gender",
+    options: [
+      { value: "Samiec", label: "Samiec" },
+      {
+        value: "Samiczka",
+        label: "Samiczka",
+      },
+    ],
+  },
+  {
+    label: "Data urodzenia",
+    name: "dateOfBirth",
     options: [
       { value: "Samiec", label: "Samiec" },
       {

@@ -1,5 +1,5 @@
 export { MainDashboard } from "./MainDashboard";
-export { AccountSettings } from "./AccountSettings";
+export { AccountSettings } from "./AccountSettings/AccountSettings";
 export { AnimalCardsSection } from "./AnimalCardsSection/AnimalCardsSection";
 export { MessagesSection } from "./MessagesSection/MessagesSection";
 export { OrganizationSection } from "./OrganizationSection/OrganizationSection";

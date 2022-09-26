@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 export const StyledWrapper = styled(motion.div)`
   padding: 2.4rem 1.6rem;
   width: clamp(30rem, 80vw, 45.6rem);
+  max-width: 45.6rem;
   background: ${({ theme }) => theme.colorsBlackandWhite.white};
   border: 1px solid ${({ theme }) => theme.colorsGray.lightGray5};
   box-shadow: 0px 0px 1px rgba(26, 32, 36, 0.32),
@@ -71,7 +72,6 @@ export const FormWrapper = ({ children }: PropsWithChildren) => (
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 0.1 }}
-    className="mainForm"
   >
     {children}
   </StyledWrapper>
