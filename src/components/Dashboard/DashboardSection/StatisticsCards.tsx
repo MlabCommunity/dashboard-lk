@@ -8,6 +8,13 @@ import IconPerson from "assets/dashboard/IconPerson.png";
 import IconZoom from "assets/dashboard/IconZoom.png";
 import axios from "axios";
 
+export const StatisticsWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+`;
+
 const StatisticCard = styled(CardLayout)`
   position: relative;
   padding: 1.6rem;

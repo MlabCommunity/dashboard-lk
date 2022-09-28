@@ -28,17 +28,6 @@ const LayoutWrapper = styled("div")`
     align-items: flex-start;
     padding: 1.8rem 0;
 
-    .passwordContainer {
-      position: relative;
-      input {
-        padding-right: 4rem;
-      }
-      button {
-        position: absolute;
-        top: 4.2rem;
-        right: 2rem;
-      }
-    }
     .errorMessage {
       color: ${({ theme }) => theme.colorsRed.r500};
       ${({ theme }) => theme.text12Regular};

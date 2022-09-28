@@ -17,6 +17,9 @@ import ValidationSchema from "components/Register/FormModel/validationSchema";
 import { formFieldOrganization } from "./FormModel/submitFormModel";
 
 const UpdateButton = styled(SubmitButton)`
+  margin-top: 0;
+  margin-left: auto;
+  width: auto;
   ${({ theme }) => theme.buttonLarge}
 `;
 
@@ -227,28 +230,22 @@ export const OrganizationSettings = () => {
               />
             </Inputs>
 
-            <div style={{ position: "relative" }}>
-              <Grid2 container spacing={3}>
-                <Grid2 xs={3}>
-                  <UpdateButton
-                    disabled={isValidating}
-                    name="next"
-                    type="submit"
-                  >
-                    Zapisz
-                  </UpdateButton>
-                </Grid2>
+            {!coordinatesError && error && (
+              <p className="errorMessage">Coś poszło nie tak</p>
+            )}
+            {coordinatesError && (
+              <p className="errorMessage">
+                Podane miejsce nie znajduje się w Polsce
+              </p>
+            )}
+            <Grid2 container spacing={3}>
+              <Grid2 xs={3}>
+                <UpdateButton disabled={isValidating} name="next" type="submit">
+                  Zapisz
+                </UpdateButton>
               </Grid2>
-              {!coordinatesError && error && (
-                <p className="errorMessage">Coś poszło nie tak</p>
-              )}
-              {coordinatesError && (
-                <p className="errorMessage">
-                  Podane miejsce nie znajduje się w Polsce
-                </p>
-              )}
-              {loading && <Loader />}
-            </div>
+            </Grid2>
+            {loading && <Loader />}
           </Form>
         )}
       </Formik>

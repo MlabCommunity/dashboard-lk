@@ -122,6 +122,9 @@ export const LoginForm = () => {
     if (response.status === 200) {
       navigate("/dashboardSection");
     }
+    if (response.status === 403) {
+      navigate("/auth/LoginForm");
+    }
   };
 
   return (

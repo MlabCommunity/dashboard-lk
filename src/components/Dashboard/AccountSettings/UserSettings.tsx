@@ -1,3 +1,4 @@
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { IUpdateUserData } from "types/axiosApi";
@@ -15,10 +16,50 @@ import { useUpdateUser } from "services/UpdateShelters";
 import ValidationSchema from "components/Register/FormModel/validationSchema";
 import EyeOff from "assets/loginRegister/Eye-off.png";
 import EyeOn from "assets/loginRegister/Eye-on.png";
+import Avatar from "assets/dashboard/AvatarOrganization.png";
+import DeleteIcon from "assets/dashboard/DeleteIcon.png";
 import { formFieldUser } from "./FormModel/submitFormModel";
+import { Crooper } from "../Crooper";
 
+const LogoContainer = styled("div")`
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  margin-bottom: 1.6rem;
+  .avatar {
+    width: 6.4rem;
+    height: 6.4rem;
+    border-radius: 50%;
+  }
+  button {
+    margin: 0;
+    width: 6.6rem;
+    ${({ theme }) => theme.buttonMedium}
+  }
+`;
 const UpdateButton = styled(SubmitButton)`
-  ${({ theme }) => theme.buttonLarge}
+  margin-top: 0;
+  margin-left: auto;
+  width: auto;
+  ${({ theme }) => theme.buttonLarge};
+`;
+const DeleteButton = styled(SubmitButton)`
+  width: auto;
+  margin: 3.2rem 0;
+  background: ${({ theme }) => theme.colorsRed.r500};
+  ${({ theme }) => theme.buttonLarge};
+  img {
+    padding-left: 1rem;
+  }
+  &:hover {
+    background: ${({ theme }) => theme.colorsRed.r600};
+  }
+`;
+const Title = styled("h2")`
+  ${({ theme }) => theme.heading18Semi};
+  color: ${({ theme }) => theme.colorsBlackandWhite.black};
+  text-align: left;
+  padding-bottom: 1.6rem;
 `;
 
 const initialValues = {
@@ -56,21 +97,37 @@ export const UserSettings = () => {
     actions.setSubmitting(false);
   };
 
+  const deleteUserHandler = () => {
+    console.log("CLicked");
+  };
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [image, setImage] = useState<any>();
+  console.log(image);
+
+  const handleCloseCrooper = () => {
+    setIsOpen(!isOpen);
+    setImage({});
+  };
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleInputFileModal = () => {
+    inputRef.current?.click();
+  };
+
+  const onSelectImage = (event: any) => {
+    if (event?.target.files && event.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.addEventListener("load", () => setImage(reader.result));
+      setIsOpen(true);
+    }
+  };
+
   return (
     <FormWrapper>
-      <h2
-        style={{
-          fontWeight: "600",
-          fontSize: "1.8rem",
-          lineHeight: "2.4rem",
-          letterSpacing: "-0.014em",
-          color: "#000",
-          textAlign: "left",
-          paddingBottom: "1.6rem",
-        }}
-      >
-        Ustawienia użytkownika
-      </h2>
+      <Title>Ustawienia użytkownika</Title>
 
       <Formik
         initialValues={initialValues}
@@ -79,6 +136,29 @@ export const UserSettings = () => {
       >
         {({ isValidating }) => (
           <Form>
+            <LogoContainer>
+              <img className="avatar" src={Avatar} alt="" />
+              {image && isOpen && (
+                <Crooper
+                  image={image}
+                  handleCloseCrooper={handleCloseCrooper}
+                />
+              )}
+              <SubmitButton
+                type="button"
+                name="prev"
+                onClick={handleInputFileModal}
+              >
+                Edytuj
+              </SubmitButton>
+              <input
+                type="file"
+                accept="image/*"
+                ref={inputRef}
+                style={{ display: "none" }}
+                onChange={onSelectImage}
+              />
+            </LogoContainer>
             <Inputs>
               <Grid2 container spacing={2}>
                 <Grid2 xs={6}>
@@ -153,13 +233,13 @@ export const UserSettings = () => {
                       alt=""
                     />
                   </button>
+                  <ErrorMessage
+                    component="p"
+                    className="errorMessage"
+                    name={formFieldUser.password.name}
+                  />
                 </Grid2>
               </Grid2>
-              <ErrorMessage
-                component="p"
-                className="errorMessage"
-                name={formFieldUser.password.name}
-              />
               <Grid2 container spacing={3}>
                 <Grid2 className="passwordContainer" xs={12}>
                   <label htmlFor={formFieldUser.confirmPassword.name}>
@@ -182,17 +262,31 @@ export const UserSettings = () => {
                       alt=""
                     />
                   </button>
+                  <ErrorMessage
+                    component="p"
+                    className="errorMessage"
+                    name={formFieldUser.confirmPassword.name}
+                  />
                 </Grid2>
               </Grid2>
-              <ErrorMessage
-                component="p"
-                className="errorMessage"
-                name={formFieldUser.confirmPassword.name}
-              />
             </Inputs>
 
             <Grid2 container spacing={3}>
-              <Grid2 xs={3}>
+              <Grid2 xs={12}>
+                <DeleteButton
+                  disabled={isValidating}
+                  name="next"
+                  type="button"
+                  onClick={deleteUserHandler}
+                >
+                  Usuń konto
+                  <img src={DeleteIcon} alt="" />
+                </DeleteButton>
+              </Grid2>
+            </Grid2>
+
+            <Grid2 container spacing={3}>
+              <Grid2 xs={12}>
                 <UpdateButton disabled={isValidating} name="next" type="submit">
                   Zapisz
                 </UpdateButton>

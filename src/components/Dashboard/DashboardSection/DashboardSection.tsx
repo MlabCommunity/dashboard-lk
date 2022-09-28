@@ -9,8 +9,7 @@ import {
   OptionType,
 } from "shared/dashboard/DropDown";
 import { ReactComponent as StatusIcon } from "assets/dashboard/Status.svg";
-import { StatisticsWrapper } from "./StatisticCardWrapper";
-import { StatisticCards } from "./StatisticsCards";
+import { StatisticCards, StatisticsWrapper } from "./StatisticsCards";
 import { VolunteeringStatus } from "./VolunteeringWrapper";
 import { LatestAnimalCards } from "./LatestAnimalCard";
 import { Chart } from "./Chart";

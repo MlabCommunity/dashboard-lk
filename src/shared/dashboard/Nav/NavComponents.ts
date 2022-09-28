@@ -8,7 +8,7 @@ export const Navigation = styled.nav`
   height: 100%;
   min-height: 100vh;
   position: fixed;
-  z-index: 1000;
+  z-index: 15;
   flex-direction: column;
   justify-content: space-between;
   padding: 1.6rem;

@@ -16,12 +16,16 @@ export const Inputs = styled("div")`
     position: relative;
     button {
       position: absolute;
-      top: 4.2rem;
+      top: 4rem;
+      height: 2.4rem;
       right: 2rem;
       background: none;
       border: none;
       cursor: pointer;
       overflow: hidden;
+    }
+    input {
+      padding-right: 4rem;
     }
   }
   input::-webkit-outer-spin-button,

@@ -1,6 +1,8 @@
 import { SectionLayout } from "shared/dashboard";
-import { StatisticCards } from "../DashboardSection/StatisticsCards";
-import { StatisticsWrapper } from "../DashboardSection/StatisticCardWrapper";
+import {
+  StatisticCards,
+  StatisticsWrapper,
+} from "../DashboardSection/StatisticsCards";
 
 export const AnimalCardsSection = () => (
   <SectionLayout>
