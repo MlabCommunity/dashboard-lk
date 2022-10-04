@@ -1,14 +1,14 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { useRefreshToken } from "services/RefreshToken";
 import { useHandleLogout } from "services/HandleLogout";
+import jwtDecode from "jwt-decode";
 
 const axiosInstance = axios.create({
   baseURL: "http://lappka.mobitouch.pl",
 });
 
-axios.interceptors.request.use(
-  async (config) => {
+axiosInstance.interceptors.request.use(
+  (config) => {
     const user = JSON.parse(localStorage.getItem("user")!);
 
     if (user) {
@@ -23,40 +23,47 @@ axios.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-axios.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const { config } = error;
-    const user = JSON.parse(localStorage.getItem("user")!);
-    const remember = localStorage.getItem("remember");
+    const originalRequest = error.config;
 
-    if (error.response.status === 401 && remember === "true") {
-      config._retry = true;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
 
-      const expiryDate = new Date(user.expires * 1000);
-      const expiryTimeout = new Date(
-        expiryDate.setDate(expiryDate.getDate() + 1)
-      );
-      const navigate = useNavigate();
-      if (expiryTimeout > new Date()) {
-        const [data, refreshTokenStatus] = await useRefreshToken(
-          user.refreshToken,
-          user.accessToken
+      const user = JSON.parse(localStorage.getItem("user")!);
+      const { accessToken } = user;
+      const { refreshToken } = user;
+      const remember = localStorage.getItem("remember");
+      interface DecodededToken {
+        exp: number;
+      }
+      const { exp } = jwtDecode<DecodededToken>(accessToken);
+      const expirationTime = exp * 1000 - 60000;
+      // if (Date.now() >= expirationTime) {
+      //   useHandleLogout();
+      // }
+      if (Date.now() >= expirationTime || remember === "true") {
+        const [responseData, responseStatus] = await useRefreshToken(
+          accessToken,
+          refreshToken
         );
-        if (data && refreshTokenStatus === 204) {
-          localStorage.setItem("user", JSON.stringify(data));
-          return axios.request(config);
+        if (responseData && responseStatus === 200) {
+          localStorage.setItem(
+            "user",
+            JSON.stringify(responseData, refreshToken)
+          );
+          console.log(responseData, refreshToken);
+          return axios.request(originalRequest);
         }
-        if (refreshTokenStatus !== 204) {
+        if (!responseData && responseStatus !== 200) {
           useHandleLogout();
-          navigate("/auth/LoginForm");
         }
       } else {
         useHandleLogout();
-        navigate("/auth/LoginForm");
       }
 
-      return axios(config);
+      return axios(originalRequest);
     }
     return Promise.reject(error);
   }

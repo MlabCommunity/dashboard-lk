@@ -2,6 +2,8 @@ import { useState, useCallback } from "react";
 import Cropper from "react-easy-crop";
 import styled from "styled-components";
 import { SubmitButton } from "shared/loginRegister";
+import { getCroppedImg } from "./CropImage";
+// import { Preview } from "./PreviewImage";
 
 const CroopModal = styled("div")`
   position: fixed;
@@ -55,16 +57,33 @@ const Range = styled("input")`
   color: green;
 `;
 
-export const Crooper = ({ image, handleCloseCrooper }: any) => {
+export const Crooper = ({
+  image,
+  handleCloseCrooper,
+  onSaveCroppedImage,
+}: any) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
   const onCropComplete = useCallback(
-    (croppedArea: any, croppedAreaPixels: any) => {
-      console.log(croppedArea, croppedAreaPixels);
+    (croppedArea: any, croppedAreaPixel: any) => {
+      console.log(croppedArea, croppedAreaPixel);
+      setCroppedAreaPixels(croppedAreaPixel);
     },
     []
   );
+
+  const showCroppedImage = useCallback(async () => {
+    try {
+      const croppedImage: any = await getCroppedImg(image, croppedAreaPixels);
+
+      onSaveCroppedImage(croppedImage);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [croppedAreaPixels]);
+
   return (
     <CroopModal>
       <CrooperLayout>
@@ -80,6 +99,7 @@ export const Crooper = ({ image, handleCloseCrooper }: any) => {
             aspect={1}
           />
         </CroopContainer>
+        {/* <Preview onHidePreview={false} imageSrc={showCroppedImage()} /> */}
         <Controls className="controls">
           <Range
             type="range"
@@ -102,7 +122,10 @@ export const Crooper = ({ image, handleCloseCrooper }: any) => {
               Anuluj
             </SubmitButton>
             <SubmitButton name="next" type="button">
-              Zapisz
+              Dodaj
+            </SubmitButton>
+            <SubmitButton onClick={showCroppedImage} name="next" type="button">
+              Podgląd
             </SubmitButton>
           </div>
         </Controls>

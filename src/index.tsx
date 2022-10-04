@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter as Router } from "react-router-dom";
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { configure } from "axios-hooks";
 import axiosInstance from "api/axios";
+import { history } from "services/ProtectedRoute";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
@@ -16,11 +17,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Router>
+    <HistoryRouter history={history}>
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
-    </Router>
+    </HistoryRouter>
   </React.StrictMode>
 );
 

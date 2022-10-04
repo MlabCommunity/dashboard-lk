@@ -71,9 +71,8 @@ export const OrganizationSettings = () => {
     const response = await onOrganizationUpdate({
       data: {
         organizationName: values.organizationName,
-        street: values.street,
-        zipCode: values.zipCode,
-        city: values.city,
+        latitude: lati,
+        longitude: long,
         nip: values.nip,
         krs: values.krs,
         phoneNumber: values.phoneNumber,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Stepper, Step, StepLabel } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { IRegisterFields } from "types/axiosApi";
@@ -49,11 +49,25 @@ const initialValues = {
 export const RegisterOrganization = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [coordinatesError, setCoordinatesError] = useState(false);
+  const [showErrorMsg, setShowErrorMsg] = useState(false);
 
   const currentValidationSchema = validationSchema[activeStep];
 
   const { useData } = useRegisterData();
   const [{ loading, error }, onRegister] = useData();
+
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    // setTimeout(setShowErrorMsg(!showErrorMsg) ,1000)
+
+    if (error) {
+      const timer = setTimeout(() => setShowErrorMsg(true), 3000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, []);
 
   const handleRegisterFormSubmit = async (values: IRegisterFields) => {
     const address = `${values.street}, ${values.city}, ${values.zipCode}`;
@@ -79,7 +93,7 @@ export const RegisterOrganization = () => {
           console.log(err);
         }
       );
-    // console.log(coordinates);
+
     const response = await onRegister({
       data: {
         shelter: {
@@ -209,8 +223,10 @@ export const RegisterOrganization = () => {
                     )}
                   </Grid2>
                 </Grid2>
-                {!coordinatesError && error && (
-                  <p className="errorMessage">Coś poszło nie tak</p>
+                {!coordinatesError && showErrorMsg && (
+                  <p className="errorMessage" style={{ paddingTop: "0.5rem" }}>
+                    {error?.message}
+                  </p>
                 )}
                 {coordinatesError && (
                   <p className="errorMessage">

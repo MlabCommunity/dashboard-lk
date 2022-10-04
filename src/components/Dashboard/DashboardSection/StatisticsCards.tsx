@@ -6,7 +6,7 @@ import { CardLayout } from "shared/dashboard";
 import IconCard from "assets/dashboard/IconCard.png";
 import IconPerson from "assets/dashboard/IconPerson.png";
 import IconZoom from "assets/dashboard/IconZoom.png";
-import axios from "axios";
+import axiosInstance from "api/axios";
 
 export const StatisticsWrapper = styled.div`
   display: flex;
@@ -59,7 +59,7 @@ export const StatisticCards = () => {
       setLoading(true);
 
       try {
-        const response = await axios(url);
+        const response = await axiosInstance(url);
         setCardsTotal(response.data.cardCount);
         setAdoptedCount(response.data.adoptedCount);
         setToAdoptCount(response.data.toAdoptCount);

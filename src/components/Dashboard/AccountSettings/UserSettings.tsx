@@ -16,8 +16,8 @@ import { useUpdateUser } from "services/UpdateShelters";
 import ValidationSchema from "components/Register/FormModel/validationSchema";
 import EyeOff from "assets/loginRegister/Eye-off.png";
 import EyeOn from "assets/loginRegister/Eye-on.png";
-import Avatar from "assets/dashboard/AvatarOrganization.png";
 import DeleteIcon from "assets/dashboard/DeleteIcon.png";
+import axiosInstance from "api/axios";
 import { formFieldUser } from "./FormModel/submitFormModel";
 import { Crooper } from "../Crooper";
 
@@ -79,7 +79,7 @@ export const UserSettings = () => {
   const [repeatPasswordType, handleRepeatPasswordVisibility] =
     useTogglePasswordVisibility();
 
-  const handleEditOrganizationSubmit = async (values: IUpdateUserData) => {
+  const handleEditUserSubmit = async (values: IUpdateUserData) => {
     const response = await onUserUpdate({
       data: {
         firstName: values.firstName,
@@ -92,7 +92,7 @@ export const UserSettings = () => {
     console.log(response);
   };
   const handleSubmit = (data: IUpdateUserData, actions: any) => {
-    handleEditOrganizationSubmit(data);
+    handleEditUserSubmit(data);
     actions.setTouched({});
     actions.setSubmitting(false);
   };
@@ -102,12 +102,12 @@ export const UserSettings = () => {
   };
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [image, setImage] = useState<any>();
-  console.log(image);
+  const [image, setImage] = useState<string>();
+  // const [displayFinalImage, setDisplayFinalImage] = useState();
 
   const handleCloseCrooper = () => {
     setIsOpen(!isOpen);
-    setImage({});
+    setImage("");
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -120,9 +120,38 @@ export const UserSettings = () => {
     if (event?.target.files && event.target.files.length > 0) {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
-      reader.addEventListener("load", () => setImage(reader.result));
+      reader.addEventListener("load", () =>
+        setImage(URL.createObjectURL(event.target.files[0]))
+      );
       setIsOpen(true);
     }
+  };
+  const handleUpload = async (file: Blob) => {
+    // const DATA = new FormData([file], "image.png", { type: "image/png" });
+    // console.log(DATA);
+    // const formData = new FormData();
+    // formData.append("image", DATA);
+    // console.log(formData);
+    const formData = new FormData();
+    // formData.append("name", file);
+    formData.append("file", file);
+    // const reader = new FileReader();
+    // reader.readAsDataURL(DATA);
+
+    // reader.onloadend = () => {
+    //   const base64data = reader.result;
+
+    //   console.log(base64data);
+    // };
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    await axiosInstance
+      .post("/files/Storage/picture", formData, config)
+      .then((res) => console.log(res));
   };
 
   return (
@@ -137,11 +166,12 @@ export const UserSettings = () => {
         {({ isValidating }) => (
           <Form>
             <LogoContainer>
-              <img className="avatar" src={Avatar} alt="" />
+              <img className="avatar" src={image} alt="" />
               {image && isOpen && (
                 <Crooper
                   image={image}
                   handleCloseCrooper={handleCloseCrooper}
+                  onSaveCroppedImage={handleUpload}
                 />
               )}
               <SubmitButton
@@ -153,7 +183,7 @@ export const UserSettings = () => {
               </SubmitButton>
               <input
                 type="file"
-                accept="image/*"
+                accept="image/jpg, image/jpeg, image/png, image/bmp"
                 ref={inputRef}
                 style={{ display: "none" }}
                 onChange={onSelectImage}
@@ -271,27 +301,20 @@ export const UserSettings = () => {
               </Grid2>
             </Inputs>
 
-            <Grid2 container spacing={3}>
-              <Grid2 xs={12}>
-                <DeleteButton
-                  disabled={isValidating}
-                  name="next"
-                  type="button"
-                  onClick={deleteUserHandler}
-                >
-                  Usuń konto
-                  <img src={DeleteIcon} alt="" />
-                </DeleteButton>
-              </Grid2>
-            </Grid2>
+            <DeleteButton
+              disabled={isValidating}
+              name="next"
+              type="button"
+              onClick={deleteUserHandler}
+            >
+              Usuń konto
+              <img src={DeleteIcon} alt="" />
+            </DeleteButton>
 
-            <Grid2 container spacing={3}>
-              <Grid2 xs={12}>
-                <UpdateButton disabled={isValidating} name="next" type="submit">
-                  Zapisz
-                </UpdateButton>
-              </Grid2>
-            </Grid2>
+            <UpdateButton disabled={isValidating} name="next" type="submit">
+              Zapisz
+            </UpdateButton>
+
             {error && <p className="errorMessage">Coś poszło nie tak</p>}
             {loading && <Loader />}
           </Form>

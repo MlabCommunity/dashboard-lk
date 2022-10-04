@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Routes } from "services/Routes";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import axiosInstance from "api/axios";
 
 import { ReactComponent as OrganizationIcon } from "assets/dashboard/Organization.svg";
 import Logo from "assets/dashboard/Logo.png";
@@ -17,6 +17,7 @@ import {
   Navigation,
   DropDownNavButton,
   DropDownContainer,
+  LogoutButton,
 } from "./NavComponents";
 import { LinkData } from "./LinkData";
 
@@ -49,11 +50,10 @@ export const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
     ["OrganizationData"],
     async () => {
       try {
-        const response = await axios(OrganizationUrl);
+        const response = await axiosInstance(OrganizationUrl);
         setFirstName(response.data.firstName);
         setLastName(response.data.lastName);
         setOrganizationName(response.data.organizationName);
-        console.log(response);
       } catch (error) {
         console.log(error);
       }
@@ -96,9 +96,11 @@ export const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
                   <Link to="/accountSettings">Ustawienia konta</Link>
                 </Option>
                 <Option>
-                  <Link to="/auth/LoginForm" onClick={useHandleLogout}>
-                    Wyloguj się
-                  </Link>
+                  <LogoutButton
+                    type="button"
+                    onClick={useHandleLogout}
+                    value="Wyloguj się"
+                  />
                 </Option>
               </DropDownList>
             </DropDownContainer>

@@ -33,6 +33,11 @@ export const Navigation = styled.nav`
       width: 4.2rem;
       height: 4.2rem;
     }
+    a {
+      padding: 0.2rem 0;
+      ${({ theme }) => theme.text14Medium};
+      color: ${({ theme }) => theme.colorsGray.darkGray1};
+    }
   }
   .links {
     .logo-top {
@@ -131,4 +136,13 @@ export const DropDownNavButton = styled(DropDownButton)`
     ${({ theme }) => theme.text12Regular};
     color: ${({ theme }) => theme.colorsPrimary.pr600};
   }
+`;
+
+export const LogoutButton = styled("input")`
+  padding: 0.2rem 0;
+  border: none;
+  background: none;
+  ${({ theme }) => theme.text14Medium};
+  color: ${({ theme }) => theme.colorsGray.darkGray1};
+  cursor: pointer;
 `;

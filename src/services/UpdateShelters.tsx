@@ -1,9 +1,14 @@
 import useAxios from "axios-hooks";
-import { IRegisterShelter } from "types/axiosApi";
+import {
+  IEmail,
+  IUpdateOrganizationData,
+  IUpdateUserData,
+  IUpdatePassword,
+} from "types/axiosApi";
 
 export const useUpdateOrganization = () => {
   const useOrganizationData = () =>
-    useAxios<IRegisterShelter>(
+    useAxios<IUpdateOrganizationData>(
       {
         url: "/pet/shelters",
         method: "PUT",
@@ -15,7 +20,7 @@ export const useUpdateOrganization = () => {
 
 export const useUpdateUser = () => {
   const useUserData = () =>
-    useAxios<IRegisterShelter>(
+    useAxios<IUpdateUserData>(
       {
         url: "/identity/User",
         method: "PATCH",
@@ -27,7 +32,7 @@ export const useUpdateUser = () => {
 
 export const useUpdatePassword = () => {
   const usePasswordData = () =>
-    useAxios<IRegisterShelter>(
+    useAxios<IUpdatePassword>(
       {
         url: "/identity/User/Password",
         method: "PATCH",
@@ -39,7 +44,7 @@ export const useUpdatePassword = () => {
 
 export const useUpdateEmail = () => {
   const useEmailData = () =>
-    useAxios<IRegisterShelter>(
+    useAxios<IEmail>(
       {
         url: "/identity/User/Email",
         method: "PATCH",

@@ -115,14 +115,13 @@ export const LoginForm = () => {
     const response = await login({
       data: values,
     });
-    localStorage.setItem("user", JSON.stringify(response.data));
     if (remember) {
       localStorage.setItem("remember", "true");
     }
     if (response.status === 200) {
+      localStorage.setItem("user", JSON.stringify(response.data));
       navigate("/dashboardSection");
-    }
-    if (response.status === 403) {
+    } else if (response.status !== 200) {
       navigate("/auth/LoginForm");
     }
   };
