@@ -38,21 +38,24 @@ axiosInstance.interceptors.response.use(
       interface DecodededToken {
         exp: number;
       }
+      // const expirationTime = exp * 1000 - 60000;
+
       const { exp } = jwtDecode<DecodededToken>(accessToken);
       const expirationTime = exp * 1000 - 60000;
+
       // if (Date.now() >= expirationTime) {
-      //   useHandleLogout();
+      //   accessToken = await refreshToken();
+      //   localStorage.setItem("user", JSON.stringify(accessToken));
+      //   // set LocalStorage here based on response;
       // }
+
       if (Date.now() >= expirationTime || remember === "true") {
         const [responseData, responseStatus] = await useRefreshToken(
           accessToken,
           refreshToken
         );
         if (responseData && responseStatus === 200) {
-          localStorage.setItem(
-            "user",
-            JSON.stringify(responseData, refreshToken)
-          );
+          localStorage.setItem("user", JSON.stringify(responseData));
           console.log(responseData, refreshToken);
           return axios.request(originalRequest);
         }
