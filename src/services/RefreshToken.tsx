@@ -14,5 +14,5 @@ export const useRefreshToken = async (
       refreshToken,
     }
   );
-  return [response.data, response.status];
+  return [response.data.accessToken, response.status];
 };

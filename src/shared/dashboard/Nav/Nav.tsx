@@ -6,12 +6,12 @@ import axiosInstance from "api/axios";
 
 import { ReactComponent as OrganizationIcon } from "assets/dashboard/Organization.svg";
 import Logo from "assets/dashboard/Logo.png";
-import UserLogo from "assets/dashboard/UserLogo.png";
 import { ReactComponent as ArrowDown } from "assets/dashboard/ArrowDown.svg";
 import { useHandleLogout } from "services/HandleLogout";
 import { ReactComponent as Close } from "assets/dashboard/Close.svg";
 import { DropDownList, Option } from "shared/dashboard/DropDown";
 import { useClickOutside } from "hooks/useClickOutside";
+// import { Loader } from "../Loader";
 import { SideBarLink } from "./SideBarLink";
 import {
   Navigation,
@@ -26,13 +26,12 @@ interface IsHiddenProp {
   toggleNav: () => void;
 }
 
-const OrganizationUrl = "http://lappka.mobitouch.pl/pet/shelters";
-
 export const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
   const [isOpen, setIsOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [organizationName, setOrganizationName] = useState("");
+  const [avatar, setAvatar] = useState("");
 
   const toggleOpen = () => setIsOpen((prevIsOpen) => !prevIsOpen);
 
@@ -46,14 +45,17 @@ export const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
   });
 
   // eslint-disable-next-line no-unused-vars
-  const { isLoading, data, isFetching } = useQuery(
-    ["OrganizationData"],
+  const { isLoading } = useQuery(
+    ["SheltersData"],
+    // eslint-disable-next-line consistent-return
     async () => {
       try {
-        const response = await axiosInstance(OrganizationUrl);
+        const response = await axiosInstance.get("/pet/shelters");
         setFirstName(response.data.firstName);
         setLastName(response.data.lastName);
         setOrganizationName(response.data.organizationName);
+        setAvatar(response.data.profilePhoto);
+        return response.data;
       } catch (error) {
         console.log(error);
       }
@@ -81,7 +83,7 @@ export const Nav = ({ isHidden, toggleNav }: IsHiddenProp) => {
         </SideBarLink>
       </div>
       <div className="dropdown">
-        <img src={UserLogo} alt="" />
+        <img src={avatar} alt="" />
         <DropDownNavButton type="button" onClick={toggleOpen} ref={buttonRef}>
           <p className="username">
             {firstName} {lastName}{" "}

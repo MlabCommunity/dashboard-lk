@@ -28,7 +28,11 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
 
       const user = JSON.parse(localStorage.getItem("user")!);
@@ -38,31 +42,43 @@ axiosInstance.interceptors.response.use(
       interface DecodededToken {
         exp: number;
       }
-      // const expirationTime = exp * 1000 - 60000;
 
       const { exp } = jwtDecode<DecodededToken>(accessToken);
-      const expirationTime = exp * 1000 - 60000;
+      const expirationTime = exp * 1000 - 6000;
 
-      // if (Date.now() >= expirationTime) {
-      //   accessToken = await refreshToken();
-      //   localStorage.setItem("user", JSON.stringify(accessToken));
-      //   // set LocalStorage here based on response;
-      // }
-
-      if (Date.now() >= expirationTime || remember === "true") {
+      if (Date.now() >= expirationTime && remember === "true") {
         const [responseData, responseStatus] = await useRefreshToken(
           accessToken,
           refreshToken
         );
         if (responseData && responseStatus === 200) {
-          localStorage.setItem("user", JSON.stringify(responseData));
-          console.log(responseData, refreshToken);
+          const newUser = {
+            accessToken: responseData,
+            refreshToken,
+          };
+          localStorage.setItem("user", JSON.stringify(newUser));
+          originalRequest.headers = {
+            Authorization: `Bearer ${responseData}`,
+          };
           return axios.request(originalRequest);
         }
-        if (!responseData && responseStatus !== 200) {
+        useHandleLogout();
+      } else if (Date.now() >= expirationTime) {
+        const [responseData, responseStatus] = await useRefreshToken(
+          accessToken,
+          refreshToken
+        );
+        if (responseData && responseStatus === 200) {
+          const newUser = {
+            accessToken: responseData,
+            refreshToken,
+          };
+          localStorage.setItem("user", JSON.stringify(newUser));
+          originalRequest.headers = {
+            Authorization: `Bearer ${responseData}`,
+          };
           useHandleLogout();
         }
-      } else {
         useHandleLogout();
       }
 

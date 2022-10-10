@@ -6,6 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { ReactComponent as PaginationArrow } from "assets/dashboard/PaginationArrow.svg";
 
 const Table = styled("table")`
   filter: drop-shadow(0px 1px 3px rgba(16, 24, 40, 0.1))
@@ -22,6 +23,12 @@ const TableRow = styled("tr")`
   display: flex;
   justify-content: space-evenly;
   text-align: left;
+  &.foot {
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem 1.6rem;
+    box-shadow: inset 0px 1px 0px #e5e9eb;
+  }
 `;
 const Title = styled("tr")`
   th {
@@ -54,6 +61,36 @@ const BodyTd = styled("td")`
   &:last-child {
     flex: 1;
     text-align: center;
+  }
+`;
+const PaginationPageNumber = styled("td")`
+  padding: 0 1rem;
+  ${({ theme }) => theme.text12Regular};
+  color: ${({ theme }) => theme.colorsGray.darkGray2};
+`;
+const PaginationButton = styled("button")`
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  transition: transform 0.3s;
+  cursor: pointer;
+  svg {
+    color: ${({ theme }) => theme.colorsGray.midGray5};
+    transition: color 0.3s;
+  }
+  &.next {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+  &.next:disabled,
+  &.prev:disabled {
+    transform: scale(0.95);
+    cursor: auto;
+    svg {
+      color: ${({ theme }) => theme.colorsGray.lightGray2};
+    }
   }
 `;
 
@@ -92,6 +129,83 @@ const defaultData: Person[] = [
     // lastName: "Zimny",
     email: "marianowicz@gmail.com",
     addDate: "22.09.21",
+    action: "X",
+  },
+  {
+    firstName: "Jan Zimny",
+    // lastName: "Zimny",
+    email: "marianowicz@gmail.com",
+    addDate: "22.09.21",
+    action: "X",
+  },
+  {
+    firstName: "Jan Zimny",
+    // lastName: "Zimny",
+    email: "mariansadsaowicz@gmail.com",
+    addDate: "22.09.21",
+    action: "X",
+  },
+  {
+    firstName: "Jan Zimny",
+    // lastName: "Zimny",
+    email: "maria21221nowicz@gmail.com",
+    addDate: "22.d09.21",
+    action: "X",
+  },
+  {
+    firstName: "Jan Zimny",
+    // lastName: "Zimny",
+    email: "marianowicz@gmail.com",
+    addDate: "22.09.21",
+    action: "X",
+  },
+  {
+    firstName: "Jan Zimny",
+    // lastName: "Zimny",
+    email: "marianowicz@gmail.com",
+    addDate: "22.09.21",
+    action: "X",
+  },
+  {
+    firstName: "Jan Zimny",
+    // lastName: "Zimny",
+    email: "marianowicz@gmail.com",
+    addDate: "22.09.21",
+    action: "X",
+  },
+  {
+    firstName: "Jan Zimny",
+    // lastName: "Zimny",
+    email: "marianowicz@gmail.com",
+    addDate: "22.09.21",
+    action: "X",
+  },
+  {
+    firstName: "Jan Zimny",
+    // lastName: "Zimny",
+    email: "marianowicz@gmail.com",
+    addDate: "22.09.21",
+    action: "X",
+  },
+  {
+    firstName: "Jan Zimny",
+    // lastName: "Zimny",
+    email: "marianowicz@gmail.com",
+    addDate: "22.09.21",
+    action: "X",
+  },
+  {
+    firstName: "Jan Zimny",
+    // lastName: "Zimny",
+    email: "marianowicz@gmail.com",
+    addDate: "22.09.21",
+    action: "X",
+  },
+  {
+    firstName: "Jdasan Zimny",
+    // lastName: "Zimny",
+    email: "marsadianowicz@gmail.com",
+    addDate: "21.09.21",
     action: "X",
   },
 ];
@@ -168,13 +282,33 @@ export const WorkersTable = () => {
             </TableRow>
           ))}
         </TBody>
-        <tfoot
-          style={{
-            padding: "1rem 1.6rem",
-            boxShadow: "inset 0px 1px 0px #E5E9EB",
-          }}
-        >
-          <tr>FOOTER</tr>
+        <tfoot>
+          <TableRow className="foot">
+            <td>
+              <PaginationButton
+                type="button"
+                className="prev"
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              >
+                <PaginationArrow />
+              </PaginationButton>
+            </td>
+            <PaginationPageNumber>
+              {table.getState().pagination.pageIndex + 1} ...{" "}
+              {table.getPageCount()}
+            </PaginationPageNumber>
+            <td>
+              <PaginationButton
+                type="button"
+                className="next"
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+              >
+                <PaginationArrow />
+              </PaginationButton>
+            </td>
+          </TableRow>
         </tfoot>
       </Table>
     </div>

@@ -4,6 +4,9 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { IUpdateUserData } from "types/axiosApi";
 import { Loader } from "shared/dashboard/Loader";
 import { Formik, Form, ErrorMessage } from "formik";
+// import { QueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import axiosInstance from "api/axios";
 
 import {
   FormWrapper,
@@ -13,15 +16,16 @@ import {
 } from "shared/loginRegister";
 import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
 import { useUpdateUser } from "services/UpdateShelters";
-import ValidationSchema from "components/Register/FormModel/validationSchema";
 import EyeOff from "assets/loginRegister/Eye-off.png";
 import EyeOn from "assets/loginRegister/Eye-on.png";
 import DeleteIcon from "assets/dashboard/DeleteIcon.png";
-import axiosInstance from "api/axios";
+import ValidationSchema from "./FormModel/validationSchema";
 import { formFieldUser } from "./FormModel/submitFormModel";
 import { Crooper } from "../Crooper";
+// import { data } from "../AnimalCardsSection/FormModel/FormInputsData";
 
 const LogoContainer = styled("div")`
+  position: relative;
   display: flex;
   align-items: center;
   gap: 1.6rem;
@@ -62,15 +66,18 @@ const Title = styled("h2")`
   padding-bottom: 1.6rem;
 `;
 
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  emailAddress: "",
-  password: "",
-  confirmPassword: "",
+const fetchUserData = async () => {
+  const response = await axiosInstance.get("/identity/User");
+  return response.data;
 };
 
 export const UserSettings = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [image, setImage] = useState<string>();
+  const [imageOptions, setImageOptions] = useState<any>();
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [temporaryImage, setTemporaryImage] = useState<any>("");
+
   const { useUserData } = useUpdateUser();
   const [{ loading, error }, onUserUpdate] = useUserData();
 
@@ -84,9 +91,10 @@ export const UserSettings = () => {
       data: {
         firstName: values.firstName,
         lastName: values.lastName,
-        email: values.emailAddress,
-        password: values.password,
-        confirmPassword: values.confirmPassword,
+        profilePicture: imageUrl,
+        // email: values.emailAddress,
+        // password: values.password,
+        // confirmPassword: values.confirmPassword,
       },
     });
     console.log(response);
@@ -100,10 +108,6 @@ export const UserSettings = () => {
   const deleteUserHandler = () => {
     console.log("CLicked");
   };
-
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [image, setImage] = useState<string>();
-  // const [displayFinalImage, setDisplayFinalImage] = useState();
 
   const handleCloseCrooper = () => {
     setIsOpen(!isOpen);
@@ -120,29 +124,28 @@ export const UserSettings = () => {
     if (event?.target.files && event.target.files.length > 0) {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
-      reader.addEventListener("load", () =>
-        setImage(URL.createObjectURL(event.target.files[0]))
-      );
+      reader.addEventListener("load", () => {
+        setImage(URL.createObjectURL(event.target.files[0]));
+        setImageOptions({
+          name: event.target.files[0].name,
+          type: event.target.files[0].type,
+        });
+      });
       setIsOpen(true);
     }
   };
+
   const handleUpload = async (file: Blob) => {
-    // const DATA = new FormData([file], "image.png", { type: "image/png" });
-    // console.log(DATA);
-    // const formData = new FormData();
-    // formData.append("image", DATA);
-    // console.log(formData);
+    setTemporaryImage(file);
+    console.log(file);
     const formData = new FormData();
-    // formData.append("name", file);
-    formData.append("file", file);
-    // const reader = new FileReader();
-    // reader.readAsDataURL(DATA);
+    const blobFile = new File([file], imageOptions.name, {
+      type: imageOptions.type,
+    });
+    console.log(blobFile);
+    formData.append("file", blobFile);
 
-    // reader.onloadend = () => {
-    //   const base64data = reader.result;
-
-    //   console.log(base64data);
-    // };
+    console.log(formData);
 
     const config = {
       headers: {
@@ -151,7 +154,32 @@ export const UserSettings = () => {
     };
     await axiosInstance
       .post("/files/Storage/picture", formData, config)
-      .then((res) => console.log(res));
+      .then((res) => {
+        console.log(res.data.url);
+        setImageUrl(res.data.url);
+      });
+  };
+
+  const dataResult = useQuery(["UserData"], fetchUserData);
+  console.log(dataResult.data);
+
+  if (dataResult.data === undefined) return <Loader />;
+
+  // const initialValues = {
+  //   firstName: "",
+  //   lastName: "",
+  //   emailAddress: "",
+  //   password: "",
+  //   confirmPassword: "",
+  //   profilePicture: "",
+  // };
+  const initialValues = {
+    firstName: dataResult.data.firstName,
+    lastName: dataResult.data.lastName,
+    emailAddress: dataResult.data.email,
+    password: "",
+    confirmPassword: "",
+    profilePicture: dataResult.data.profilePicture,
   };
 
   return (
@@ -159,6 +187,7 @@ export const UserSettings = () => {
       <Title>Ustawienia użytkownika</Title>
 
       <Formik
+        enableReinitialize
         initialValues={initialValues}
         validationSchema={ValidationSchema[1]}
         onSubmit={handleSubmit}
@@ -166,7 +195,17 @@ export const UserSettings = () => {
         {({ isValidating }) => (
           <Form>
             <LogoContainer>
-              <img className="avatar" src={image} alt="" />
+              {dataResult.data === undefined ? (
+                <Loader />
+              ) : (
+                <img
+                  src={dataResult.data.profilePicture}
+                  className="avatar"
+                  alt=""
+                />
+              )}
+
+              <img className="avatar" src={temporaryImage} alt="" />
               {image && isOpen && (
                 <Crooper
                   image={image}

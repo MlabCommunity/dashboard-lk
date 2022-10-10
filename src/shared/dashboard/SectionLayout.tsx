@@ -5,7 +5,7 @@ const Layout = styled.div`
   padding: 2.4rem;
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.colorsGray.lightGray5};
+  background: ${({ theme }) => theme.colorsGray.lightGray5};
 `;
 
 export const SectionLayout = ({ children }: PropsWithChildren) => (

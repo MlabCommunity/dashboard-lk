@@ -3,7 +3,6 @@ import Cropper from "react-easy-crop";
 import styled from "styled-components";
 import { SubmitButton } from "shared/loginRegister";
 import { getCroppedImg } from "./CropImage";
-// import { Preview } from "./PreviewImage";
 
 const CroopModal = styled("div")`
   position: fixed;
@@ -28,7 +27,7 @@ const CrooperLayout = styled("div")`
 
 const CroopContainer = styled("div")`
   position: absolute;
-  top: 0;
+  top: 6rem;
   left: 0;
   right: 0;
   bottom: 6rem;
@@ -53,6 +52,14 @@ const Controls = styled("div")`
   }
 `;
 
+const TitleBar = styled(Controls)`
+  top: 0;
+  p {
+    ${({ theme }) => theme.heading18Semi};
+    color: ${({ theme }) => theme.colorsGray.darkGray2};
+  }
+`;
+
 const Range = styled("input")`
   color: green;
 `;
@@ -68,7 +75,6 @@ export const Crooper = ({
 
   const onCropComplete = useCallback(
     (croppedArea: any, croppedAreaPixel: any) => {
-      console.log(croppedArea, croppedAreaPixel);
       setCroppedAreaPixels(croppedAreaPixel);
     },
     []
@@ -77,16 +83,22 @@ export const Crooper = ({
   const showCroppedImage = useCallback(async () => {
     try {
       const croppedImage: any = await getCroppedImg(image, croppedAreaPixels);
-
       onSaveCroppedImage(croppedImage);
-    } catch (e) {
-      console.log(e);
+      handleCloseCrooper();
+    } catch (err) {
+      console.log(err);
     }
   }, [croppedAreaPixels]);
 
   return (
     <CroopModal>
       <CrooperLayout>
+        <TitleBar>
+          <p>Edytuj zdjęcie</p>
+          <SubmitButton type="button" name="prev" onClick={handleCloseCrooper}>
+            X
+          </SubmitButton>
+        </TitleBar>
         <CroopContainer>
           <Cropper
             image={image}
@@ -96,7 +108,7 @@ export const Crooper = ({
             onCropChange={setCrop}
             onCropComplete={onCropComplete}
             onZoomChange={setZoom}
-            aspect={1}
+            aspect={5 / 5}
           />
         </CroopContainer>
         {/* <Preview onHidePreview={false} imageSrc={showCroppedImage()} /> */}
@@ -121,11 +133,8 @@ export const Crooper = ({
             >
               Anuluj
             </SubmitButton>
-            <SubmitButton name="next" type="button">
-              Dodaj
-            </SubmitButton>
             <SubmitButton onClick={showCroppedImage} name="next" type="button">
-              Podgląd
+              Dodaj
             </SubmitButton>
           </div>
         </Controls>

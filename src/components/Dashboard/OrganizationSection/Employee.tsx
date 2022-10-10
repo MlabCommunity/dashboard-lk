@@ -1,71 +1,24 @@
 import { useEffect, useState } from "react";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { ErrorMessage, Formik } from "formik";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { Loader } from "shared/dashboard/Loader";
-import styled from "styled-components";
 import * as Yup from "yup";
-import { motion } from "framer-motion";
 import axiosInstance from "api/axios";
 
 import { SectionLayout } from "shared/dashboard";
-import { SubmitButton, Inputs, InputField } from "shared/loginRegister";
-// import { useWorkerData } from "services/AddWorker";
-
-const FormWrapper = styled(motion.div)`
-  position: relative;
-  text-align: left;
-  padding: 0;
-  max-width: 56rem;
-  background: ${({ theme }) => theme.colorsBlackandWhite.white};
-  border: 1px solid ${({ theme }) => theme.colorsGray.lightGray5};
-  box-shadow: 0px 0px 1px rgba(26, 32, 36, 0.32),
-    0px 1px 2px rgba(91, 104, 113, 0.32);
-  border-radius: 8px;
-`;
-const FormContainer = styled.form`
-  button[type="submit"] {
-    margin-top: 4rem;
-  }
-`;
-const InputWrapper = styled(Inputs)`
-  padding: 0 2.4rem 2.4rem;
-`;
-const Title = styled("h2")`
-  padding: 2.4rem 2.4rem 0.8rem;
-  ${({ theme }) => theme.heading18Semi};
-  color: ${({ theme }) => theme.colorsGray.darkGray2};
-`;
-const Description = styled("p")`
-  padding: 0 2.4rem 2.4rem;
-  ${({ theme }) => theme.text12Regular};
-  color: ${({ theme }) => theme.colorsGray.midGray1};
-`;
-const Controls = styled("div")`
-  padding: 1.6rem 2.4rem;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 1.6rem;
-  border-top: 1px solid ${({ theme }) => theme.colorsGray.lightGray4};
-  button {
-    ${({ theme }) => theme.buttonLarge};
-    width: auto;
-    margin-top: 0;
-  }
-  button[type="submit"] {
-    margin-top: 0;
-  }
-`;
-const Modal = styled("div")`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 80%;
-  height: 80%;
-  transform: translate(-50%, -50%);
-`;
+import { SubmitButton, InputField } from "shared/loginRegister";
+import { ReactComponent as Success } from "assets/dashboard/WorkerSuccess.svg";
+import {
+  FormWrapper,
+  ModalBackground,
+  Modal,
+  Title,
+  Description,
+  FormContainer,
+  InputWrapper,
+  Controls,
+} from "./WorkerComponents";
 
 const AddWorkerSchema = Yup.object().shape({
   email: Yup.string().email("Niepoprawny email").required("Wymagane pole"),
@@ -77,13 +30,16 @@ interface IInputValue {
 
 export const Employee = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  // const navigate = useNavigate();
+  const [resError, setResError] = useState<boolean>();
+  const [errorUserExist, setErrorUserExist] = useState<string>("");
+
+  const navigate = useNavigate();
 
   // const { workerData } = useWorkerData();
   // const [{ error, loading }, sendEmail] = workerData(prop);
 
   useEffect(() => {
-    const modalTimer = setTimeout(() => setShowModal(false), 3000);
+    const modalTimer = setTimeout(() => setShowModal(false), 2200);
 
     return () => {
       clearTimeout(modalTimer);
@@ -95,19 +51,35 @@ export const Employee = () => {
       .post(`/pet/shelters/workers/${value.email}`)
       .then((res) => {
         if (res.status === 204) {
+          setResError(false);
           setShowModal(true);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        if (error.message === "Worker already exists" && error.status === 400) {
+          setErrorUserExist("Użytkownik o takim adresie email jest już dodany");
+        }
+        if (error) {
+          setResError(true);
+        }
+        return error;
+      });
+  };
+
+  const returnHandler = () => {
+    navigate("/organizationSection");
   };
 
   return (
     <SectionLayout>
       <FormWrapper>
         {showModal && (
-          <Modal>
-            <p>Siema</p>
-          </Modal>
+          <>
+            <ModalBackground />
+            <Modal>
+              <Success /> <p>Pomyślnie dodano pracownika</p>
+            </Modal>
+          </>
         )}
         <Title className="title">Dodaj pracownika</Title>
         <Description className="description">
@@ -121,8 +93,14 @@ export const Employee = () => {
           validationSchema={AddWorkerSchema}
           onSubmit={async (values, actions) => {
             actions.validateForm();
-            handleFormSubmit(values);
-            actions.setSubmitting(false);
+            await handleFormSubmit(values);
+            if (resError === true) {
+              console.log(resError);
+            } else {
+              console.log(resError);
+              actions.setSubmitting(false);
+              actions.resetForm();
+            }
           }}
         >
           {(props) => (
@@ -144,8 +122,18 @@ export const Employee = () => {
                   name="email"
                 />
               </InputWrapper>
+
+              {resError && (
+                <p className="errorMessage" style={{ padding: "0 2.4rem" }}>
+                  Coś poszło nie tak
+                </p>
+              )}
+              {errorUserExist !== "" && (
+                <p className="errorMessage">{errorUserExist}</p>
+              )}
+
               <Controls>
-                <SubmitButton type="button" name="prev">
+                <SubmitButton type="button" name="prev" onClick={returnHandler}>
                   Anuluj
                 </SubmitButton>
                 <SubmitButton

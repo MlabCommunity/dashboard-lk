@@ -5,6 +5,7 @@ import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { configure } from "axios-hooks";
 import axiosInstance from "api/axios";
 import { history } from "services/ProtectedRoute";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
@@ -20,6 +21,7 @@ root.render(
     <HistoryRouter history={history}>
       <QueryClientProvider client={queryClient}>
         <App />
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </HistoryRouter>
   </React.StrictMode>

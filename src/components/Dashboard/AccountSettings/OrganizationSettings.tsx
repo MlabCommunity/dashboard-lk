@@ -4,6 +4,8 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { IUpdateOrganizationData } from "types/axiosApi";
 import { Loader } from "shared/dashboard/Loader";
 import { Formik, Form, ErrorMessage } from "formik";
+import { useQuery } from "@tanstack/react-query";
+import axiosInstance from "api/axios";
 
 import {
   FormWrapper,
@@ -13,24 +15,33 @@ import {
 } from "shared/loginRegister";
 import { useUpdateOrganization } from "services/UpdateShelters";
 import useGeocode from "services/Geocode";
-import ValidationSchema from "components/Register/FormModel/validationSchema";
+import ValidationSchema from "./FormModel/validationSchema";
 import { formFieldOrganization } from "./FormModel/submitFormModel";
 
 const UpdateButton = styled(SubmitButton)`
-  margin-top: 0;
+  margin-top: 3rem;
   margin-left: auto;
   width: auto;
   ${({ theme }) => theme.buttonLarge}
 `;
+const Title = styled("h2")`
+  ${({ theme }) => theme.heading18Semi};
+  color: ${({ theme }) => theme.colorsBlackandWhite.black};
+  text-align: left;
+  padding-bottom: 1.6rem;
+`;
 
-const initialValues = {
-  organizationName: "",
-  street: "",
-  zipCode: "",
-  city: "",
-  nip: "",
-  krs: "",
-  phoneNumber: "",
+const getOrganizationId = async () => {
+  const response = await axiosInstance.get("/pet/shelters");
+  return response.data.id;
+};
+
+const fetchOrganizationData = async () => {
+  const id = await getOrganizationId();
+  const organizationData = await axiosInstance.get(
+    `/pet/shelters/details/${id}`
+  );
+  return organizationData.data;
 };
 
 export const OrganizationSettings = () => {
@@ -43,9 +54,7 @@ export const OrganizationSettings = () => {
     values: IUpdateOrganizationData
   ) => {
     const address = `${values.street}, ${values.city}, ${values.zipCode}`;
-    // eslint-disable-next-line no-unused-vars
     let lati = null;
-    // eslint-disable-next-line no-unused-vars
     let long = null;
 
     const getCoordinates = (lat: number, lng: number) => {
@@ -86,21 +95,32 @@ export const OrganizationSettings = () => {
     actions.setSubmitting(false);
   };
 
+  const dataResult = useQuery(["OrganizationData"], fetchOrganizationData);
+
+  if (dataResult.data === undefined) return <Loader />;
+
+  // const initialValues = {
+  //   organizationName: "",
+  //   street: "",
+  //   zipCode: "",
+  //   city: "",
+  //   nip: "",
+  //   krs: "",
+  //   phoneNumber: "",
+  // };
+  const initialValues = {
+    organizationName: dataResult.data.organizationName,
+    street: "",
+    zipCode: "",
+    city: "",
+    nip: dataResult.data.nip,
+    krs: dataResult.data.krs,
+    phoneNumber: dataResult.data.phoneNumber,
+  };
+
   return (
     <FormWrapper>
-      <h2
-        style={{
-          fontWeight: "600",
-          fontSize: "1.8rem",
-          lineHeight: "2.4rem",
-          letterSpacing: "-0.014em",
-          color: "#000",
-          textAlign: "left",
-          paddingBottom: "1.6rem",
-        }}
-      >
-        Ustawienia organizacji
-      </h2>
+      <Title>Ustawienia organizacji</Title>
 
       <Formik
         initialValues={initialValues}
@@ -237,13 +257,11 @@ export const OrganizationSettings = () => {
                 Podane miejsce nie znajduje się w Polsce
               </p>
             )}
-            <Grid2 container spacing={3}>
-              <Grid2 xs={3}>
-                <UpdateButton disabled={isValidating} name="next" type="submit">
-                  Zapisz
-                </UpdateButton>
-              </Grid2>
-            </Grid2>
+
+            <UpdateButton disabled={isValidating} name="next" type="submit">
+              Zapisz
+            </UpdateButton>
+
             {loading && <Loader />}
           </Form>
         )}

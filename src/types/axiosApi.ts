@@ -4,7 +4,6 @@ export interface ILogin {
 }
 export interface IResponse {
   accessToken: string;
-  refreshToken: string;
 }
 export interface IInputNames {
   name: string;
@@ -93,6 +92,7 @@ export interface IUpdateUserData {
   emailAddress: string;
   password: string;
   confirmPassword: string;
+  profilePicture: string;
 }
 
 export interface IUpdatePassword {
