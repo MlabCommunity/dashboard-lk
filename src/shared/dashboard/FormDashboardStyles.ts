@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Inputs } from "shared/loginRegister";
+import { ReactComponent as Success } from "assets/dashboard/WorkerSuccess.svg";
+
+export { Success };
 
 export const FormWrapper = styled(motion.div)`
   position: relative;

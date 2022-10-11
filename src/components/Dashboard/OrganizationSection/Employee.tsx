@@ -18,7 +18,7 @@ import {
   FormContainer,
   InputWrapper,
   Controls,
-} from "./WorkerComponents";
+} from "shared/dashboard/FormDashboardStyles";
 
 const AddWorkerSchema = Yup.object().shape({
   email: Yup.string().email("Niepoprawny email").required("Wymagane pole"),

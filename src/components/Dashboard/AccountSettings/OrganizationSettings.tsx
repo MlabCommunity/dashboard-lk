@@ -3,14 +3,25 @@ import { useState } from "react";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { IUpdateOrganizationData } from "types/axiosApi";
 import { Loader } from "shared/dashboard/Loader";
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik, ErrorMessage } from "formik";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "api/axios";
 
 import {
   FormWrapper,
+  ModalBackground,
+  Modal,
+  Title,
+  FormContainer,
+  InputWrapper,
+  Controls,
+  Success,
+} from "shared/dashboard/FormDashboardStyles";
+
+import {
+  // FormWrapper,
   InputField,
-  Inputs,
+  // Inputs,
   SubmitButton,
 } from "shared/loginRegister";
 import { useUpdateOrganization } from "services/UpdateShelters";
@@ -23,12 +34,6 @@ const UpdateButton = styled(SubmitButton)`
   margin-left: auto;
   width: auto;
   ${({ theme }) => theme.buttonLarge}
-`;
-const Title = styled("h2")`
-  ${({ theme }) => theme.heading18Semi};
-  color: ${({ theme }) => theme.colorsBlackandWhite.black};
-  text-align: left;
-  padding-bottom: 1.6rem;
 `;
 
 const getOrganizationId = async () => {
@@ -99,15 +104,6 @@ export const OrganizationSettings = () => {
 
   if (dataResult.data === undefined) return <Loader />;
 
-  // const initialValues = {
-  //   organizationName: "",
-  //   street: "",
-  //   zipCode: "",
-  //   city: "",
-  //   nip: "",
-  //   krs: "",
-  //   phoneNumber: "",
-  // };
   const initialValues = {
     organizationName: dataResult.data.organizationName,
     street: "",
@@ -120,6 +116,14 @@ export const OrganizationSettings = () => {
 
   return (
     <FormWrapper>
+      {"" && (
+        <>
+          <ModalBackground />
+          <Modal>
+            <Success />
+          </Modal>
+        </>
+      )}
       <Title>Ustawienia organizacji</Title>
 
       <Formik
@@ -127,9 +131,9 @@ export const OrganizationSettings = () => {
         validationSchema={ValidationSchema[0]}
         onSubmit={handleSubmit}
       >
-        {({ isValidating }) => (
-          <Form>
-            <Inputs>
+        {(props) => (
+          <FormContainer onSubmit={props.handleSubmit}>
+            <InputWrapper>
               <Grid2 container spacing={3}>
                 <Grid2 xs={12}>
                   <label htmlFor="organizationName">
@@ -247,7 +251,7 @@ export const OrganizationSettings = () => {
                 className="errorMessage"
                 name="phoneNumber"
               />
-            </Inputs>
+            </InputWrapper>
 
             {!coordinatesError && error && (
               <p className="errorMessage">Coś poszło nie tak</p>
@@ -258,12 +262,14 @@ export const OrganizationSettings = () => {
               </p>
             )}
 
-            <UpdateButton disabled={isValidating} name="next" type="submit">
-              Zapisz
-            </UpdateButton>
+            <Controls>
+              <UpdateButton name="next" type="submit">
+                Zapisz
+              </UpdateButton>
+            </Controls>
 
             {loading && <Loader />}
-          </Form>
+          </FormContainer>
         )}
       </Formik>
     </FormWrapper>

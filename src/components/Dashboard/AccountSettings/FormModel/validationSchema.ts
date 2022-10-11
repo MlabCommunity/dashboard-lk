@@ -18,64 +18,73 @@ const {
   },
 } = submitFormModel;
 
+const required = "Wymagane Pole";
+
 export default [
   Yup.object().shape({
     [organizationName.name]: Yup.string()
+      .required(required)
       .min(2, "Minimum 2 znaki")
       .matches(
         /^[a-zA-ZzżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9\\-]{2,64}$/,
         "Znaki specjalne z wyjątkiem - są niedozwolone"
       ),
     [street.name]: Yup.string()
+      .required(required)
       .min(2, "Minimum 2 znaki")
       .matches(
         /^[a-zA-ZzżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9\\-]{2,64}$/,
         "Znaki specjalne z wyjątkiem - są niedozwolone"
       ),
-    [zipCode.name]: Yup.string().matches(
-      /^\d\d-\d\d\d$/,
-      "Wymagany format '00-000'"
-    ),
+    [zipCode.name]: Yup.string()
+      .required(required)
+      .matches(/^\d\d-\d\d\d$/, "Wymagany format '00-000'"),
     [city.name]: Yup.string()
+      .required(required)
       .min(2, "Minimum 2 znaki")
       .matches(
         /^[a-zA-ZzżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9\\-]{2,64}$/,
         "Znaki specjalne z wyjątkiem - są niedozwolone"
       ),
     [nip.name]: Yup.string()
+      .required(required)
       .matches(/^\d{10}$/, "Numer NIP musi mieć 10 cyfr")
       .length(10, "Numer NIP musi mieć 10 cyfr"),
     [krs.name]: Yup.string()
+      .required(required)
       .matches(/^\d{10}$/, "Numer KRS musi mieć 10 cyfr")
       .length(10, "Numer KRS musi mieć 10 cyfr"),
-    [phoneNumber.name]: Yup.string().matches(
-      /^\d{9,10}$/,
-      "Numer telefonu musi mieć między 9-10 cyfr"
-    ),
+    [phoneNumber.name]: Yup.string()
+      .required(required)
+      .matches(/^\d{9,10}$/, "Numer telefonu musi mieć między 9-10 cyfr"),
   }),
   Yup.object().shape({
     [firstName.name]: Yup.string()
+      .required(required)
       .min(2, "Minimum 2 znaki")
       .matches(
         /^[a-zA-ZzżźćńółęąśŻŹĆĄŚĘŁÓŃ\\-]{2,32}$/,
         "Dozwolone są tylko litery oraz '-'"
       ),
     [lastName.name]: Yup.string()
+      .required(required)
       .min(2, "Minimum 2 znaki")
       .matches(
         /^[a-zA-ZzżźćńółęąśŻŹĆĄŚĘŁÓŃ\\-]{2,32}$/,
         "Dozwolone są tylko litery oraz '-'"
       ),
-    [emailAddress.name]: Yup.string().email("Niepoprawny email"),
+    [emailAddress.name]: Yup.string()
+      .required(required)
+      .email("Niepoprawny email"),
     [password.name]: Yup.string()
+      .required(required)
       .min(8, "Hasło musi zawierać conajmniej 8 znaków")
       .matches(/^(?=.*?[a-z])/, "Wymagana: mała litera")
       .matches(/^(?=.*?[A-Z])/, "Wymagana: duża litera")
       .matches(/^(?=.*?[#?!@$%^&*-])/, "Wymagany: znak specjalny #?!@$%^&*-")
       .matches(/^(?=.*?[0-9])/, "Wymagana: cyfra 0-9"),
-    [confirmPassword.name]: Yup.string().oneOf(
-      [Yup.ref("password"), null],
-      "Hasła muszą być takie same"
-    ),
+    [confirmPassword.name]: Yup.string()
+      .required(required)
+      .oneOf([Yup.ref("password"), null], "Hasła muszą być takie same"),
   }),
 ];

@@ -3,17 +3,22 @@ import styled from "styled-components";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { IUpdateUserData } from "types/axiosApi";
 import { Loader } from "shared/dashboard/Loader";
-import { Formik, Form, ErrorMessage } from "formik";
-// import { QueryClient } from "@tanstack/react-query";
+import { Formik, ErrorMessage } from "formik";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "api/axios";
 
 import {
   FormWrapper,
-  InputField,
-  Inputs,
-  SubmitButton,
-} from "shared/loginRegister";
+  ModalBackground,
+  Modal,
+  Title,
+  FormContainer,
+  InputWrapper,
+  Controls,
+  Success,
+} from "shared/dashboard/FormDashboardStyles";
+
+import { InputField, SubmitButton } from "shared/loginRegister";
 import { useTogglePasswordVisibility } from "hooks/useTogglePasswordVisibility";
 import { useUpdateUser } from "services/UpdateShelters";
 import EyeOff from "assets/loginRegister/Eye-off.png";
@@ -22,13 +27,13 @@ import DeleteIcon from "assets/dashboard/DeleteIcon.png";
 import ValidationSchema from "./FormModel/validationSchema";
 import { formFieldUser } from "./FormModel/submitFormModel";
 import { Crooper } from "../Crooper";
-// import { data } from "../AnimalCardsSection/FormModel/FormInputsData";
 
 const LogoContainer = styled("div")`
   position: relative;
   display: flex;
   align-items: center;
   gap: 1.6rem;
+  padding-top: 0.8rem;
   margin-bottom: 1.6rem;
   .avatar {
     width: 6.4rem;
@@ -49,7 +54,7 @@ const UpdateButton = styled(SubmitButton)`
 `;
 const DeleteButton = styled(SubmitButton)`
   width: auto;
-  margin: 3.2rem 0;
+  margin: 3.2rem 0 0.8rem;
   background: ${({ theme }) => theme.colorsRed.r500};
   ${({ theme }) => theme.buttonLarge};
   img {
@@ -58,12 +63,6 @@ const DeleteButton = styled(SubmitButton)`
   &:hover {
     background: ${({ theme }) => theme.colorsRed.r600};
   }
-`;
-const Title = styled("h2")`
-  ${({ theme }) => theme.heading18Semi};
-  color: ${({ theme }) => theme.colorsBlackandWhite.black};
-  text-align: left;
-  padding-bottom: 1.6rem;
 `;
 
 const fetchUserData = async () => {
@@ -105,8 +104,10 @@ export const UserSettings = () => {
     actions.setSubmitting(false);
   };
 
-  const deleteUserHandler = () => {
-    console.log("CLicked");
+  const deleteUserHandler = async () => {
+    await axiosInstance
+      .delete("/identity/User")
+      .then((res) => console.log(res));
   };
 
   const handleCloseCrooper = () => {
@@ -137,15 +138,12 @@ export const UserSettings = () => {
 
   const handleUpload = async (file: Blob) => {
     setTemporaryImage(file);
-    console.log(file);
     const formData = new FormData();
     const blobFile = new File([file], imageOptions.name, {
       type: imageOptions.type,
     });
     console.log(blobFile);
     formData.append("file", blobFile);
-
-    console.log(formData);
 
     const config = {
       headers: {
@@ -155,24 +153,14 @@ export const UserSettings = () => {
     await axiosInstance
       .post("/files/Storage/picture", formData, config)
       .then((res) => {
-        console.log(res.data.url);
         setImageUrl(res.data.url);
       });
   };
 
   const dataResult = useQuery(["UserData"], fetchUserData);
-  console.log(dataResult.data);
 
   if (dataResult.data === undefined) return <Loader />;
 
-  // const initialValues = {
-  //   firstName: "",
-  //   lastName: "",
-  //   emailAddress: "",
-  //   password: "",
-  //   confirmPassword: "",
-  //   profilePicture: "",
-  // };
   const initialValues = {
     firstName: dataResult.data.firstName,
     lastName: dataResult.data.lastName,
@@ -184,6 +172,14 @@ export const UserSettings = () => {
 
   return (
     <FormWrapper>
+      {"" && (
+        <>
+          <ModalBackground />
+          <Modal>
+            <Success />
+          </Modal>
+        </>
+      )}
       <Title>Ustawienia użytkownika</Title>
 
       <Formik
@@ -192,44 +188,44 @@ export const UserSettings = () => {
         validationSchema={ValidationSchema[1]}
         onSubmit={handleSubmit}
       >
-        {({ isValidating }) => (
-          <Form>
-            <LogoContainer>
-              {dataResult.data === undefined ? (
-                <Loader />
-              ) : (
-                <img
-                  src={dataResult.data.profilePicture}
-                  className="avatar"
-                  alt=""
-                />
-              )}
+        {(props) => (
+          <FormContainer onSubmit={props.handleSubmit}>
+            <InputWrapper>
+              <LogoContainer>
+                {dataResult.data === undefined ? (
+                  <Loader />
+                ) : (
+                  <img
+                    src={dataResult.data.profilePicture}
+                    className="avatar"
+                    alt=""
+                  />
+                )}
 
-              <img className="avatar" src={temporaryImage} alt="" />
-              {image && isOpen && (
-                <Crooper
-                  image={image}
-                  handleCloseCrooper={handleCloseCrooper}
-                  onSaveCroppedImage={handleUpload}
+                <img className="avatar" src={temporaryImage} alt="" />
+                {image && isOpen && (
+                  <Crooper
+                    image={image}
+                    handleCloseCrooper={handleCloseCrooper}
+                    onSaveCroppedImage={handleUpload}
+                  />
+                )}
+                <SubmitButton
+                  type="button"
+                  name="prev"
+                  onClick={handleInputFileModal}
+                >
+                  Edytuj
+                </SubmitButton>
+                <input
+                  type="file"
+                  accept="image/jpg, image/jpeg, image/png, image/bmp"
+                  ref={inputRef}
+                  style={{ display: "none" }}
+                  onChange={onSelectImage}
                 />
-              )}
-              <SubmitButton
-                type="button"
-                name="prev"
-                onClick={handleInputFileModal}
-              >
-                Edytuj
-              </SubmitButton>
-              <input
-                type="file"
-                accept="image/jpg, image/jpeg, image/png, image/bmp"
-                ref={inputRef}
-                style={{ display: "none" }}
-                onChange={onSelectImage}
-              />
-            </LogoContainer>
-            <Inputs>
-              <Grid2 container spacing={2}>
+              </LogoContainer>
+              <Grid2 container spacing={3}>
                 <Grid2 xs={6}>
                   <label htmlFor={formFieldUser.firstName.name}>
                     {formFieldUser.firstName.label}
@@ -338,25 +334,25 @@ export const UserSettings = () => {
                   />
                 </Grid2>
               </Grid2>
-            </Inputs>
-
-            <DeleteButton
-              disabled={isValidating}
-              name="next"
-              type="button"
-              onClick={deleteUserHandler}
-            >
-              Usuń konto
-              <img src={DeleteIcon} alt="" />
-            </DeleteButton>
-
-            <UpdateButton disabled={isValidating} name="next" type="submit">
-              Zapisz
-            </UpdateButton>
+              <DeleteButton
+                name="next"
+                type="button"
+                onClick={deleteUserHandler}
+              >
+                Usuń konto
+                <img src={DeleteIcon} alt="" />
+              </DeleteButton>
+            </InputWrapper>
 
             {error && <p className="errorMessage">Coś poszło nie tak</p>}
             {loading && <Loader />}
-          </Form>
+
+            <Controls>
+              <UpdateButton name="next" type="submit">
+                Zapisz
+              </UpdateButton>
+            </Controls>
+          </FormContainer>
         )}
       </Formik>
     </FormWrapper>
